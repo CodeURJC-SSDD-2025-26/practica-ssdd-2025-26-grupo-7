@@ -4,8 +4,8 @@
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
 | Angel Molinero Caja | a.molinero.2023@alumnos.urjc.es | anxelito |
-| Jorge Castellano Bajo | j.castellano.2023@alumnos.urjc.es | [User2] |
-| Pedro Gonzalez Matín | [email3]@alumnos.urjc.es | [User3] |
+| Jorge Castellano Bajo | j.castellano.2023@alumnos.urjc.es | jorgeC2110 |
+| Pedro Gonzalez Matín | p.gonzalezm.2023@alumnos.urjc.es | [User3] |
 ---
 
 ## 🎭 **Preparación: Definición del Proyecto**
