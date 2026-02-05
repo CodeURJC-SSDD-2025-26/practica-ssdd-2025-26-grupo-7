@@ -5,7 +5,7 @@
 |:--- |:--- |:--- |
 | Angel Molinero Caja | a.molinero.2023@alumnos.urjc.es | anxelito |
 | Jorge Castellano Bajo | j.castellano.2023@alumnos.urjc.es | jorgeC2110 |
-| Pedro Gonzalez Matín | p.gonzalezm.2023@alumnos.urjc.es | glezpedro |
+| Pedro González Martín | p.gonzalezm.2023@alumnos.urjc.es | glezpedro |
 ---
 
 ## 🎭 **Preparación: Definición del Proyecto**
