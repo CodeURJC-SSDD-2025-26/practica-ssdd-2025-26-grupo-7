@@ -23,10 +23,13 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 
 
 **Relaciones entre entidades:**
-- Usuario - Equipo: Un usuario puede ser propietario de varios equipos (1:N)
-- Usuario - Torneo: Un usuario administrador puede crear varios torneos (1:N)
-- Torneo - Partida: Un torneo contiene varias partidas (1:N)
-- Usuario - Partida: 
+- Usuario - Equipo (1:N): Un usuario puede ser propietario de varios equipos
+- Usuario - Equipo (N:N): Un usuario puede ser miembro de múltiples equipos, y un equipo puede tener múltiples miembros.
+- Usuario - Torneo (1:N): Un usuario administrador puede crear varios torneos.
+- Equipo - Torneo (N:M): Un equipo puede permanecer a múltiples torneos, y un torneo puede tener múltiples equipos.
+- Torneo - Partida (1:N): Un torneo contiene varias partidas, y cada partida pertenece a un torneo.
+- Equipo - Partida (N:M): Un equipo puede participar en múltiples partidas, y cada partida enfrenta a exactamente dos equipos.
+- Usuario - Partida (N:M): Un usuario participa en múltiples partidas mediante su equipo. 
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
