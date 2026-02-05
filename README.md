@@ -16,10 +16,11 @@ Página web destinada a organizar torneos eSports universitarios de distintos vi
 ### **Entidades**
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
 
-1. **[Entidad 1]**: [Ej: Usuario]
-2. **[Entidad 2]**: [Ej: Producto]
-3. **[Entidad 3]**: [Ej: Pedido]
-4. **[Entidad 4]**: [Ej: Categoría]
+1. **Usuario**: Representa a los jugadores y administradores de la plataforma.
+2. **Equipo**: Representa la grupación de usuarios que compiten conjuntamente en un mismo grupo.
+3. **Torneo**: Representa la competición o liga en la que se inscriben los distintos equipos.
+4. **Partido**: Representa el enfrentamiento específico entre dos equipos dentro de un torneo.
+
 
 **Relaciones entre entidades:**
 - Usuario - Equipo: Un usuario puede ser propietario de varios equipos (1:N)
