@@ -22,10 +22,10 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 4. **[Entidad 4]**: [Ej: Categoría]
 
 **Relaciones entre entidades:**
-- [Ej: Usuario - Pedido: Un usuario puede tener múltiples pedidos (1:N)]
-- [Ej: Pedido - Producto: Un pedido puede contener múltiples productos y un producto puede estar en múltiples pedidos (N:M)]
-- [Ej: Producto - Categoría: Un producto pertenece a una categoría (N:1)]
-- [Descripción de otras relaciones relevantes]
+- Usuario - Equipo: Un usuario puede ser propietario de varios equipos (1:N)
+- Usuario - Torneo: Un usuario administrador puede crear varios torneos (1:N)
+- Torneo - Partida: Un torneo contiene varias partidas (1:N)
+- Usuario - Partida: 
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
