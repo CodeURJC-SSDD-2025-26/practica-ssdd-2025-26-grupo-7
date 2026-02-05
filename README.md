@@ -11,7 +11,7 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
-[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario].
+Página web destinada a organizar torneos eSports universitarios de distintos videojuegos. La página web tendrá diversas funcionalidades buscando la mejor experiencia y claridad posible para cada usuario. La aplicación incluirá la clasificación general de cada torneo, resultado de cada enfrentamiento de dichos torneos, estadísticas generales de equipos y muchasmás funcionalidades.
 
 ### **Entidades**
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
