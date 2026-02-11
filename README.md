@@ -9,7 +9,7 @@
 ---
 
 ## 🎭 **Preparación: Definición del Proyecto**
-
+7
 ### **Descripción del Tema**
 Página web destinada a organizar torneos eSports universitarios de distintos videojuegos. La página web tendrá diversas funcionalidades buscando la mejor experiencia y claridad posible para cada usuario. La aplicación incluirá la clasificación general de cada torneo, resultado de cada enfrentamiento de dichos torneos, estadísticas generales de equipos y muchasmás funcionalidades.
 
