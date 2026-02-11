@@ -127,3 +127,10 @@ footer {
 section {
     animation: fadeIn 0.8s ease-out forwards;
 }
+
+
+.tournament-card img {
+    height: 220px;
+    object-fit: contain;
+    width: 100%;
+}
