@@ -20,6 +20,7 @@ h1, h2, h3, .navbar-brand {
     font-weight: 700;
 }
 
+/* --- Navbar --- */
 .navbar {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -30,38 +31,61 @@ h1, h2, h3, .navbar-brand {
     text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
+/* --- Header / Hero Section --- */
 .hero-section {
     position: relative;
     overflow: hidden;
     border-bottom: 2px solid var(--primary-cyan);
+    
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), 
+                      url('../assets/images/hero-image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    padding: 100px 0;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    color: white;
 }
 
 .hero-section h1 {
     text-shadow: 2px 2px 20px rgba(0, 212, 255, 0.4);
 }
 
-/* --- Tarjetas de Torneos (Cards) --- */
-.card {
-    background-color: var(--bg-card);
-    border: 1px solid #333;
+.card.tournament-card {
+    background-color: #ffffff; 
+    border: 1px solid #dee2e6;
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary-cyan);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 212, 255, 0.2);
+.card.tournament-card .card-title {
+    color: #0f1216 !important;
 }
 
-.card-img-top {
+.card.tournament-card .card-text {
+    color: #444444 !important;
+}
+
+.card.tournament-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-cyan);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 212, 255, 0.1);
+}
+
+.tournament-card img, .card-img-top {
+    height: 220px;
+    object-fit: contain;
+    width: 100%;
     filter: grayscale(30%);
     transition: 0.3s;
 }
 
-.card:hover .card-img-top {
-    filter: grayscale(0%);
+.card.tournament-card:hover .card-img-top {
+    filter: grayscale(0%); 
 }
 
 /* --- Tablas de Clasificación --- */
@@ -106,7 +130,7 @@ h1, h2, h3, .navbar-brand {
     border-color: var(--primary-cyan);
 }
 
-/* --- Badges y Estados --- */
+/* --- Badges --- */
 .badge {
     padding: 0.6em 1em;
     font-weight: 500;
@@ -126,11 +150,4 @@ footer {
 
 section {
     animation: fadeIn 0.8s ease-out forwards;
-}
-
-
-.tournament-card img {
-    height: 220px;
-    object-fit: contain;
-    width: 100%;
 }
