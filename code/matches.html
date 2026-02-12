@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/matches.css">
+</head>
+
+<body>
+    <!--- nav --->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tournaments.html">Torneos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="teams.html">Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="matches.html">Enfrentamientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main section -->
+
+    <main class="matches-container py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="text-white">CALENDARIO DE <span style="color: var(--primary-cyan);">MATCHES</span></h2>
+                <p class="text-white-50">Resultados en tiempo real y próximos encuentros</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="match-card border-live">
+                        <div class="match-info-top">
+                            <span class="badge badge-live pulse">EN VIVO</span>
+                            <span class="text-white-50 small fw-bold">VALORANT - SEMIFINAL</span>
+                            <a href="#" class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.7rem;">TWITCH
+                                TV</a>
+                        </div>
+
+                        <div class="match-main-content">
+                            <div class="match-team left">
+                                <h4 class="team-name d-none d-md-block">Agua</h4>
+                                <div class="team-icon-container">
+                                    <img src="assets/images/team_water.png" alt="Agua" class="team-icon">
+                                </div>
+                            </div>
+
+                            <div class="match-score">
+                                <div class="score-box live-score">
+                                    <span class="score-value">13</span>
+                                    <span class="score-divider">:</span>
+                                    <span class="score-value">11</span>
+                                </div>
+                                <div class="match-status-text text-danger small mt-1 fw-bold">MAPA 2</div>
+                            </div>
+
+                            <div class="match-team right">
+                                <div class="team-icon-container">
+                                    <img src="assets/images/team_fire.png" alt="Fuego" class="team-icon">
+                                </div>
+                                <h4 class="team-name d-none d-md-block">Fuego</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="match-card">
+                        <div class="match-info-top">
+                            <span class="badge bg-dark border border-info text-info">18:00h</span>
+                            <span class="text-white-50 small fw-bold">ROCKET LEAGUE</span>
+                            <span class="text-white-50 small">MAÑANA</span>
+                        </div>
+
+                        <div class="match-main-content">
+                            <div class="match-team left">
+                                <h4 class="team-name d-none d-md-block">Rivas</h4>
+                                <div class="team-icon-container border-cyan">
+                                    <img src="assets/images/team_rivas.png" alt="Rivas" class="team-icon">
+                                </div>
+                            </div>
+
+                            <div class="match-score">
+                                <div class="vs-circle text-white-50">VS</div>
+                            </div>
+
+                            <div class="match-team right">
+                                <div class="team-icon-container border-cyan">
+                                    <img src="assets/images/team_shadow.png" alt="Sombra" class="team-icon">
+                                </div>
+                                <h4 class="team-name d-none d-md-block">Sombra</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="match-card">
+                        <div class="match-info-top">
+                            <span class="badge bg-dark border border-secondary text-white">20:30h</span>
+                            <span class="text-white-50 small fw-bold">LEAGUE OF LEGENDS - GRUPO B</span>
+                            <span class="text-white-50 small">HOY</span>
+                        </div>
+
+                        <div class="match-main-content">
+                            <div class="match-team left">
+                                <h4 class="team-name d-none d-md-block">Elite</h4>
+                                <div class="team-icon-container border-cyan">
+                                    <img src="assets/images/team_elite.png" alt="Elite" class="team-icon">
+                                </div>
+                            </div>
+
+                            <div class="match-score">
+                                <div class="vs-circle text-white-50">VS</div>
+                                <div class="small text-white-50 mt-1">BO3</div>
+                            </div>
+
+                            <div class="match-team right">
+                                <div class="team-icon-container border-cyan">
+                                    <img src="assets/images/team_water.png" alt="Agua" class="team-icon">
+                                </div>
+                                <h4 class="team-name d-none d-md-block">Agua</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="match-card finished-card">
+                        <div class="match-info-top">
+                            <span class="badge bg-secondary">FINALIZADO</span>
+                            <span class="text-white-50 small fw-bold">CS2 - JORNADA 5</span>
+                            <span class="text-white-50 small">12 FEB</span>
+                        </div>
+
+                        <div class="match-main-content opacity-75">
+                            <div class="match-team left">
+                                <h4 class="team-name d-none d-md-block">Sombra</h4>
+                                <div class="team-icon-container">
+                                    <img src="assets/images/team_shadow.png" alt="Sombra" class="team-icon">
+                                </div>
+                            </div>
+
+                            <div class="match-score">
+                                <div class="score-box border-secondary">
+                                    <span class="score-value">0</span>
+                                    <span class="score-divider">-</span>
+                                    <span class="score-value text-success">2</span>
+                                </div>
+                            </div>
+
+                            <div class="match-team right text-success">
+                                <div class="team-icon-container border-success">
+                                    <img src="assets/images/team_fire.png" alt="Fuego" class="team-icon">
+                                </div>
+                                <h4 class="team-name d-none d-md-block fw-bold">Fuego</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+[33m649bca6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to ORIG_HEAD
+[33m649bca6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit (merge): Merge branch 'main' of https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7
+[33m880a24b[m HEAD@{2}: commit: Update: hero image
+[33m8dbd95c[m HEAD@{3}: commit: Update: comments from spanish to english
+[33ma536aef[m HEAD@{4}: commit: Updated: hero image, and card background color
+[33m06210b5[m HEAD@{5}: commit: Added: css folder with css files
+[33m092e030[m HEAD@{6}: commit: Added: .html files
+[33m3405c2b[m HEAD@{7}: pull: Fast-forward
+[33m45a632f[m HEAD@{8}: pull: Fast-forward
+[33md43d08f[m HEAD@{9}: pull: Fast-forward
+[33mbd4121d[m HEAD@{10}: commit: Updated: index.html added style.css
+[33m1a13125[m HEAD@{11}: pull --tags origin main: Merge made by the 'ort' strategy.
+[33m181cfc6[m HEAD@{12}: commit: Added: logo lol, valorant and cs2
+[33mb0d988f[m HEAD@{13}: pull: Fast-forward
+[33mbf1d3ac[m HEAD@{14}: pull --tags origin main: Merge made by the 'ort' strategy.
+[33m2a003bb[m HEAD@{15}: commit: Added: logo.png
+[33m26736d9[m HEAD@{16}: pull: Fast-forward
+[33m2c94f4e[m HEAD@{17}: commit: Added: style.css file
+[33m74c3701[m HEAD@{18}: checkout: moving from main to main
+[33m74c3701[m HEAD@{19}: pull --tags origin main: Merge made by the 'ort' strategy.
+[33m8d5085f[m HEAD@{20}: checkout: moving from rama-angel to main
+[33m98b51c4[m[33m ([m[1;31morigin/rama-angel[m[33m, [m[1;32mrama-angel[m[33m)[m HEAD@{21}: checkout: moving from main to rama-angel
+[33m8d5085f[m HEAD@{22}: commit: Added Code folder
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{23}: checkout: moving from main to main
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{24}: checkout: moving from rama-angel to main
+[33m98b51c4[m[33m ([m[1;31morigin/rama-angel[m[33m, [m[1;32mrama-angel[m[33m)[m HEAD@{25}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{26}: checkout: moving from rama-angel to main
+[33m98b51c4[m[33m ([m[1;31morigin/rama-angel[m[33m, [m[1;32mrama-angel[m[33m)[m HEAD@{27}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{28}: checkout: moving from rama-angel to main
+[33m98b51c4[m[33m ([m[1;31morigin/rama-angel[m[33m, [m[1;32mrama-angel[m[33m)[m HEAD@{29}: checkout: moving from rama-angel to rama-angel
+[33m98b51c4[m[33m ([m[1;31morigin/rama-angel[m[33m, [m[1;32mrama-angel[m[33m)[m HEAD@{30}: commit: Added code folder.
+[33mc509986[m HEAD@{31}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{32}: checkout: moving from rama-angel to main
+[33mc509986[m HEAD@{33}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{34}: checkout: moving from rama-angel to main
+[33mc509986[m HEAD@{35}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{36}: checkout: moving from rama-angel to main
+[33mc509986[m HEAD@{37}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{38}: checkout: moving from rama-angel to main
+[33mc509986[m HEAD@{39}: commit: Added code folder.
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{40}: checkout: moving from main to rama-angel
+[33mb66da8c[m[33m ([m[1;31morigin/rama-pedro[m[33m, [m[1;31morigin/rama-jorge[m[33m)[m HEAD@{41}: pull --tags origin main: Fast-forward
+[33mdb4ec11[m HEAD@{42}: clone: from https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7
