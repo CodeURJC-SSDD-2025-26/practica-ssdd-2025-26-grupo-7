@@ -88,7 +88,6 @@ h1, h2, h3, .navbar-brand {
     filter: grayscale(0%); 
 }
 
-/* --- Tablas de Clasificación --- */
 .table-responsive {
     border-radius: 15px;
     overflow: hidden;
@@ -107,7 +106,6 @@ h1, h2, h3, .navbar-brand {
     background-color: rgba(0, 212, 255, 0.05) !important;
 }
 
-/* --- Botones --- */
 .btn-primary {
     background-color: var(--primary-cyan);
     border-color: var(--primary-cyan);
@@ -142,7 +140,6 @@ footer {
     background-color: #080a0c;
 }
 
-/* --- Animaciones --- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }

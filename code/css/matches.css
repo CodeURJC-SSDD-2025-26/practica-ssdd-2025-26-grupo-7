@@ -1,0 +1,132 @@
+.matches-container {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.match-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px 25px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-5px);
+}
+
+.match-info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+}
+
+.match-main-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.match-team {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.match-team.left { justify-content: flex-end; }
+.match-team.right { justify-content: flex-start; }
+
+.team-icon-container {
+    width: 70px;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 212, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+.match-card:hover .team-icon-container {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.team-icon {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.team-name {
+    margin: 0 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.match-score {
+    min-width: 140px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 800;   
+}
+
+.vs-circle {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.badge-live {
+    background-color: #ff004c;
+    color: white;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.border-live {
+    border: 1px solid rgba(255, 0, 76, 0.4) !important;
+    background: linear-gradient(145deg, var(--bg-card), #1e1215) !important;
+}
+
+.live-score {
+    border-color: #ff004c !important;
+    color: #ff004c;
+    text-shadow: 0 0 10px rgba(255, 0, 76, 0.4);
+}
+
+.finished-card {
+    opacity: 0.8;
+}
+
+@keyframes pulse-live {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.pulse {
+    animation: pulse-live 2s infinite ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .team-name {
+        display: none;
+    }
+    .match-score {
+        min-width: 100px;
+    }
+    .team-icon-container {
+        width: 60px;
+        height: 60px;
+    }
+}
