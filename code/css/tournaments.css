@@ -1,0 +1,43 @@
+.page-header {
+    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)), 
+                url('../assets/images/hero-image.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--primary-cyan);
+    margin-bottom: 2rem;
+    margin-top: 20px;
+}
+
+.filter-bar {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(233, 221, 221, 0.737);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.pagination .page-link {
+    background-color: var(--bg-card);
+    border-color: #444;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #2c323a;
+    border-color: var(--primary-cyan);
+    color: var(--primary-cyan);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-cyan);
+    border-color: var(--primary-cyan);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #15191e;
+    border-color: #333;
+    color: #666;
+}
