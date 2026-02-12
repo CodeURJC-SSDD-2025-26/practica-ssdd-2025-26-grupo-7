@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <!--- nav --->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tournaments.html">Torneos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="teams.html">Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="matches.html">Enfrentamientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main section -->
+    
+    <main class="register-wrapper d-flex align-items-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card login-card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <img src="assets/images/logo.png" alt="OneTap Logo" height="60" class="mb-3">
+                                <h2 class="text-white">UNIRSE A LA <span style="color: var(--primary-cyan);">LEAGUE</span></h2>
+                                <p class="text-white-50">Crea tu perfil de competidor</p>
+                            </div>
+
+                            <form action="onboarding.html" method="POST">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Nombre Completo</label>
+                                        <input type="text" class="form-control custom-input" placeholder="Ej: Juan Pérez" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Gamertag (ID)</label>
+                                        <input type="text" class="form-control custom-input" placeholder="Ej: NoobMaster" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Email</label>
+                                        <input type="email" class="form-control custom-input" placeholder="tu@mail.com" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Universidad</label>
+                                        <select class="form-select custom-input text-white-50">
+                                            <option selected disabled>Selecciona tu centro</option>
+                                            <option value="1">Universidad Rey Juan Carlos</option>
+                                            <option value="2">Universidad Complutense</option>
+                                            <option value="3">Politécnica de Madrid</option>
+                                            <option value="4">Otras...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Contraseña</label>
+                                        <input type="password" class="form-control custom-input" placeholder="••••••••" required>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label small text-uppercase fw-bold" style="color: var(--primary-cyan);">Confirmar Contraseña</label>
+                                        <input type="password" class="form-control custom-input" placeholder="••••••••" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="terms" required>
+                                    <label class="form-check-label small text-white-50" for="terms">
+                                        Acepto los <a href="#" style="color: var(--primary-cyan);">Términos de Competición</a> y Política de Privacidad.
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100 mb-3 shadow-glow">
+                                    REGISTRARME Y EMPEZAR
+                                </button>
+
+                                <div class="text-center mt-3">
+                                    <p class="text-white-50 small mb-0">¿Ya tienes cuenta?</p>
+                                    <a href="login.html" class="text-decoration-none fw-bold" style="color: var(--accent-green);">INICIAR SESIÓN</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+.login-wrapper {
+    min-height: calc(100vh - 200px);
+}
+
+.login-card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-top: 3px solid var(--primary-cyan) !important;
+}
+
+.custom-input {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid #444 !important;
+    color: white !important;
+    padding: 12px;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-cyan) !important;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2) !important;
+    outline: none;
+}
+
+.custom-input::placeholder {
+    color: #555;
+}
+
+.login-card {
+    animation: fadeIn 0.6s ease-out;
+}
