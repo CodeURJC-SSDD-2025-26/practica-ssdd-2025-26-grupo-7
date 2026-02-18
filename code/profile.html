@@ -7,7 +7,7 @@
     <title>OneTap eLeague - Mi Perfil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
 </head>
@@ -24,14 +24,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center" id="nav-content">
-                    </ul>
+                </ul>
             </div>
         </div>
     </nav>
 
     <main class="container py-5 mt-4">
         <div class="row g-4">
-            
+
             <div class="col-lg-4">
                 <div class="card bg-card border-0 shadow-lg text-center p-4 h-100 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
@@ -41,15 +41,16 @@
                             class="profile-avatar rounded-circle border border-primary border-3 shadow-sm w-100 h-100">
                     </div>
 
-                    <h3 class="text-white mb-1">PlayerOne_URJC</h3>
-                    <p class="text-primary fw-bold small text-uppercase mb-3">Diamante I • Midlaner</p>
+                    <h3 class="text-white mb-1">PlayerONE</h3>
+                    <p class="text-primary fw-bold small text-uppercase mb-3">Diamante IV</p>
 
                     <div class="d-flex justify-content-center gap-2 mb-4">
                         <span class="badge bg-dark border border-secondary text-white-50">Nivel 42</span>
                         <span class="badge bg-dark border border-secondary text-white-50">URJC Member</span>
                     </div>
 
-                    <div class="text-start bg-dark bg-opacity-25 p-3 rounded-3 mb-4 border border-secondary border-opacity-25">
+                    <div
+                        class="text-start bg-dark bg-opacity-25 p-3 rounded-3 mb-4 border border-secondary border-opacity-25">
                         <div class="mb-3">
                             <label class="text-white-50 small d-block mb-1 text-uppercase">Nombre Real</label>
                             <span class="text-white fw-medium">Juan Pérez García</span>
@@ -68,7 +69,8 @@
                         <button class="btn btn-primary shadow-sm fw-bold">
                             <i class="bi bi-pencil-square me-2"></i>EDITAR PERFIL
                         </button>
-                        <button id="logout-profile" class="btn btn-outline-danger btn-sm border-0 text-white-50 hover-text-white">
+                        <button id="logout-profile"
+                            class="btn btn-outline-danger btn-sm border-0 text-white-50 hover-text-white">
                             <i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión
                         </button>
                     </div>
@@ -76,44 +78,61 @@
             </div>
 
             <div class="col-lg-8">
-                
+
                 <div class="card bg-card border-0 shadow-lg p-4 mb-4 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line" style="opacity: 0.3;"></div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="m-0 text-cyan text-uppercase fs-5"><i class="bi bi-bar-chart-fill me-2"></i>Rendimiento Anual</h4>
+                        <h4 class="m-0 text-cyan text-uppercase fs-5"><i
+                                class="bi bi-bar-chart-fill me-2"></i>Rendimiento Anual</h4>
                         <span class="badge bg-dark border border-secondary text-white-50">Temporada 2026</span>
                     </div>
 
-                    <div class="stats-placeholder d-flex align-items-end justify-content-around bg-dark bg-opacity-50 rounded-3 p-4 border border-secondary border-opacity-10" style="height: 250px;">
-                        <div class="text-center w-100 group-hover">
-                            <div class="bar bg-primary mx-auto shadow-primary" style="height: 60%;" title="60% Wins"></div>
-                            <span class="text-white-50 d-block mt-3 smaller fw-bold">VICTORIAS</span>
+                    <div class="stats-placeholder d-flex justify-content-around bg-dark bg-opacity-50 rounded-3 p-4 border border-secondary border-opacity-10"
+                        style="height: 250px;">
+
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-primary shadow-primary" style="height: 60%; width: 40px;"
+                                title="60% Ganadas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">VICTORIAS</span>
                         </div>
-                        <div class="text-center w-100 group-hover">
-                            <div class="bar bg-secondary mx-auto" style="height: 40%; opacity: 0.7;" title="40% Loss"></div>
-                            <span class="text-white-50 d-block mt-3 smaller fw-bold">DERROTAS</span>
+
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-secondary" style="height: 40%; width: 40px; opacity: 0.7;"
+                                title="40% Perdidas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">DERROTAS</span>
                         </div>
-                        <div class="text-center w-100 group-hover">
-                            <div class="bar bg-info mx-auto shadow-info" style="height: 85%;" title="KDA 4.2"></div>
-                            <span class="text-white-50 d-block mt-3 smaller fw-bold">KDA RATIO</span>
+
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-info shadow-info" style="height: 85%; width: 40px;" title="KDA 4.2">
+                            </div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">KDA RATIO</span>
                         </div>
-                        <div class="text-center w-100 group-hover">
-                            <div class="bar bg-success mx-auto shadow-success" style="height: 50%;" title="50 Partidas"></div>
-                            <span class="text-white-50 d-block mt-3 smaller fw-bold">PARTIDAS</span>
+
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-success shadow-success" style="height: 50%; width: 40px;"
+                                title="50 Partidas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">PARTIDAS</span>
                         </div>
+
                     </div>
                 </div>
 
+
                 <div class="card bg-card border-0 shadow-lg p-4">
-                    <h4 class="mt-0 mb-4 text-cyan text-uppercase fs-5"><i class="bi bi-trophy-fill me-2"></i>Mis Competiciones</h4>
+                    <h4 class="mt-0 mb-4 text-cyan text-uppercase fs-5"><i class="bi bi-trophy-fill me-2"></i>Mis
+                        Competiciones</h4>
                     <div class="table-responsive border-0">
                         <table class="table table-dark table-hover align-middle mb-0">
                             <thead class="text-white-50 border-bottom border-secondary border-opacity-25">
                                 <tr>
                                     <th class="border-0 small text-uppercase py-3 ps-3">Videojuego</th>
                                     <th class="border-0 small text-uppercase py-3">Equipo</th>
-                                    <th class="border-0 small text-uppercase py-3 text-center">Rank</th>
+                                    <th class="border-0 small text-uppercase py-3 text-center">Rango</th>
                                     <th class="border-0 small text-uppercase py-3 text-end pe-3">Estado</th>
                                 </tr>
                             </thead>
@@ -125,11 +144,13 @@
                                             <span class="fw-bold">Valorant</span>
                                         </div>
                                     </td>
-                                    <td>URJC Lions</td>
+                                    <td>Fuego</td>
                                     <td class="text-center"><span class="fw-bold text-warning">3º</span></td>
                                     <td class="text-end pe-3">
-                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
-                                            <span class="spinner-grow spinner-grow-sm me-1" style="width: 0.5rem; height: 0.5rem;"></span> EN CURSO
+                                        <span
+                                            class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                                            <span class="spinner-grow spinner-grow-sm me-1"
+                                                style="width: 0.5rem; height: 0.5rem;"></span> EN CURSO
                                         </span>
                                     </td>
                                 </tr>
@@ -140,10 +161,11 @@
                                             <span class="fw-bold">League of Legends</span>
                                         </div>
                                     </td>
-                                    <td>Móstoles eSports</td>
+                                    <td>Rivas</td>
                                     <td class="text-center"><span class="text-white-50">12º</span></td>
                                     <td class="text-end pe-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white-50 px-3 py-2">FINALIZADO</span>
+                                        <span
+                                            class="badge bg-secondary bg-opacity-25 text-white-50 px-3 py-2">FINALIZADO</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -193,4 +215,5 @@
     </script>
 
 </body>
+
 </html>
