@@ -16,7 +16,7 @@ function actualizarNavegacion() {
             <li class="nav-item"><a class="nav-link ${isActive('teams.html')}" href="teams.html">Equipos</a></li>
             <li class="nav-item dropdown ms-lg-3">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
-                    <div class="nav-avatar-container me-2"><img src="assets/images/avatar.png" class="nav-avatar"></div>
+                    <div class="nav-avatar-container me-2"><img src="assets/images/avatar-player.png" class="nav-avatar"></div>
                     <span class="text-white fw-bold">Mi Cuenta</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg">
