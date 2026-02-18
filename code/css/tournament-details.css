@@ -11,7 +11,7 @@
 .detail-card {
     background: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
 }
 
@@ -19,30 +19,32 @@
     background: rgba(0, 212, 255, 0.08);
     border-bottom: 1px solid rgba(0, 212, 255, 0.2);
     color: var(--primary-cyan);
-    font-family: 'Orbitron', sans-serif;
+    font-family: sans-serif;
     font-size: 0.95rem;
 }
 
 .standings-table thead th {
-    background: rgba(0, 212, 255, 0.06);
-    color: var(--primary-cyan);
-    font-size: 0.8rem;
+    background: #00d4ff !important; 
+    color: #000000 !important; 
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-color: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 0; 
 }
 
 .standings-table tbody tr,
 .standings-table tbody td {
     border-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0;
     vertical-align: middle;
 }
 
 .match-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
+    border-radius: 0;
     padding: 14px 18px;
+    color: #ffffff;
 }
 
 .border-live { border-color: rgba(255, 0, 76, 0.4) !important; }
