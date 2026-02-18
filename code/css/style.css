@@ -28,6 +28,7 @@ h4{
 /* --- Navbar --- */
 .navbar {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
     backdrop-filter: blur(10px);
 }
 
@@ -154,6 +155,7 @@ section {
     animation: fadeIn 0.8s ease-out forwards;
 }
 
+
 .team-banner {
     height: 200px;
     background-color: #0f1216;
@@ -220,3 +222,69 @@ section {
     background-color: rgba(255, 255, 255, 0.02) !important;
     border-left: 3px solid var(--primary-cyan) !important;
 }
+/* --- Estilos de Avatar en Navbar --- */
+.nav-avatar-container {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-cyan);
+    background-color: #000;
+}
+
+.nav-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Personalización del Dropdown Gaming --- */
+.dropdown-menu-dark {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    margin-top: 10px;
+}
+
+.dropdown-item {
+    transition: 0.2s;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(0, 212, 255, 0.1);
+    color: var(--primary-cyan);
+}
+
+.dropdown-toggle::after {
+    color: var(--primary-cyan);
+    vertical-align: middle;
+}
+
+.navbar {
+    z-index: 1050; 
+    position: relative;
+}
+
+.dropdown-menu {
+    z-index: 2000 !important;
+}
+
+.dropdown-menu-dark {
+    background-color: var(--bg-card) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Color cyan brillante para el link activo */
+.navbar-nav .nav-link.active {
+    color: var(--primary-cyan) !important;
+    border-bottom: 2px solid var(--primary-cyan);
+}
+
+/* Para los elementos del dropdown */
+.dropdown-item.active {
+    background-color: rgba(0, 212, 255, 0.2);
+    color: var(--primary-cyan);
+}
+
