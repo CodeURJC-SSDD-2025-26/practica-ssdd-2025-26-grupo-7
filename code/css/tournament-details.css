@@ -1,0 +1,56 @@
+.page-header {
+    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)),
+                url('../assets/images/hero-image.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--primary-cyan);
+    margin-bottom: 2rem;
+}
+
+.detail-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.detail-card .card-header {
+    background: rgba(0, 212, 255, 0.08);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    color: var(--primary-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+}
+
+.standings-table thead th {
+    background: rgba(0, 212, 255, 0.06);
+    color: var(--primary-cyan);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.standings-table tbody tr,
+.standings-table tbody td {
+    border-color: rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+}
+
+.match-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+}
+
+.border-live { border-color: rgba(255, 0, 76, 0.4) !important; }
+.badge-live { background-color: #ff004c; color: white; font-size: 0.7rem; }
+.live-score { color: #ff004c; }
+
+@keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+.pulse { animation: pulse-live 2s infinite; }
