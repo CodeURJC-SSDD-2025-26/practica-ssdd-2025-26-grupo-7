@@ -47,12 +47,14 @@
     color: #ffffff;
 }
 
-.border-live { border-color: rgba(255, 0, 76, 0.4) !important; }
-.badge-live { background-color: #ff004c; color: white; font-size: 0.7rem; }
-.live-score { color: #ff004c; }
-
-@keyframes pulse-live {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+.border-live {
+    border-color: rgba(255, 0, 76, 0.4); 
 }
-.pulse { animation: pulse-live 2s infinite; }
+
+.badge-live {
+    background-color: #ff004c;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
