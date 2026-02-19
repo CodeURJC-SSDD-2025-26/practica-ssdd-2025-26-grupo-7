@@ -1,12 +1,4 @@
-.page-header {
-    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)),
-                url('../assets/images/hero-image.png');
-    background-size: cover;
-    background-position: center;
-    padding: 60px 0;
-    border-bottom: none;
-    margin-bottom: 2rem;
-}
+
 
 .detail-card {
     background: var(--bg-card);
@@ -60,3 +52,17 @@
     text-transform: uppercase;
 }
 
+.hero-tournaments {
+    height: 10px;
+    margin-bottom: 30px;
+}
+
+.page-header {
+    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)), 
+                url('../assets/images/hero-image.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--primary-cyan);
+    margin-bottom: 2rem;
+}
