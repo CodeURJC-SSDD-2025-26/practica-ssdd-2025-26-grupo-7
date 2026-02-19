@@ -61,7 +61,7 @@ h4{
 }
 
 .table-responsive {
-    border-radius: 15px;
+    border-radius: none;
     overflow: hidden;
     border: 1px solid #444;
 }
