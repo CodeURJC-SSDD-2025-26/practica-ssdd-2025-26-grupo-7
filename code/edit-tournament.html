@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/create-edit-tournament.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <!--- nav --->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main section -->
+    
+    <main class="container py-5 mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <div class="text-center mb-5">
+                    <h2 class="text-white text-uppercase"><i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Torneo</span></h2>
+                    <p class="text-white-50">Modifica los detalles, fechas y reglas del torneo en curso.</p>
+                </div>
+
+                <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
+
+                    <form action="tournaments.html" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary border-opacity-25 pb-2">
+                            <h4 class="text-white m-0 fs-5">Información Principal</h4>
+                            <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50">ID Torneo: #VAL-2026</span>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Torneo</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" value="Valorant Winter Cup" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="valorant" selected>Valorant</option>
+                                    <option value="lol">League of Legends</option>
+                                    <option value="cs2">Counter-Strike 2</option>
+                                    <option value="rocket">Rocket League</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Inicio</label>
+                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" value="2026-03-15" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Finalización</label>
+                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" value="2026-04-20" required>
+                            </div>
+                        </div>
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">Detalles y Requisitos</h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Máx. Equipos</label>
+                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-50" min="4" max="64" value="16" required>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize Pool)</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" value="500€ + Setup Gaming">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan"><i class="bi bi-image me-2"></i>Banner Actual</label>
+                                <div class="d-flex align-items-center gap-3 p-3 bg-dark bg-opacity-50 rounded border border-secondary border-opacity-25 mb-3">
+                                    <img src="assets/images/hero-image.png" alt="Banner Actual" class="rounded" style="width: 120px; height: 60px; object-fit: cover;">
+                                    <div>
+                                        <p class="mb-0 text-white small">urjc_spring_banner.jpg</p>
+                                        <p class="mb-0 text-white-50 smaller">Subida el 10 Feb 2026</p>
+                                    </div>
+                                </div>
+                                <label class="form-label small text-white-50">Actualizar Banner (Opcional)</label>
+                                <input class="form-control bg-dark text-white border-secondary border-opacity-50" type="file" accept="image/png, image/jpeg">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y Descripción</label>
+                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50" rows="5" required>El torneo principal de primavera de la URJC. Se jugará en formato BO1 durante la fase de grupos y BO3 en los playoffs. 
+Se requiere que al menos 3 jugadores de cada equipo sean estudiantes matriculados en la universidad.</textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 p-4 border border-danger border-opacity-25 rounded bg-danger bg-opacity-10">
+                            <h5 class="text-danger fs-6 mb-2"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h5>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                <p class="text-white-50 small mb-0">Una vez elimines el torneo, no hay vuelta atrás. Las inscripciones y resultados se perderán.</p>
+                                <button type="button" class="btn btn-outline-danger btn-sm px-4">Eliminar Torneo</button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <a href="tournaments.html" class="btn btn-dark border border-secondary px-4 text-white hover-text-cyan">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold"><i class="bi bi-save-fill me-2"></i>GUARDAR CAMBIOS</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--footer -->
+    <footer class="footer bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

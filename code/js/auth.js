@@ -33,7 +33,7 @@ function actualizarNavegacion() {
         navContent.innerHTML = `
             <li class="nav-item"><a class="nav-link ${isActive('index.html')}" href="index.html">Inicio</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('tournaments.html')}" href="tournaments.html">Torneos</a></li>
-            <li class="nav-item"><a class="nav-link ${isActive('matches.html')}" href="matches.html">Matches</a></li>
+            <li class="nav-item"><a class="nav-link ${isActive('matches.html')}" href="matches.html">Partidos</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('login.html')}" href="login.html">Iniciar Sesión</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('register.html')}" href="register.html">Registrar</a></li>`;
     }

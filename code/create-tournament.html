@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/create-edit-tournament.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <!--- nav --->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main section -->
+    
+    <main class="container py-5 mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <div class="text-center mb-5">
+                    <h2 class="text-white text-uppercase"><i class="bi bi-trophy text-cyan me-2"></i>Crear Nuevo <span class="text-cyan">Torneo</span></h2>
+                    <p class="text-white-50">Configura las reglas, el premio y abre las inscripciones.</p>
+                </div>
+
+                <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
+
+                    <form action="tournaments.html" method="POST" enctype="multipart/form-data">
+                        
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">Información Principal</h4>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Torneo</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: URJC Spring Cup 2026" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" selected disabled>Selecciona un juego...</option>
+                                    <option value="valorant">Valorant</option>
+                                    <option value="lol">League of Legends</option>
+                                    <option value="cs2">Counter-Strike 2</option>
+                                    <option value="rocket">Rocket League</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Inicio</label>
+                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Finalización</label>
+                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                            </div>
+                        </div>
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">Detalles y Requisitos</h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Máx. Equipos</label>
+                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-50" min="4" max="64" placeholder="Ej: 16" required>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize Pool)</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: 500€ + Setup Gaming">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan"><i class="bi bi-image me-2"></i>Banner / Imagen del Torneo</label>
+                                <input class="form-control bg-dark text-white border-secondary border-opacity-50" type="file" accept="image/png, image/jpeg" required>
+                                <div class="form-text text-white-50 small mt-1">Formato recomendado: 1920x1080px (PNG o JPG). Peso máximo: 2MB.</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y Descripción</label>
+                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50" rows="4" placeholder="Describe las normativas del torneo, horarios de los partidos, formato (BO1, BO3)..." required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5">
+                            <a href="tournaments.html" class="btn btn-outline-danger px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold"><i class="bi bi-plus-circle-fill me-2"></i>CREAR TORNEO</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--footer -->
+    <footer class="footer bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
