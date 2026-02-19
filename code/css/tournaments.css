@@ -41,3 +41,37 @@
     border-color: #333;
     color: #666;
 }
+
+.card.tournament-card {
+    background-color: #ffffff; 
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card.tournament-card .card-title {
+    color: #0f1216 !important;
+}
+
+.card.tournament-card .card-text {
+    color: #444444 !important;
+}
+
+.card.tournament-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-cyan);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 212, 255, 0.1);
+}
+
+.tournament-card img, .card-img-top {
+    height: 220px;
+    object-fit: contain;
+    width: 100%;
+    filter: grayscale(30%);
+    transition: 0.3s;
+}
+
+.card.tournament-card:hover .card-img-top {
+    filter: grayscale(0%); 
+}
