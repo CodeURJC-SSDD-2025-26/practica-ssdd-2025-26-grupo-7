@@ -1,9 +1,5 @@
-/* --- ESTILOS ESPECÍFICOS DEL PERFIL --- */
-
-/* 1. Tarjeta de Perfil y Contenedores */
 .bg-card {
     background-color: var(--bg-card);
-    /* Un sutil degradado para darle profundidad */
     background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -98,12 +94,10 @@
     to { transform: scaleY(1); }
 }
 
-/* Colores específicos de las barras con sombras neón */
 .shadow-primary { box-shadow: 0 0 15px rgba(13, 110, 253, 0.3); }
 .shadow-info { box-shadow: 0 0 15px rgba(13, 202, 240, 0.3); }
 .shadow-success { box-shadow: 0 0 15px rgba(25, 135, 84, 0.3); }
 
-/* 4. Tablas del Perfil */
 .table-responsive {
     scrollbar-width: thin;
     scrollbar-color: var(--primary-cyan) #000;
@@ -123,7 +117,6 @@
     letter-spacing: 0.5px;
 }
 
-/* 5. Utilidades de Texto */
 .text-cyan {
     color: var(--primary-cyan) !important;
     text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
@@ -134,14 +127,4 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     margin-top: 8px;
-}
-
-/* Ajustes Responsive */
-@media (max-width: 768px) {
-    .stats-placeholder {
-        height: 200px !important;
-    }
-    .bar {
-        width: 30px; /* Barras más finas en móvil */
-    }
 }

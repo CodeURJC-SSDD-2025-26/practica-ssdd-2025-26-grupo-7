@@ -169,9 +169,9 @@ section {
 .team-logo {
     width: 160px;
     height: 160px;
-    object-fit: contain; /* Ajusta la imagen sin recortar */
-    background-color: var(--bg-card); /* Este será el fondo del círculo */
-    padding: 10px; /* Un poco de margen interior para que respire */
+    object-fit: contain; 
+    background-color: var(--bg-card);
+    padding: 10px;
     margin-top: -20px;
 }
 
@@ -222,7 +222,7 @@ section {
     background-color: rgba(255, 255, 255, 0.02) !important;
     border-left: 3px solid var(--primary-cyan) !important;
 }
-/* --- Estilos de Avatar en Navbar --- */
+
 .nav-avatar-container {
     width: 35px;
     height: 35px;
@@ -238,7 +238,6 @@ section {
     object-fit: cover;
 }
 
-/* --- Personalización del Dropdown Gaming --- */
 .dropdown-menu-dark {
     background-color: var(--bg-card);
     border-radius: 10px;

@@ -5,7 +5,6 @@ function actualizarNavegacion() {
     const sesionActiva = localStorage.getItem('onetape_sesion') === 'true';
     const path = window.location.pathname.split("/").pop() || 'index.html';
 
-    // Función auxiliar para marcar como activo
     const isActive = (page) => (path === page ? 'active' : '');
 
     if (sesionActiva) {
