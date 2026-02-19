@@ -4,23 +4,24 @@
     background-size: cover;
     background-position: center;
     padding: 60px 0;
-    border-bottom: 1px solid var(--primary-cyan);
+    border-bottom: none;
     margin-bottom: 2rem;
 }
 
 .detail-card {
     background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
     border-radius: 0;
     overflow: hidden;
 }
 
 .detail-card .card-header {
     background: rgba(0, 212, 255, 0.08);
-    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    border-bottom: none;
     color: var(--primary-cyan);
     font-family: sans-serif;
     font-size: 0.95rem;
+    border-radius: 0;
 }
 
 .standings-table thead th {
@@ -34,8 +35,9 @@
 
 .standings-table tbody tr,
 .standings-table tbody td {
-    border-color: rgba(255, 255, 255, 0.05);
+    border-color: no    ne;
     border-radius: 0;
+    border:none;
     vertical-align: middle;
 }
 
