@@ -56,7 +56,6 @@
     position: relative;
     cursor: pointer;
     transform-origin: bottom; /* La animación crece desde abajo */
-    animation: growBar 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     opacity: 0.9;
     transition: filter 0.2s, transform 0.2s;
 }
@@ -86,12 +85,6 @@
 
 .bar:hover::after {
     opacity: 1;
-}
-
-/* Animación de crecimiento */
-@keyframes growBar {
-    from { transform: scaleY(0); }
-    to { transform: scaleY(1); }
 }
 
 .shadow-primary { box-shadow: 0 0 15px rgba(13, 110, 253, 0.3); }
