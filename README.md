@@ -51,7 +51,7 @@ Describir los permisos de cada tipo de usuario e indicar de qué entidades es du
   - Es dueño de:[]
 
 * **Administrador**: 
-  - Permisos: Configuración de nuevos de torneos/ligas, añadir resultados de cada partido, enviar mensajes a los capitanes de cada equipo.
+  - Permisos: Configuración de nuevos de torneos/ligas, añadir resultados de cada partido, enviar mensajes a los capitanes de cada equipo, ver todos los equipos/usuarios, modificar permisos de usuarios,
   - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
 
 ### **Imágenes**
