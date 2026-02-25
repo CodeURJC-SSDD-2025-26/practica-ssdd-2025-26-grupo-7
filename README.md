@@ -38,20 +38,16 @@ Describir los permisos de cada tipo de usuario e indicar de qué entidades es du
   - Permisos: Visualización de clasificación general y resultados de cada partido de dicha clasificación.
   - No es dueño de ninguna entidad
  
-* **Usuario registrado**:
-  - Permisos: Visualización de clasificación general y resultados de cada partido de dicha clasificación, añadir comentarios en un foro general, poder guardarse equipos/torneos en favoritos, recibir notificaciones personalizadas.
-  - Es dueño de []
-
 * **Usuario Capitán de Equipo**: 
-  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece. Además, podrá editar el perfil de su equipo, cambiando avatar o nombre y tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. El capitán también podrá inscribirse a torneos o ligas nuevas. El capitán también tendrá el permiso de invitar y aceptar nuevos miembros para su equipo. Tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. Chat privado con administrador.
+  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece. Tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. Tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. Chat privado con administrador.
   - Es dueño de: [Ej: Sus propios Pedidos, su Perfil de Usuario, sus Valoraciones]
  
 * **Usuario integrante de equipo**:
-  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece. También podrá realizar una solicitud de unirse a un equipo o aceptar una solicitud de unión recibida.
+  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece.
   - Es dueño de:[]
 
 * **Administrador**: 
-  - Permisos: Configuración de nuevos de torneos/ligas, añadir resultados de cada partido, enviar mensajes a los capitanes de cada equipo.
+  - Permisos: Configuración de nuevos de torneos/ligas, añadir resultados de cada partido, enviar mensajes a los capitanes de cada equipo, ver todos los equipos/usuarios, modificar permisos de usuarios, añadir o eliminar integrantes, ver listado de personas por equipo y elegir capitán.
   - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
 
 ### **Imágenes**
