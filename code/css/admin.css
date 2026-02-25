@@ -40,7 +40,6 @@
     width: 100%; max-width: 500px; border: 1px solid rgba(255, 255, 255, 0.08);
     pointer-events: all; animation: adminFadeIn 0.2s ease-out; background: var(--bg-card, #1a1d24);
 }
-
 #modal-resultado:checked ~ .admin-overlay:nth-of-type(1),
 #modal-mensaje:checked ~ .admin-overlay:nth-of-type(2),
 #modal-permisos:checked ~ .admin-overlay:nth-of-type(3) { display: block; }
