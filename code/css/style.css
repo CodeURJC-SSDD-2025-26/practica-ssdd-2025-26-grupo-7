@@ -102,14 +102,12 @@ h4{
     border-color: var(--primary-cyan);
 }
 
-/* --- Badges --- */
 .badge {
     padding: 0.6em 1em;
     font-weight: 500;
     text-transform: uppercase;
 }
 
-/* --- Footer --- */
 footer {
     background-color: #080a0c;
 }
@@ -137,9 +135,9 @@ section {
 .team-logo {
     width: 160px;
     height: 160px;
-    object-fit: contain; /* Ajusta la imagen sin recortar */
-    background-color: var(--bg-card); /* Este será el fondo del círculo */
-    padding: 10px; /* Un poco de margen interior para que respire */
+    object-fit: contain;
+    background-color: var(--bg-card);
+    padding: 10px; 
     margin-top: -20px;
 }
 
@@ -190,7 +188,7 @@ section {
     background-color: rgba(255, 255, 255, 0.02) !important;
     border-left: 3px solid var(--primary-cyan) !important;
 }
-/* --- Estilos de Avatar en Navbar --- */
+
 .nav-avatar-container {
     width: 35px;
     height: 35px;
@@ -243,13 +241,11 @@ section {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Color cyan brillante para el link activo */
 .navbar-nav .nav-link.active {
     color: var(--primary-cyan) !important;
     border-bottom: 2px solid var(--primary-cyan);
 }
 
-/* Para los elementos del dropdown */
 .dropdown-item.active {
     background-color: rgba(0, 212, 255, 0.2);
     color: var(--primary-cyan);
