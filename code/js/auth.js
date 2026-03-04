@@ -8,6 +8,10 @@ function actualizarNavegacion() {
     const isActive = (page) => (path === page ? 'active' : '');
 
     if (sesionActiva) {
+        const role = localStorage.getItem('onetape_role');
+        const profileLink = role === 'admin' ? 'admin.html' : 'profile.html';
+        const profileText = role === 'admin' ? 'Admin Panel' : 'Mi Perfil';
+
         navContent.innerHTML = `
             <li class="nav-item"><a class="nav-link ${isActive('index.html')}" href="index.html">Inicio</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('tournaments.html')}" href="tournaments.html">Torneos</a></li>
@@ -19,14 +23,15 @@ function actualizarNavegacion() {
                     <span class="text-white fw-bold">Mi Cuenta</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg">
-                    <li><a class="dropdown-item ${isActive('profile.html')}" href="profile.html">Mi Perfil</a></li>
+                    <li><a class="dropdown-item ${isActive(profileLink)}" href="${profileLink}">${profileText}</a></li>
                     <li><hr class="dropdown-divider border-secondary"></li>
                     <li><a class="dropdown-item text-danger" href="#" id="btn-logout">Cerrar Sesión</a></li>
                 </ul>
             </li>`;
-        
+
         document.getElementById('btn-logout')?.addEventListener('click', () => {
             localStorage.setItem('onetape_sesion', 'false');
+            localStorage.removeItem('onetape_role');
             window.location.href = 'index.html';
         });
     } else {
