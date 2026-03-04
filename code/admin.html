@@ -176,115 +176,11 @@
         <p class="section-label mt-4">Usuarios</p>
         <div class="row g-3 mb-5">
             <div class="col-sm-6 col-lg-3">
-                <label for="modal-permisos" class="admin-card d-block p-4 rounded-3 h-100" style="cursor:pointer;">
-                    <i class="bi bi-people-fill fs-3 text-warning mb-3 d-block"></i>
-                    <p class="text-white fw-bold mb-1">Ver Equipos</p>
-                    <p class="text-white-50 small mb-0">Lista de todos los equipos registrados</p>
-                </a>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <label for="modal-permisos" class="admin-card d-block p-4 rounded-3 h-100" style="cursor:pointer;">
+                <a href="user-management.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-shield-lock-fill fs-3 text-warning mb-3 d-block"></i>
-                    <p class="text-white fw-bold mb-1">Permisos</p>
-                    <p class="text-white-50 small mb-0">Modifica el rol y accesos de usuarios</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card bg-card border-0 shadow-lg p-0 position-relative overflow-hidden">
-            <div class="neon-line"></div>
-            
-            <div class="d-flex justify-content-between align-items-center p-4 border-bottom border-secondary border-opacity-25">
-                <h5 class="text-cyan text-uppercase m-0 fs-6"><i class="bi bi-people-fill me-2"></i>Usuarios registrados</h5>
-                <div class="input-group" style="max-width: 250px;">
-                    <span class="input-group-text bg-dark border-secondary text-white-50"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control bg-dark border-secondary text-white shadow-none" placeholder="Buscar usuario...">
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
-                    <thead class="text-white-50">
-                        <tr>
-                            <th class="border-secondary border-opacity-25 small text-uppercase py-3 ps-4">Usuario</th>
-                            <th class="border-secondary border-opacity-25 small text-uppercase py-3">Universidad</th>
-                            <th class="border-secondary border-opacity-25 small text-uppercase py-3 text-center">Rol</th>
-                            <th class="border-secondary border-opacity-25 small text-uppercase py-3 text-center">Estado</th>
-                            <th class="border-secondary border-opacity-25 small text-uppercase py-3 text-end pe-4">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-3 ps-4 border-secondary border-opacity-10">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="assets/images/avatar-player.png" width="42" height="42" class="rounded-circle" style="object-fit:cover; border:2px solid var(--primary-cyan, #00d4ff);">
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-white">PlayerONE</h6>
-                                        <span class="text-white-50 small" style="font-size: 0.75rem;">admin@urjc.es</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-white-50 small border-secondary border-opacity-10">URJC - Móstoles</td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2 py-1">Admin</span>
-                            </td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-success bg-opacity-10 text-success px-2 py-1"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem; vertical-align: middle;"></i>Activo</span>
-                            </td>
-                            <td class="text-end pe-4 border-secondary border-opacity-10">
-                                <label for="modal-permisos" class="btn btn-sm btn-outline-secondary border-0" style="cursor:pointer;" title="Gestionar usuario">
-                                    <i class="bi bi-gear-fill fs-5"></i>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 ps-4 border-secondary border-opacity-10">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="assets/images/avatar-player.png" width="42" height="42" class="rounded-circle" style="object-fit:cover; border:2px solid rgba(255,255,255,0.1);">
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-white">AquaKing</h6>
-                                        <span class="text-white-50 small" style="font-size: 0.75rem;">aquaking@urjc.es</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-white-50 small border-secondary border-opacity-10">URJC - Fuenlabrada</td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-secondary bg-opacity-25 text-white-50 px-2 py-1">Capitán</span>
-                            </td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-success bg-opacity-10 text-success px-2 py-1"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem; vertical-align: middle;"></i>Activo</span>
-                            </td>
-                            <td class="text-end pe-4 border-secondary border-opacity-10">
-                                <label for="modal-permisos" class="btn btn-sm btn-outline-secondary border-0" style="cursor:pointer;" title="Gestionar usuario">
-                                    <i class="bi bi-gear-fill fs-5"></i>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 ps-4 border-secondary border-opacity-10">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="assets/images/avatar-player.png" width="42" height="42" class="rounded-circle opacity-50" style="object-fit:cover; border:2px solid rgba(255,255,255,0.1);">
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-white-50">RivasGG</h6>
-                                        <span class="text-white-50 small" style="font-size: 0.75rem;">rivasgg@urjc.es</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-white-50 small border-secondary border-opacity-10">URJC - Rivas</td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-secondary bg-opacity-25 text-white-50 px-2 py-1">Jugador</span>
-                            </td>
-                            <td class="text-center border-secondary border-opacity-10">
-                                <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem; vertical-align: middle;"></i>Baneado</span>
-                            </td>
-                            <td class="text-end pe-4 border-secondary border-opacity-10">
-                                <label for="modal-permisos" class="btn btn-sm btn-outline-secondary border-0" style="cursor:pointer;" title="Gestionar usuario">
-                                    <i class="bi bi-gear-fill fs-5"></i>
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <p class="text-white fw-bold mb-1">Gestión de Usuarios</p>
+                    <p class="text-white-50 small mb-0">Modifica roles, equipos y permisos</p>
+                </a>
             </div>
         </div>
 
