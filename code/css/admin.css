@@ -40,15 +40,30 @@
     width: 100%; max-width: 500px; border: 1px solid rgba(255, 255, 255, 0.08);
     pointer-events: all; animation: adminFadeIn 0.2s ease-out; background: var(--bg-card, #1a1d24);
 }
-#modal-resultado:checked ~ .admin-overlay:nth-of-type(1),
-#modal-mensaje:checked ~ .admin-overlay:nth-of-type(2),
-#modal-permisos:checked ~ .admin-overlay:nth-of-type(3) { display: block; }
 
-#modal-resultado:checked ~ .admin-modal:nth-of-type(1),
-#modal-mensaje:checked ~ .admin-modal:nth-of-type(2),
-#modal-permisos:checked ~ .admin-modal:nth-of-type(3) { display: flex; }
+#modal-resultado:checked ~ .admin-overlay:nth-of-type(1) { display: block; }
+#modal-mensaje:checked   ~ .admin-overlay:nth-of-type(2) { display: block; }
+#modal-permisos:checked  ~ .admin-overlay:nth-of-type(3) { display: block; }
+
+#modal-resultado:checked ~ .admin-modal:nth-of-type(1) { display: flex; }
+#modal-mensaje:checked   ~ .admin-modal:nth-of-type(2) { display: flex; }
+#modal-permisos:checked  ~ .admin-modal:nth-of-type(3) { display: flex; }
 
 @keyframes adminFadeIn {
     from { opacity: 0; transform: translateY(15px); }
     to   { opacity: 1; transform: translateY(0); }
-}	
+}
+
+.text-green  { color: var(--accent-green,  #39ff14) !important; }
+.text-orange { color: var(--accent-orange, #f97316) !important; }
+.text-purple { color: var(--secondary-purple, #8b5cf6) !important; }
+
+.marcador-wrap {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.marcador-input { width: 80px; }
+
+label.admin-card,
+label.admin-overlay,
+label.btn-close { cursor: pointer; }
