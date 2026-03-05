@@ -1,6 +1,6 @@
 .page-header {
-    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)), 
-                url('../assets/images/hero-image.png');
+    background: linear-gradient(rgba(15, 18, 22, 0.9), rgba(15, 18, 22, 0.7)),
+        url('../assets/images/hero-image.png');
     background-size: cover;
     background-position: center;
     padding: 60px 0;
@@ -43,7 +43,7 @@
 }
 
 .card.tournament-card {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 12px;
     overflow: hidden;
@@ -64,7 +64,8 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 212, 255, 0.1);
 }
 
-.tournament-card img, .card-img-top {
+.tournament-card img,
+.card-img-top {
     height: 220px;
     object-fit: contain;
     width: 100%;
@@ -73,5 +74,18 @@
 }
 
 .card.tournament-card:hover .card-img-top {
-    filter: grayscale(0%); 
+    filter: grayscale(0%);
+}
+
+/* Like Button */
+.like-checkbox:checked+label .heart-empty {
+    display: none !important;
+}
+
+.like-checkbox:checked+label .heart-filled {
+    display: inline-block !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
