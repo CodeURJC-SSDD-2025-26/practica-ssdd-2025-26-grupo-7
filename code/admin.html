@@ -13,13 +13,18 @@
 </head>
 
 <body>
+
+    <!-- CHECKBOXES -->
     <input type="checkbox" id="modal-resultado" style="display:none;">
     <input type="checkbox" id="modal-mensaje"   style="display:none;">
 
+    <!-- OVERLAYS -->
     <label for="modal-resultado" class="admin-overlay"></label>
     <label for="modal-mensaje"   class="admin-overlay"></label>
 
-    <!--AÑADIR RESULTADO-->
+    <!-- ══════════════════════════════════════════
+         MODAL 1 — AÑADIR RESULTADO
+    ══════════════════════════════════════════ -->
     <div class="admin-modal">
         <div class="admin-modal-content bg-card text-white p-4 rounded-4 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -80,7 +85,9 @@
         </div>
     </div>
 
-    
+    <!-- ══════════════════════════════════════════
+         MODAL 2 — ENVIAR MENSAJE
+    ══════════════════════════════════════════ -->
     <div class="admin-modal">
         <div class="admin-modal-content bg-card text-white p-4 rounded-4 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -116,6 +123,7 @@
         </div>
     </div>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -131,6 +139,7 @@
         </div>
     </nav>
 
+    <!-- MAIN -->
     <main class="container py-5 mt-2">
 
         <div class="mb-5">
@@ -139,8 +148,10 @@
             <p class="text-white-50 mb-0">Gestiona la plataforma desde un solo lugar.</p>
         </div>
 
+        <!-- FILA 1: Torneos y Partidos -->
         <p class="section-label">Torneos y Partidos</p>
         <div class="row g-3 mb-4">
+
             <div class="col-sm-6 col-lg-3">
                 <a href="create-tournament.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-plus-circle-fill fs-3 text-cyan mb-3 d-block"></i>
@@ -148,6 +159,7 @@
                     <p class="text-white-50 small mb-0">Configura un nuevo torneo o liga</p>
                 </a>
             </div>
+
             <div class="col-sm-6 col-lg-3">
                 <a href="edit-tournament.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-pencil-square fs-3 text-cyan mb-3 d-block"></i>
@@ -155,6 +167,7 @@
                     <p class="text-white-50 small mb-0">Modifica un torneo existente</p>
                 </a>
             </div>
+
             <div class="col-sm-6 col-lg-3">
                 <a href="create-matches.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-calendar-plus-fill fs-3 text-green mb-3 d-block"></i>
@@ -162,6 +175,7 @@
                     <p class="text-white-50 small mb-0">Crea un partido dentro de un torneo</p>
                 </a>
             </div>
+
             <div class="col-sm-6 col-lg-3">
                 <label for="modal-resultado" class="admin-card d-block p-4 rounded-3 h-100">
                     <i class="bi bi-controller fs-3 text-orange mb-3 d-block"></i>
@@ -169,10 +183,13 @@
                     <p class="text-white-50 small mb-0">Registra el marcador de un partido</p>
                 </label>
             </div>
+
         </div>
 
+        <!-- FILA 2: Usuarios y Comunicación -->
         <p class="section-label mt-4">Usuarios y Comunicación</p>
         <div class="row g-3 mb-5">
+
             <div class="col-sm-6 col-lg-3">
                 <a href="user-management.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-shield-lock-fill fs-3 text-warning mb-3 d-block"></i>
@@ -180,6 +197,7 @@
                     <p class="text-white-50 small mb-0">Modifica roles, equipos y permisos</p>
                 </a>
             </div>
+
             <div class="col-sm-6 col-lg-3">
                 <label for="modal-mensaje" class="admin-card d-block p-4 rounded-3 h-100">
                     <i class="bi bi-envelope-fill fs-3 text-purple mb-3 d-block"></i>
@@ -187,6 +205,7 @@
                     <p class="text-white-50 small mb-0">Escribe a los capitanes de equipo</p>
                 </label>
             </div>
+
         </div>
 
     </main>
