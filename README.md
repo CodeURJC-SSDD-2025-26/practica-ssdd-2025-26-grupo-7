@@ -90,9 +90,102 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 #### **1. Página Principal / Home**
 ![Página Principal](images/home-page.png)
 
-> [Todas las ventanas comparten Navbar y footer. Desde todas las páginas se pueden acceder al resto a través del NavBar, dependiendo de los permisos que tengan]
+> [Es la página de inicio o landing page. Muestra la bienvenida y el contenido principal público de la plataforma.]
 
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+#### **2. Página Login**
+![Página Login](images/login.png)
+
+> [Pantalla de inicio de sesión. Permite a los usuarios y administradores introducir sus credenciales para acceder a sus cuentas.]
+
+#### **3. Página Registrarse**
+![Página Registrarse](images/register.png)
+
+> [Formulario de registro para que nuevos usuarios puedan crearse una cuenta en la plataforma.]
+
+#### **4. Página Perfil**
+![Página Perfil](images/profile.png)
+
+> [La página del perfil del usuario autenticado. Aquí el usuario puede consultar su información personal, equipos, y editar sus datos (como la foto de perfil).]
+
+#### **5. Página Favoritos**
+![Página Favoritos](images/favourites.png)
+
+> [La página del perfil del usuario autenticado. Aquí el usuario puede consultar su información personal, equipos, y editar sus datos (como la foto de perfil).]
+
+#### **6. Página Torneos**
+![Página Torneos](images/tournaments.png)
+
+> [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
+
+#### **7. Página Torneos**
+![Página Torneos](images/tournaments.png)
+
+> [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
+
+#### **8. Página Detalles Torneos**
+![Página Detalles Torneos](images/tournament-detail.png)
+
+> [Vista detallada de un torneo en específico (muestra reglas, equipos inscritos, fechas y brackets/enfrentamientos)]
+
+#### **9. Página Crear Torneo**
+![Página Crear Torneo](images/create-tournament.png)
+
+> [Formulario para organizar y registrar un nuevo torneo en la plataforma.]
+
+#### **10. Página Editar Torneo**
+![Página Editar Torneo](images/edit-tournament.png)
+
+> [Pantalla destinada a modificar la información, configuración o estado de un torneo ya existente.]
+
+#### **11. Página Equipos**
+![Página Equipos](images/teams.png)
+
+> [Páginas de listado público de los equipos registrados. Permiten al usuario explorar los distintos equipos que compiten.]
+
+#### **12. Página Crear Equipos**
+![Página Crear Equipos](images/create-team.png)
+
+> [Formulario mediante el cual un usuario puede registrar un nuevo equipo, asignándole un nombre y detalles.]
+
+#### **13. Página Partidos**
+![Página Partidos](images/edit-team.png)
+
+> [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
+
+#### **14. Página Editar Partidos**
+![Página Editar Equipos](images/edit-matches.png)
+
+> [Listado general de los enfrentamientos o partidos (ya sean futuros, en vivo o resultados pasados).]
+
+#### **15. Página Detalles Partidos**
+![Página Detalles Equipos](images/match-detail.png)
+
+> [Vista en profundidad de un partido concreto, mostrando quiénes se enfrentan, el marcador y estadísticas del encuentro.]
+
+#### **16. Página Crear Equipos**
+![Página Crear Equipos](images/create-matches.png)
+
+> [Interfaz para programar y generar nuevos partidos dentro del cuadro de los torneos.]
+
+#### **17. Página Editar Equipos**
+![Página Editar Equipos](images/edit-matches.png)
+
+> [Formulario para actualizar la información de un partido existente, como reportar el resultado final o cambiar la fecha.]
+
+#### **18. Página Admin**
+![Página Admin](images/admin.png)
+
+> [El dashboard o panel de control principal exclusivo para administradores, donde pueden ver métricas y accesos rápidos a la gestión.]
+
+#### **19. Página Administración Miembros**
+![Página Administración Miembros](images/user-management.png)
+
+> [Interfaz donde los administradores pueden gestionar a todos los usuarios de la plataforma (ver roles, banear, editar cuentas o ascender a otros administradores).]
+
+#### **20. Página Administración Equipos**
+![Página Administración Equipos](images/teams-list-admin.png)
+
+> [Listado de equipos con privilegios de administrador, incluyendo botones y acciones para forzar la edición o eliminación de cualquier equipo de la plataforma.]
 
 ### **Participación de Miembros en la Práctica 1**
 
