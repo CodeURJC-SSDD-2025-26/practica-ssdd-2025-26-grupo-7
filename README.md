@@ -226,10 +226,8 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 |1| [Update: Teams.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/350cd16effe188adba2f96c16caa1f9a69200f29)  | [Teams.html](code/teams.html)   |
 |2| [Update: Admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/5ce4649df9b3328c864221c858da326ed5932bb2)  | [Admin.html](code/admin.html)   |
 |3| [Update: tournaments.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/8d98369f082e6034aaf12713ee525d635bd136ae)  | [tournaments.html](code/tournaments.html)   |
-|4| [Update:css]([URL_commit_4](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/45d56492f18d12edfbde6d478de726bef0e8d202
-))  | [styles.css](code/CSS/styles.css)   |
-|5| [Added: Match detail]([URL_commit_5](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/b6b33fcaeca02e7769e52b49fe77b287ea227e0d
-))  | [match-detail](code/match-detail)   |
+|4| [Update:css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/45d56492f18d12edfbde6d478de726bef0e8d202)  | [styles.css](code/CSS/styles.css)   |
+|5| [Added: Match detail](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/b6b33fcaeca02e7769e52b49fe77b287ea227e0d)  | [match-detail](code/match-detail)   |
 
 ---
 
