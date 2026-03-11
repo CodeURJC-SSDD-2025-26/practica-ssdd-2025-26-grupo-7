@@ -14,17 +14,28 @@
 
 <body>
 
-    <!-- CHECKBOXES -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center" id="nav-content"></ul>
+            </div>
+        </div>
+    </nav>
+
     <input type="checkbox" id="modal-resultado" style="display:none;">
     <input type="checkbox" id="modal-mensaje"   style="display:none;">
 
-    <!-- OVERLAYS -->
     <label for="modal-resultado" class="admin-overlay"></label>
     <label for="modal-mensaje"   class="admin-overlay"></label>
 
-    <!-- ══════════════════════════════════════════
-         MODAL 1 — AÑADIR RESULTADO
-    ══════════════════════════════════════════ -->
+  
     <div class="admin-modal">
         <div class="admin-modal-content bg-card text-white p-4 rounded-4 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -85,9 +96,6 @@
         </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         MODAL 2 — ENVIAR MENSAJE
-    ══════════════════════════════════════════ -->
     <div class="admin-modal">
         <div class="admin-modal-content bg-card text-white p-4 rounded-4 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -123,23 +131,7 @@
         </div>
     </div>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
-                OneTap eLeague
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center" id="nav-content"></ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- MAIN -->
     <main class="container py-5 mt-2">
 
         <div class="mb-5">
@@ -148,7 +140,6 @@
             <p class="text-white-50 mb-0">Gestiona la plataforma desde un solo lugar.</p>
         </div>
 
-        <!-- FILA 1: Torneos y Partidos -->
         <p class="section-label">Torneos y Partidos</p>
         <div class="row g-3 mb-4">
 
@@ -186,7 +177,6 @@
 
         </div>
 
-        <!-- FILA 2: Usuarios y Comunicación -->
         <p class="section-label mt-4">Usuarios y Comunicación</p>
         <div class="row g-3 mb-5">
 
