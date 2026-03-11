@@ -49,10 +49,8 @@
     background: var(--bg-card, #1a1d24);
 }
 
-#modal-resultado:checked ~ .admin-overlay:nth-of-type(1) { display: block; }
 #modal-mensaje:checked   ~ .admin-overlay:nth-of-type(2) { display: block; }
 
-#modal-resultado:checked ~ .admin-modal:nth-of-type(1)   { display: flex; }
 #modal-mensaje:checked   ~ .admin-modal:nth-of-type(2)   { display: flex; }
 
 @keyframes adminFadeIn {
