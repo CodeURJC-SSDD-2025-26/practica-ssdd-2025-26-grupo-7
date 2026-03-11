@@ -23,30 +23,48 @@
             </div>
 
             <form>
+                <!-- Foto de perfil (compacto) -->
+                <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                    <div class="position-relative" style="width:56px;height:56px;flex-shrink:0;cursor:pointer;"
+                        onclick="document.getElementById('avatar-input').click()">
+                        <img id="modal-avatar-preview" src="assets/images/avatar-player.png" alt="Avatar"
+                            class="rounded-circle border border-primary border-2 w-100 h-100" style="object-fit:cover;">
+                        <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                            style="width:20px;height:20px;">
+                            <i class="bi bi-camera-fill text-white" style="font-size:.6rem;"></i>
+                        </div>
+                    </div>
+                    <input type="file" id="avatar-input" accept="image/*" class="d-none">
+                    <span class="text-white-50 small">Haz clic para cambiar la foto</span>
+                </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Nickname</label>
                     <input type="text" class="form-control bg-dark text-white border-secondary" value="Player">
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Nombre Real</label>
-                    <input type="text" class="form-control bg-dark text-white border-secondary" value="Juan Pérez García" readonly>
+                    <input type="text" class="form-control bg-dark text-white border-secondary"
+                        value="Juan Pérez García" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Universidad</label>
-                    <input type="text" class="form-control bg-dark text-white border-secondary" value="URJC - Móstoles" readonly>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" value="URJC - Móstoles"
+                        readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Contacto</label>
-                    <input type="email" class="form-control bg-dark text-white border-secondary" value="j.perez@alumnos.urjc.es">
+                    <input type="email" class="form-control bg-dark text-white border-secondary"
+                        value="j.perez@alumnos.urjc.es">
                 </div>
                 <div class="d-flex gap-2 mt-4">
-                    <label for="toggle-modal" class="btn btn-outline-secondary w-50" style="cursor:pointer;">Cancelar</label>
+                    <label for="toggle-modal" class="btn btn-outline-secondary w-50"
+                        style="cursor:pointer;">Cancelar</label>
                     <button type="submit" class="btn btn-primary fw-bold w-50">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
-<!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -62,7 +80,7 @@
             </div>
         </div>
     </nav>
-<!-- MAIN -->
+    <!-- MAIN -->
     <main class="container py-5 mt-4">
         <div class="row g-4">
 
@@ -83,7 +101,8 @@
                         <span class="badge bg-dark border border-secondary text-white-50">URJC Member</span>
                     </div>
 
-                    <div class="text-start bg-dark bg-opacity-25 p-3 rounded-3 mb-4 border border-secondary border-opacity-25">
+                    <div
+                        class="text-start bg-dark bg-opacity-25 p-3 rounded-3 mb-4 border border-secondary border-opacity-25">
                         <div class="mb-3">
                             <label class="text-white-50 small d-block mb-1 text-uppercase">Nombre Real</label>
                             <span class="text-white fw-medium">Juan Pérez García</span>
@@ -116,30 +135,39 @@
                     <div class="position-absolute top-0 start-0 w-100 neon-line" style="opacity: 0.3;"></div>
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="m-0 text-cyan text-uppercase fs-5"><i class="bi bi-bar-chart-fill me-2"></i>Rendimiento Anual</h4>
+                        <h4 class="m-0 text-cyan text-uppercase fs-5"><i
+                                class="bi bi-bar-chart-fill me-2"></i>Rendimiento Anual</h4>
                         <span class="badge bg-dark border border-secondary text-white-50">Temporada 2026</span>
                     </div>
 
                     <div class="stats-placeholder d-flex justify-content-around bg-dark bg-opacity-50 rounded-3 p-4 border border-secondary border-opacity-10"
                         style="height: 250px;">
 
-                        <div class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-primary shadow-primary" style="height: 60%; width: 40px;" title="60% Ganadas"></div>
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-primary shadow-primary" style="height: 60%; width: 40px;"
+                                title="60% Ganadas"></div>
                             <span class="text-white-50 d-block mt-2 smaller fw-bold">VICTORIAS</span>
                         </div>
 
-                        <div class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-secondary" style="height: 40%; width: 40px; opacity: 0.7;" title="40% Perdidas"></div>
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-secondary" style="height: 40%; width: 40px; opacity: 0.7;"
+                                title="40% Perdidas"></div>
                             <span class="text-white-50 d-block mt-2 smaller fw-bold">DERROTAS</span>
                         </div>
 
-                        <div class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-info shadow-info" style="height: 75%; width: 40px;" title="KDA 4.2"></div>
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-info shadow-info" style="height: 75%; width: 40px;" title="KDA 4.2">
+                            </div>
                             <span class="text-white-50 d-block mt-2 smaller fw-bold">KDA RATIO</span>
                         </div>
 
-                        <div class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-success shadow-success" style="height: 50%; width: 40px;" title="50 Partidas"></div>
+                        <div
+                            class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
+                            <div class="bar bg-success shadow-success" style="height: 50%; width: 40px;"
+                                title="50 Partidas"></div>
                             <span class="text-white-50 d-block mt-2 smaller fw-bold">PARTIDAS</span>
                         </div>
 
@@ -147,7 +175,8 @@
                 </div>
 
                 <div class="card bg-card border-0 shadow-lg p-4">
-                    <h4 class="mt-0 mb-4 text-cyan text-uppercase fs-5"><i class="bi bi-trophy-fill me-2"></i>Mis Competiciones</h4>
+                    <h4 class="mt-0 mb-4 text-cyan text-uppercase fs-5"><i class="bi bi-trophy-fill me-2"></i>Mis
+                        Competiciones</h4>
                     <div class="table-responsive border-0">
                         <table class="table table-dark table-hover align-middle mb-0">
                             <thead class="text-white-50 border-bottom border-secondary border-opacity-25">
@@ -169,7 +198,8 @@
                                     <td>Fuego</td>
                                     <td class="text-center"><span class="fw-bold text-warning">3º</span></td>
                                     <td class="text-end pe-3">
-                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                                        <span
+                                            class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
                                             EN CURSO
                                         </span>
                                     </td>
@@ -184,7 +214,8 @@
                                     <td>Rivas</td>
                                     <td class="text-center"><span class="text-white-50">12º</span></td>
                                     <td class="text-end pe-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white-50 px-3 py-2">FINALIZADO</span>
+                                        <span
+                                            class="badge bg-secondary bg-opacity-25 text-white-50 px-3 py-2">FINALIZADO</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -195,7 +226,7 @@
             </div>
         </div>
     </main>
-<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="footer bg-dark text-white py-4">
         <div class="container">
             <div class="row">
@@ -230,6 +261,34 @@
         document.getElementById('logout-profile')?.addEventListener('click', () => {
             localStorage.setItem('onetape_sesion', 'false');
             window.location.href = 'index.html';
+        });
+
+        // Cargar avatar guardado al abrir la página
+        const profileAvatar = document.querySelector('.profile-avatar');
+        const savedAvatar = localStorage.getItem('onetap_avatar');
+        if (savedAvatar && profileAvatar) profileAvatar.src = savedAvatar;
+
+        // Sincronizar miniatura del modal al abrirlo
+        document.getElementById('toggle-modal')?.addEventListener('change', function () {
+            if (this.checked) {
+                const preview = document.getElementById('modal-avatar-preview');
+                if (preview && profileAvatar) preview.src = profileAvatar.src;
+            }
+        });
+
+        // Cambiar foto al seleccionar archivo
+        document.getElementById('avatar-input')?.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const url = e.target.result;
+                if (profileAvatar) profileAvatar.src = url;
+                const preview = document.getElementById('modal-avatar-preview');
+                if (preview) preview.src = url;
+                localStorage.setItem('onetap_avatar', url);
+            };
+            reader.readAsDataURL(file);
         });
     </script>
 
