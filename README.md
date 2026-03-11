@@ -117,35 +117,35 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 > [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
 
-#### **7. Página Torneos**
-![Página Torneos](images/tournaments.png)
-
-> [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
-
-#### **8. Página Detalles Torneos**
+#### **7. Página Detalles Torneos**
 ![Página Detalles Torneos](images/tournament-detail.png)
 
 > [Vista detallada de un torneo en específico (muestra reglas, equipos inscritos, fechas y brackets/enfrentamientos)]
 
-#### **9. Página Crear Torneo**
+#### **8. Página Crear Torneo**
 ![Página Crear Torneo](images/create-tournament.png)
 
 > [Formulario para organizar y registrar un nuevo torneo en la plataforma.]
 
-#### **10. Página Editar Torneo**
+#### **9. Página Editar Torneo**
 ![Página Editar Torneo](images/edit-tournament.png)
 
 > [Pantalla destinada a modificar la información, configuración o estado de un torneo ya existente.]
 
-#### **11. Página Equipos**
+#### **10. Página Equipos**
 ![Página Equipos](images/teams.png)
 
 > [Páginas de listado público de los equipos registrados. Permiten al usuario explorar los distintos equipos que compiten.]
 
-#### **12. Página Crear Equipos**
+#### **11. Página Crear Equipos**
 ![Página Crear Equipos](images/create-team.png)
 
 > [Formulario mediante el cual un usuario puede registrar un nuevo equipo, asignándole un nombre y detalles.]
+
+#### **12. Página Editar Equipos**
+![Página Editar Equipos](images/edit-team.png)
+
+> [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
 
 #### **13. Página Partidos**
 ![Página Partidos](images/edit-team.png)
