@@ -20,7 +20,7 @@ function actualizarNavegacion() {
             <li class="nav-item"><a class="nav-link ${isActive('favourites.html')}" href="favourites.html">Favoritos</a></li>
             <li class="nav-item dropdown ms-lg-3">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
-                    <div class="nav-avatar-container me-2"><img src="assets/images/avatar-player.png" class="nav-avatar"></div>
+                    <div class="nav-avatar-container me-2"><img src="${localStorage.getItem('onetap_avatar') || 'assets/images/avatar-player.png'}" class="nav-avatar" id="nav-avatar-img"></div>
                     <span class="text-white fw-bold">Mi Cuenta</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg">
