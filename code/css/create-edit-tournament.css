@@ -45,5 +45,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0.85rem; padding: 14px 0;
 }
 
-.btn-green { background: var(--accent-green); color: #000; border: none; }
-.btn-green:hover { background: #2ecc0f; color: #000; }
+
