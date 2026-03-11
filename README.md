@@ -80,6 +80,8 @@ Indicar cuál será el algoritmo o consulta avanzada que se implementará:
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
 ![Diagrama de Navegación](images/Diagrama_flujo.drawio.png)
+(images/Diagrama_Usuarios.drawio.png)
+(images/Diagrama_Admin.drawio.png)
 
 > [Todas las ventanas comparten Navbar y footer. Desde todas las páginas se pueden acceder al resto a través del NavBar, dependiendo de los permisos que tengan]
 
