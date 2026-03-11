@@ -35,35 +35,29 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
 * **Usuario no registrado**: 
-  - Permisos: Visualización de clasificación general y resultados de cada partido de dicha clasificación.
+  - Permisos: Visualización de clasificaciones general, resultados de cada partido, detalles avanzados de los mismos y vista + detalles de equipos que participan.
   - No es dueño de ninguna entidad
  
-* **Usuario Capitán de Equipo**: 
-  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece. Tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. Tendrá un apartado de notificaciones para recibir las últimas noticias relacionadas con su equipo. Chat privado con administrador.
-  - Es dueño de: [Ej: Sus propios Pedidos, su Perfil de Usuario, sus Valoraciones]
- 
 * **Usuario integrante de equipo**:
-  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece.
-  - Es dueño de:[]
+  - Permisos: El usuario registrado podrá ver las estadísticas avanzadas de su propio equipo, con los integrantes (con sus respectivos IDs) y los torneos a los que pertenece. Podrá elegir sus torneos favoritos y verlos en una pantalla extra. A parte podrá editar su perfil, incluyendo una foto.
+  - Es dueño de: Usuario y Equipo
 
 * **Administrador**: 
   - Permisos: Configuración de nuevos de torneos/ligas, añadir resultados de cada partido, enviar mensajes a los capitanes de cada equipo, ver todos los equipos/usuarios, modificar permisos de usuarios, añadir o eliminar integrantes, ver listado de personas por equipo y elegir capitán.
-  - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
+  - Es dueño de: Puede gestionar todos los usuarios, equipos, torneos y partidos.
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
-- **[Entidad con imágenes 1]**: [Ej: Usuario - Una imagen de avatar por usuario]
-- **[Entidad con imágenes 2]**: [Ej: Producto - Múltiples imágenes por producto (galería)]
-- **[Entidad con imágenes 3]**: [Ej: Categoría - Una imagen representativa por categoría]
+- **[Torneos]**: Los torneos tendrán asociados una imágen del juego que es jugado.
+- **[Equipo]**: Cada equipo tendrá una imágen o logo representativo de su equipo, más un banner en la pantalla de detalles del equipo.
+- **[Usuario]**: Cada usuario podrá editar su perfil, añadiendo una imágen.
+- **[Partido]**: Cada partido tendrá asociados los logos de los equipos participantes.
 
 ### **Gráficos**
 Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 
-- **Gráfico 1**: [Ej: Ventas mensuales - Gráfico de barras]
-- **Gráfico 2**: [Ej: Productos más vendidos - Gráfico de tarta/circular]
-- **Gráfico 3**: [Ej: Evolución de usuarios registrados - Gráfico de líneas]
-- **Gráfico 4**: [Ej: Distribución de pedidos por categoría - Gráfico de barras horizontales]
+- **Gráfico 1**: Cada usuario podrá ver sus estadísticas personales en su apartad de "Mi perfil"
 
 ### **Tecnología Complementaria**
 Indicar qué tecnología complementaria se empleará:
