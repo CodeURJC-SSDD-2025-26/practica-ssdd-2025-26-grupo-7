@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Detalles del Partido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/match-detail.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content"></ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="mb-4">
+            <a href="matches.html" class="text-cyan text-decoration-none small text-uppercase">
+                <i class="bi bi-arrow-left me-1"></i> Volver a Partidos
+            </a>
+        </div>
+
+        <div class="bg-card rounded-4 p-4 p-md-5 mb-5 border border-secondary border-opacity-25 position-relative overflow-hidden shadow-lg">
+            <div class="text-center mb-4">
+                <span class="badge bg-danger pulse-live me-2"><i class="bi bi-broadcast me-1"></i> EN VIVO</span>
+                <span class="text-white-50 small fw-bold text-uppercase">Valorant - Semifinal - Mapa 2</span>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center gap-3 gap-md-5">
+                <div class="text-center team-block">
+                    <div class="logo-wrapper border-cyan mb-3 mx-auto">
+                        <img src="assets/images/team_water.png" alt="Team Agua" class="detail-team-logo">
+                    </div>
+                    <h3 class="text-white mb-0 font-sans text-uppercase">Agua</h3>
+                </div>
+
+                <div class="text-center score-block">
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <span class="score-number text-white">13</span>
+                        <span class="score-divider text-white-50">:</span>
+                        <span class="score-number text-white">11</span>
+                    </div>
+                    <div class="mt-2 text-cyan small fw-bold">ASCENT</div>
+                </div>
+
+                <div class="text-center team-block">
+                    <div class="logo-wrapper border-danger mb-3 mx-auto">
+                        <img src="assets/images/team_fire.png" alt="Team Fuego" class="detail-team-logo">
+                    </div>
+                    <h3 class="text-white mb-0 font-sans text-uppercase">Fuego</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12">
+                <h4 class="text-white mb-4 mt-0 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                    <i class="bi bi-bar-chart-fill text-cyan me-2"></i>Estadísticas del Partido
+                </h4>
+                
+                <div class="mb-5">
+                    <h5 class="text-cyan mb-3 text-uppercase fw-bold d-flex align-items-center">
+                        <img src="assets/images/team_water.png" alt="Agua" width="30" class="me-2"> Team Agua
+                    </h5>
+                    <div class="table-responsive bg-card rounded-3 border border-secondary border-opacity-25 shadow-sm">
+                        <table class="table table-dark table-hover align-middle mb-0 text-center stats-table">
+                            <thead class="text-uppercase small text-white">
+                                <tr>
+                                    <th class="text-start ps-4 py-3 col-player">Jugador</th>
+                                    <th class="py-3 col-stat">Kills</th>
+                                    <th class="py-3 col-stat">Deaths</th>
+                                    <th class="py-3 col-stat">Assists</th>
+                                    <th class="py-3 col-stat">K/D</th>
+                                    <th class="pe-4 py-3 text-end col-stat">ACS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0 border-secondary border-opacity-25">
+                                <tr>
+                                    <td class="text-start ps-4 fw-bold">AquaKing <span class="badge bg-info text-dark ms-2 badge-team-leader">TEAM LEADER</span></td>
+                                    <td class="text-success fw-bold">24</td>
+                                    <td class="text-danger">12</td>
+                                    <td>8</td>
+                                    <td>2.00</td>
+                                    <td class="pe-4 fw-bold text-cyan text-end">285</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">RiverFlow</td>
+                                    <td class="text-success">18</td>
+                                    <td class="text-danger">14</td>
+                                    <td>12</td>
+                                    <td>1.28</td>
+                                    <td class="pe-4 text-white-50 text-end">210</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">TidalWave</td>
+                                    <td class="text-success">15</td>
+                                    <td class="text-danger">15</td>
+                                    <td>5</td>
+                                    <td>1.00</td>
+                                    <td class="pe-4 text-white-50 text-end">195</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">DeepBlue</td>
+                                    <td class="text-success">12</td>
+                                    <td class="text-danger">16</td>
+                                    <td>9</td>
+                                    <td>0.75</td>
+                                    <td class="pe-4 text-white-50 text-end">160</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">OceanMist</td>
+                                    <td class="text-success">9</td>
+                                    <td class="text-danger">17</td>
+                                    <td>11</td>
+                                    <td>0.52</td>
+                                    <td class="pe-4 text-white-50 text-end">135</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="text-danger mb-3 text-uppercase fw-bold d-flex align-items-center">
+                        <img src="assets/images/team_fire.png" alt="Fuego" width="30" class="me-2"> Team Fuego
+                    </h5>
+                    <div class="table-responsive bg-card rounded-3 border border-secondary border-opacity-25 shadow-sm">
+                        <table class="table table-dark table-hover align-middle mb-0 text-center stats-table">
+                            <thead class="text-uppercase small text-white bg-gradient-fire">
+                                <tr>
+                                    <th class="text-start ps-4 py-3 col-player">Jugador</th>
+                                    <th class="py-3 col-stat">Kills</th>
+                                    <th class="py-3 col-stat">Deaths</th>
+                                    <th class="py-3 col-stat">Assists</th>
+                                    <th class="py-3 col-stat">K/D</th>
+                                    <th class="pe-4 py-3 text-end col-stat">ACS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0 border-secondary border-opacity-25">
+                                <tr>
+                                    <td class="text-start ps-4 fw-bold">BlazeMaster <span class="badge bg-danger text-white ms-2 badge-team-leader">TEAM LEADER</span></td>
+                                    <td class="text-success fw-bold">22</td>
+                                    <td class="text-danger">16</td>
+                                    <td>5</td>
+                                    <td>1.37</td>
+                                    <td class="pe-4 fw-bold text-danger text-end">260</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">Inferno</td>
+                                    <td class="text-success">19</td>
+                                    <td class="text-danger">15</td>
+                                    <td>4</td>
+                                    <td>1.26</td>
+                                    <td class="pe-4 text-white-50 text-end">225</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">EmberSpark</td>
+                                    <td class="text-success">16</td>
+                                    <td class="text-danger">14</td>
+                                    <td>10</td>
+                                    <td>1.14</td>
+                                    <td class="pe-4 text-white-50 text-end">205</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">AshCloud</td>
+                                    <td class="text-success">10</td>
+                                    <td class="text-danger">16</td>
+                                    <td>8</td>
+                                    <td>0.62</td>
+                                    <td class="pe-4 text-white-50 text-end">150</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start ps-4">Wildfire</td>
+                                    <td class="text-success">7</td>
+                                    <td class="text-danger">17</td>
+                                    <td>6</td>
+                                    <td>0.41</td>
+                                    <td class="pe-4 text-white-50 text-end">110</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
