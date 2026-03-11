@@ -148,7 +148,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
 
 #### **13. Página Partidos**
-![Página Partidos](images/edit-team.png)
+![Página Partidos](images/matches.png)
 
 > [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
 
