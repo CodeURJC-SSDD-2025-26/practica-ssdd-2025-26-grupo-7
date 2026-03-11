@@ -224,10 +224,10 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
 |1| [Update: Teams.html](URL_commit_1)  | [Teams.html](code/teams.html)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|2| [Update: Admin.html](URL_commit_2)  | [Admin.html](code/admin.html)   |
+|3| [Update: tournaments.html](URL_commit_3)  | [tournaments.html](code/tournaments.html)   |
+|4| [Update:css](URL_commit_4)  | [styles.css](code/CSS/styles.css)   |
+|5| [Added: Match detail](URL_commit_5)  | [match-detail](code/match-detail)   |
 
 ---
 
