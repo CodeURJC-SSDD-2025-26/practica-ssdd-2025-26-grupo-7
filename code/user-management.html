@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/auth.js"></script>
-    
 </head>
+
 <body>
 
-     <!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -31,7 +32,8 @@
 
     <main class="container py-5">
         <div class="mb-4">
-            <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase"><i class="bi bi-arrow-left"></i> Panel Admin</a>
+            <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase"><i
+                    class="bi bi-arrow-left"></i> Panel Admin</a>
             <h1 class="fw-bold mt-2">Gestión de <span class="text-cyan">Usuarios</span></h1>
             <p class="text-secondary">Administra roles, equipos y estados de todas las cuentas</p>
         </div>
@@ -64,7 +66,7 @@
         </div>
 
         <div class="bg-card rounded-4 overflow-hidden">
-            
+
             <div class="table-responsive">
                 <table class="table table-dark table-hover align-middle mb-0">
                     <thead class="text-secondary small text-uppercase">
@@ -80,20 +82,27 @@
                         <tr>
                             <td class="ps-4">
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="avatar">AK</div>
+                                    <div class="avatar">PO</div>
                                     <div>
-                                        <div class="fw-bold">AquaKing</div>
-                                        <div class="small text-secondary">aquaking@urjc.es</div>
+                                        <div class="fw-bold">PlayerOne</div>
+                                        <div class="small text-secondary">player1@urjc.es</div>
                                     </div>
                                 </div>
                             </td>
-                            <td><i text-cyan small me-1></i> Team Agua</td>
+                            <td><i text-cyan small me-1></i> Team 1</td>
                             <td class="text-center"><span class="badge bg-info text-dark">Capitán</span></td>
-                            <td class="text-center"><span class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
+                            <td class="text-center"><span
+                                    class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
                             <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalEquipo" title="Equipo"><i class="bi bi-shield-plus"></i></button>
-                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRol" title="Rol"><i class="bi bi-person-gear"></i></button>
-                                <button class="btn btn-sm btn-outline-danger" title="Banear"><i class="bi bi-ban"></i></button>
+                                <a href="profile.html" class="btn btn-sm btn-outline-info" title="Ver perfil"><i
+                                        class="bi bi-eye"></i></a>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalEquipo" title="Equipo"><i
+                                        class="bi bi-shield-plus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalRol" title="Rol"><i class="bi bi-person-gear"></i></button>
+                                <button class="btn btn-sm btn-outline-danger" title="Banear"><i
+                                        class="bi bi-ban"></i></button>
                             </td>
                         </tr>
                         <tr>
@@ -108,17 +117,22 @@
                             </td>
                             <td class="text-secondary fst-italic">— Agente Libre —</td>
                             <td class="text-center"><span class="badge bg-secondary">Jugador</span></td>
-                            <td class="text-center"><span class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
+                            <td class="text-center"><span
+                                    class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
                             <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalEquipo"><i class="bi bi-shield-plus"></i></button>
-                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRol"><i class="bi bi-person-gear"></i></button>
+                                <a href="profile.html" class="btn btn-sm btn-outline-info" title="Ver perfil"><i
+                                        class="bi bi-eye"></i></a>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalEquipo"><i class="bi bi-shield-plus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalRol"><i class="bi bi-person-gear"></i></button>
                                 <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="p-3 border-top border-secondary text-end small text-secondary">
                 Mostrando 1-2 de X usuarios
             </div>
@@ -133,7 +147,8 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong class="text-white">AquaKing</strong></p>
+                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong
+                            class="text-white">AquaKing</strong></p>
                     <label class="form-label small text-uppercase text-secondary">Asignar a equipo</label>
                     <select class="form-select">
                         <option>— Agente Libre —</option>
@@ -144,7 +159,8 @@
                 </div>
                 <div class="modal-footer border-secondary">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Guardar cambios</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Guardar
+                        cambios</button>
                 </div>
             </div>
         </div>
@@ -154,10 +170,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-card text-white">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-cyan"><i class="bi bi-shield-shaded me-2"></i>Gestionar Rol</h5> 
+                    <h5 class="modal-title text-cyan"><i class="bi bi-shield-shaded me-2"></i>Gestionar Rol</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong class="text-white">AquaKing</strong></p>
+                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong
+                            class="text-white">AquaKing</strong></p>
                     <label class="form-label small text-uppercase text-secondary">Nuevo Rol</label>
                     <select class="form-select">
                         <option>Jugador</option>
@@ -167,7 +184,8 @@
                 </div>
                 <div class="modal-footer border-secondary">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Actualizar rol</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Actualizar
+                        rol</button>
                 </div>
             </div>
         </div>
@@ -201,4 +219,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
