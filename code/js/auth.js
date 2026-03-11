@@ -16,7 +16,7 @@ function actualizarNavegacion() {
             <li class="nav-item"><a class="nav-link ${isActive('index.html')}" href="index.html">Inicio</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('tournaments.html')}" href="tournaments.html">Torneos</a></li>
             <li class="nav-item"><a class="nav-link ${isActive('matches.html')}" href="matches.html">Partidos</a></li>
-            <li class="nav-item"><a class="nav-link ${isActive('teams.html')}" href="teams.html">Equipo</a></li>
+            ${role !== 'admin' ? `<li class="nav-item"><a class="nav-link ${isActive('teams.html')}" href="teams.html">Equipo</a></li>` : ''}
             <li class="nav-item"><a class="nav-link ${isActive('favourites.html')}" href="favourites.html">Favoritos</a></li>
             <li class="nav-item dropdown ms-lg-3">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
