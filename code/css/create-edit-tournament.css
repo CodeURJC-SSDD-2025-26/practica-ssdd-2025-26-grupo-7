@@ -15,10 +15,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.text-cyan {
-    color: var(--primary-cyan, #00d4ff) !important;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-}
 .text-green { color: var(--accent-green, #39ff14) !important; }
 
 .neon-line {

@@ -10,7 +10,7 @@
     text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
 }
 
-.text-cyan   { color: var(--primary-cyan,      #00d4ff) !important; }
+
 .text-green  { color: var(--accent-green,       #39ff14) !important; }
 .text-orange { color: var(--accent-orange,      #f97316) !important; }
 .text-purple { color: var(--secondary-purple,   #8b5cf6) !important; }
