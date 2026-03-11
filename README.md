@@ -79,7 +79,7 @@ Indicar cuál será el algoritmo o consulta avanzada que se implementará:
 ### **Diagrama de Navegación**
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
-![Diagrama de Navegación](images/navigation-diagram.png)
+![Diagrama de Navegación](images/Diagrama_flujo.drawio.png)
 
 > [Descripción opcional del flujo de navegación: Ej: "El usuario puede acceder desde la página principal a todas las secciones mediante el menú de navegación. Los usuarios anónimos solo tienen acceso a las páginas públicas, mientras que los registrados pueden acceder a su perfil y panel de usuario."]
 
