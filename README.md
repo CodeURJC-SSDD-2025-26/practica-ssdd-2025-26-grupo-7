@@ -163,12 +163,12 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > [Vista en profundidad de un partido concreto, mostrando quiénes se enfrentan, el marcador y estadísticas del encuentro.]
 
 #### **16. Página Crear Equipos**
-![Página Crear Equipos](images/create-matches.png)
+![Página Crear Equipos](images/create-team.png)
 
 > [Interfaz para programar y generar nuevos partidos dentro del cuadro de los torneos.]
 
 #### **17. Página Editar Equipos**
-![Página Editar Equipos](images/edit-matches.png)
+![Página Editar Equipos](images/edit-team.png)
 
 > [Formulario para actualizar la información de un partido existente, como reportar el resultado final o cambiar la fecha.]
 
