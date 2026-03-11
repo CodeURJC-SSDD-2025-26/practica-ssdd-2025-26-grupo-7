@@ -263,3 +263,6 @@ section {
     margin-top: 20px;
 }
 
+.text-cyan {
+    color: var(--primary-cyan) !important;
+}
