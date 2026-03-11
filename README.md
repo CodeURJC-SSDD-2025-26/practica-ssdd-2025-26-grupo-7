@@ -117,10 +117,10 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 > [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
 
-#### **7. Página Torneos**
-![Página Torneos](images/tournaments.png)
+#### **7. Página Detalles Torneos**
+![Página Detalles Torneos](images/tournament-detail.png)
 
-> [Listado o catálogo público que muestra todos los torneos disponibles, permitiendo buscar o filtrar.]
+> [Vista detallada de un torneo en específico (muestra reglas, equipos inscritos, fechas y brackets/enfrentamientos)]
 
 #### **8. Página Detalles Torneos**
 ![Página Detalles Torneos](images/tournament-detail.png)
