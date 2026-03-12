@@ -220,7 +220,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 #### **Alumno 3 - [Jorge Castellano Bajo]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Realización de detalles del proyecto global mediante el styles.css y edicion de varios css individuales. Realización de páginas como detalles de equipo, página de selección de torneos o detalles de partidos individuales. También encargado de organizar el proyecto, organizandonlos comentarios de los archivos, y trabajando en el diseño y flujo de pantallas]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
