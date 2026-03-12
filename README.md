@@ -203,17 +203,18 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - [Angel Molinero Caja]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[El alumno ha liderado el diseño y desarrollo del frontend y la interfaz de usuario, encargándose de la creación de las páginas clave (perfil, registro y torneos) y la implementación de una navegación dinámica basada en el estado del usuario. Su labor incluyó la maquetación mediante HTML, CSS y JS.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Update: nav bar, profile.html, Add: profile.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/a1f4d5f) | [profile.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/css/profile.css) |
+|2| [Update: matches.html image route](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/437386f) | [matches.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/matches.html) |
+|3| [Updated: edit and create tournament.html and .css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/9e954f9) | [create-tournament.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/create-tournament.html) |
+|4| [Add: tournaments and favourites pages](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/c9da3c5) | [favourite.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/favourite.html) |
+|5| [Add: register.html and updated comments](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/4672a50) | [register.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/register.html) |
+
 
 ---
 
