@@ -191,7 +191,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 #### **Alumno 1 - [Pedro González Martín]**
 
-[Realización de parte de las páginas de adminis (como el panel, la vista de equipos, la creación y edición de partidos, y la gestión de usuarios), implementando la lógica de navegación y el flujo de trabajo entre ellas. Además, me he encargado de la creación de sus correspondientes archivos CSS, así como de una limpieza y reorganización global, eliminando código muerto y duplicados de todos los estilos del proyecto para unificar el diseño.]
+[Realización de parte de las páginas de admin (como el panel, la vista de equipos, la creación y edición de partidos, y la gestión de usuarios), implementando la lógica de navegación y el flujo de trabajo entre ellas. Además, me he encargado de la creación de sus correspondientes archivos CSS, así como de una limpieza y reorganización global, eliminando código muerto y duplicados de todos los estilos del proyecto para unificar el diseño.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
