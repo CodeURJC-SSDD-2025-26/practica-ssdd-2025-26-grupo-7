@@ -189,17 +189,17 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - [Pedro González Martín]**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Limpieza y reorganización global de todos los archivos CSS eliminando código duplicado y reordenandolo](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/5f9cf4506dd7fa51b29f2320c6df2e422e7a7dce)  | [style.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/5f9cf4506dd7fa51b29f2320c6df2e422e7a7dce/code/css/style.css)   |
+|2| [Creación de la lógica de equipos desde la vista del admin. Primera versión de páginas como crear equipo, editar equipo y ver lista de equipos. ](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/ec6138b90e5bed7bae828a629598cdc00365f14b)  | [create-team.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/ec6138b90e5bed7bae828a629598cdc00365f14b/code/create-team.html)  
+|3| [Reorganización de la lógica de crear partidos y torneos por parte del admin.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/758586451eae823a07dd036d7f8e63ac198db8c2)  | [admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/758586451eae823a07dd036d7f8e63ac198db8c2/code/admin.html)   |
+|4| [Separación de las listas de equipos. Se crean dos vistas, una para usuario y otra con posibilidad de editar para el admin.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/be1ec4c3bfa6acc33d371cee2b96585704549149#diff-507df1fe7dd4ccf0b4219aa1e29df5218f5881554b163a47955b6fdda590f173)  | [team-list-admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/be1ec4c3bfa6acc33d371cee2b96585704549149/code/teams-list-admin.html)   |
+|5| [Creación de la parte del admin de edición de partidos.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/1e9c38b540c3a140f662f830684a3e0bcf2a3623#diff-9a16d31ec12793f59b375fc3252173572f21b501f28ea33ec8e65d968ca2f766)  | [edit-matches.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/1e9c38b540c3a140f662f830684a3e0bcf2a3623/code/edit-matches.html)   |
 
 ---
 
