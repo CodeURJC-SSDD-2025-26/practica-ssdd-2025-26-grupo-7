@@ -29,6 +29,9 @@ public class Tournament {
     @Lob
     private Blob imageFile;
 
+    @ManyToOne
+    private User creator;
+
     @ManyToMany
     private List<Team> teams = new ArrayList<>();
 
