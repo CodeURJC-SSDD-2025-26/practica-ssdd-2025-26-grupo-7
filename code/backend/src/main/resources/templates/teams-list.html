@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Equipos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/team-list.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <!--- NAVBAR --->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-white">Equipos Registrados</h1>
+            <p class="lead text-white-50">Conoce a los competidores de la liga universitaria de eSports</p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+
+        <p class="text-white-50 small mb-4">
+            <i class="bi bi-shield-fill me-1 text-cyan"></i>Mostrando <strong class="text-white">5</strong> equipos registrados
+        </p>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card h-100">
+                    <div class="team-card-banner"></div>
+                    <div class="team-card-logo-wrapper">
+                        <img src="assets/images/team_fire.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                    </div>
+                    <div class="team-card-body text-center">
+                        <div class="team-card-info">
+                            <h5 class="text-white fw-bold mb-1">Equipo Fuego</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Móstoles</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                                <span class="badge bg-warning text-dark">Valorant</span>
+                            </div>
+                            <div class="team-stats-mini d-flex justify-content-around mb-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-white">21</div>
+                                    <div class="text-white-50 stat-label">PUNTOS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">7V</div>
+                                    <div class="text-white-50 stat-label">VICTORIAS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">87%</div>
+                                    <div class="text-white-50 stat-label">WIN RATE</div>
+                                </div>
+                            </div>
+                            <a href="teams.html" class="btn btn-outline-info w-100">Ver Detalles del Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card h-100">
+                    <div class="team-card-banner"></div>
+                    <div class="team-card-logo-wrapper">
+                        <img src="assets/images/team_elite.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                    </div>
+                    <div class="team-card-body text-center">
+                        <div class="team-card-info">
+                            <h5 class="text-white fw-bold mb-1">Gaming Elite</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>UCM - Madrid</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                                <span class="badge bg-info text-dark">LoL</span>
+                            </div>
+                            <div class="team-stats-mini d-flex justify-content-around mb-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-white">18</div>
+                                    <div class="text-white-50 stat-label">PUNTOS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">6V</div>
+                                    <div class="text-white-50 stat-label">VICTORIAS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">75%</div>
+                                    <div class="text-white-50 stat-label">WIN RATE</div>
+                                </div>
+                            </div>
+                            <a href="teams.html" class="btn btn-outline-info w-100">Ver Detalles del Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card h-100">
+                    <div class="team-card-banner"></div>
+                    <div class="team-card-logo-wrapper">
+                        <img src="assets/images/team_water.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                    </div>
+                    <div class="team-card-body text-center">
+                        <div class="team-card-info">
+                            <h5 class="text-white fw-bold mb-1">Equipo Agua</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Fuenlabrada</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                                <span class="badge bg-danger">CS:GO</span>
+                            </div>
+                            <div class="team-stats-mini d-flex justify-content-around mb-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-white">15</div>
+                                    <div class="text-white-50 stat-label">PUNTOS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">5V</div>
+                                    <div class="text-white-50 stat-label">VICTORIAS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">62%</div>
+                                    <div class="text-white-50 stat-label">WIN RATE</div>
+                                </div>
+                            </div>
+                            <a href="teams.html" class="btn btn-outline-info w-100">Ver Detalles del Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card h-100">
+                    <div class="team-card-banner"></div>
+                    <div class="team-card-logo-wrapper">
+                        <img src="assets/images/team_shadow.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                    </div>
+                    <div class="team-card-body text-center">
+                        <div class="team-card-info">
+                            <h5 class="text-white fw-bold mb-1">Equipo Sombra</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>Politécnica de Madrid</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                                <span class="badge bg-secondary">Rocket League</span>
+                            </div>
+                            <div class="team-stats-mini d-flex justify-content-around mb-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-white">12</div>
+                                    <div class="text-white-50 stat-label">PUNTOS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">4V</div>
+                                    <div class="text-white-50 stat-label">VICTORIAS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">50%</div>
+                                    <div class="text-white-50 stat-label">WIN RATE</div>
+                                </div>
+                            </div>
+                            <a href="teams.html" class="btn btn-outline-info w-100">Ver Detalles del Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card h-100">
+                    <div class="team-card-banner"></div>
+                    <div class="team-card-logo-wrapper">
+                        <img src="assets/images/team_rivas.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                    </div>
+                    <div class="team-card-body text-center">
+                        <div class="team-card-info">
+                            <h5 class="text-white fw-bold mb-1">Equipo Rivas</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Alcorcón</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                                <span class="badge bg-warning text-dark">Multi-Gaming</span>
+                            </div>
+                            <div class="team-stats-mini d-flex justify-content-around mb-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-white">6</div>
+                                    <div class="text-white-50 stat-label">PUNTOS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">2V</div>
+                                    <div class="text-white-50 stat-label">VICTORIAS</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="fw-bold text-warning">25%</div>
+                                    <div class="text-white-50 stat-label">WIN RATE</div>
+                                </div>
+                            </div>
+                            <a href="teams.html" class="btn btn-outline-info w-100">Ver Detalles del Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer bg-dark text-white py-4 mt-auto border-top border-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p class="text-white-50">La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50 text-decoration-none">Torneos</a></li>
+                        <li><a href="teams-list.html" class="text-white-50 text-decoration-none">Equipos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center">
+                <p class="mb-0 text-white-50">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

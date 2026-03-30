@@ -1,0 +1,56 @@
+.admin-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    color: var(--primary-cyan); padding: 5px 14px;
+    border-radius: 50px; font-size: 0.75rem;
+    font-weight: 600; text-transform: uppercase;
+}
+
+.section-label {
+    color: rgba(255, 255, 255, 0.35); font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
+}
+
+.admin-card {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.admin-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 212, 255, 0.25);
+}
+label.admin-card,
+label.admin-overlay,
+label.btn-close { cursor: pointer; }
+
+.admin-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px); z-index: 999; cursor: pointer;
+}
+.admin-modal {
+    display: none; position: fixed; inset: 0;
+    z-index: 1000; align-items: center; justify-content: center;
+    pointer-events: none;
+}
+.admin-modal-content {
+    width: 100%; max-width: 500px;
+    border: 1px solid rgba(255,255,255,0.08);
+    pointer-events: all; background: var(--bg-card);
+    animation: adminFadeIn 0.2s ease-out;
+}
+#modal-mensaje:checked ~ .admin-overlay:nth-of-type(2) { display: block; }
+#modal-mensaje:checked ~ .admin-modal:nth-of-type(2)   { display: flex; }
+
+@keyframes adminFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.marcador-wrap {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.marcador-input { width: 80px; }

@@ -1,0 +1,29 @@
+.detail-card {
+    background: var(--bg-card);
+    border: none; border-radius: 0; overflow: hidden;
+}
+.detail-card .card-header {
+    background: rgba(0,212,255,0.08);
+    border-bottom: none;
+    color: var(--primary-cyan);
+    font-family: sans-serif; font-size: 0.95rem; border-radius: 0;
+}
+
+.standings-table thead th {
+    background: #00d4ff !important; color: #000 !important;
+    text-transform: uppercase; letter-spacing: 1px;
+    border: none; border-radius: 0;
+}
+.standings-table tbody tr,
+.standings-table tbody td {
+    border: none; vertical-align: middle;
+}
+
+.detail-match-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0; padding: 14px 18px; color: #fff;
+}
+
+.badge-live  { background-color: #ff004c; color: white; font-weight: bold; text-transform: uppercase; }
+.border-live { border-color: rgba(255,0,76,0.4); }

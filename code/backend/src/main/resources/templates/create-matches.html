@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Crear Partido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/create-edit-tournament.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content"></ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container py-5">
+        <div class="mb-4">
+            <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase"><i class="bi bi-arrow-left"></i> Panel Admin</a>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <div class="text-center mb-5">
+                    <h2 class="text-white text-uppercase">
+                        <i class="bi bi-calendar-plus text-cyan me-2"></i>Crear Nuevo <span class="text-cyan">Partido</span>
+                    </h2>
+                    <p class="text-white-50">Crea un enfrentamiento y asígnalo a un torneo existente.</p>
+                </div>
+
+                <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 neon-green"></div>
+
+                    <form action="matches.html" method="POST">
+
+                        <!-- ── Torneo ── -->
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                            Torneo
+                        </h4>
+
+                        <div class="row g-4 mb-2">
+                            <div class="col-md-8">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Selecciona el Torneo</label>
+                                <select id="sel-torneo" class="form-select bg-dark text-white border-secondary border-opacity-50" required onchange="cargarTorneo(this.value)">
+                                    <option value="" disabled selected>— Selecciona un torneo —</option>
+                                    <option value="valorant">Valorant Winter Cup 2026</option>
+                                    <option value="lol">LoL University Series</option>
+                                    <option value="cs2">CS2 Spring Split</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Juego</label>
+                                <input id="torneo-juego" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Auto" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Partidos existentes en ese torneo -->
+                        <div id="partidos-existentes" class="campos-ocultos mb-4 mt-3">
+                            <label class="form-label small text-uppercase mb-2" style="color:rgba(255,255,255,0.3); letter-spacing:1px;">
+                                <i class="bi bi-list-ul me-1"></i>Partidos ya creados en este torneo
+                            </label>
+                            <div id="partidos-lista" class="partidos-lista-wrap"></div>
+                        </div>
+
+                        <!-- ── Equipos ── -->
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-4">
+                            Equipos
+                        </h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Local</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" disabled selected>Selecciona equipo...</option>
+                                    <option>Fuego</option>
+                                    <option>Agua</option>
+                                    <option>Rivas</option>
+                                    <option>Shadow</option>
+                                    <option>Elite</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Visitante</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" disabled selected>Selecciona equipo...</option>
+                                    <option>Fuego</option>
+                                    <option>Agua</option>
+                                    <option>Rivas</option>
+                                    <option>Shadow</option>
+                                    <option>Elite</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ── Detalles del Partido ── -->
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Detalles del Partido
+                        </h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" disabled selected>Selecciona fase...</option>
+                                    <option>Fase de Grupos</option>
+                                    <option>Cuartos de Final</option>
+                                    <option>Semifinal</option>
+                                    <option>Final</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" disabled selected>Selecciona...</option>
+                                    <option>BO1</option>
+                                    <option>BO3</option>
+                                    <option>BO5</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
+                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
+                                <input type="time" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: Sala privada #1234, stream en Twitch...">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5">
+                            <a href="admin.html" class="btn btn-outline-danger px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold">
+                                <i class="bi bi-calendar-plus-fill me-2"></i>CREAR PARTIDO
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p class="text-white-50">La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center">
+                <p class="mb-0 text-white-50">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const TORNEOS = {
+            valorant: {
+                juego: "Valorant",
+                partidos: [
+                    { equipos: "Fuego vs Agua",  fase: "Semifinal",       fecha: "2026-02-10", hora: "18:00", formato: "BO3" },
+                    { equipos: "Rivas vs Elite", fase: "Cuartos de Final", fecha: "2026-02-08", hora: "17:00", formato: "BO1" },
+                ]
+            },
+            lol: {
+                juego: "League of Legends",
+                partidos: [
+                    { equipos: "Shadow vs Water", fase: "Fase de Grupos", fecha: "2026-03-01", hora: "19:00", formato: "BO1" },
+                ]
+            },
+            cs2: { juego: "Counter-Strike 2", partidos: [] }
+        };
+
+        function cargarTorneo(val) {
+            const t = TORNEOS[val];
+            document.getElementById('torneo-juego').value = t ? t.juego : '';
+
+            const section = document.getElementById('partidos-existentes');
+            const lista   = document.getElementById('partidos-lista');
+
+            if (!t) { section.classList.remove('visible'); return; }
+
+            section.classList.add('visible');
+
+            if (t.partidos.length === 0) {
+                lista.innerHTML = '<div class="partidos-vacio">No hay partidos creados aún en este torneo.</div>';
+                return;
+            }
+
+            lista.innerHTML = t.partidos.map(p => `
+                <div class="partido-fila">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-white fw-semibold">${p.equipos}</span>
+                        <span class="partido-formato">${p.formato}</span>
+                        <span class="partido-fase">${p.fase}</span>
+                    </div>
+                    <span class="partido-fecha">${p.fecha} · ${p.hora}</span>
+                </div>
+            `).join('');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague - Editar Equipo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/create-edit-tournament.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content"></ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container py-5 mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <div class="mb-4">
+                    <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase">
+                        <i class="bi bi-arrow-left me-1"></i>Panel Admin
+                    </a>
+                    <span class="text-white-50 small mx-2">/</span>
+                    <a href="teams-list.html" class="text-cyan text-decoration-none small text-uppercase">Equipos</a>
+                </div>
+
+                <div class="text-center mb-5">
+                    <h2 class="text-white text-uppercase">
+                        <i class="bi bi-pencil-square text-cyan me-2"></i>Editar Equipo</span>
+                    </h2>
+                    <p class="text-white-50">Modifica los datos del equipo. Los cambios se aplicarán de inmediato.</p>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 mb-4 p-3 bg-card rounded-3 border border-secondary border-opacity-25">
+                    <img src="assets/images/team_rivas.png" alt="Logo" width="56" height="56"
+                        class="rounded-circle border border-2" style="border-color: var(--primary-cyan) !important; object-fit:contain; background: #0f1216; padding:4px;">
+                    <div>
+                        <div class="fw-bold text-white">Equipo Rivas</div>
+                        <div class="text-white-50 small">Multi-Gaming · URJC · 5 miembros</div>
+                    </div>
+                    <span class="badge bg-success ms-auto">Activo</span>
+                </div>
+
+                <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
+
+                    <form action="teams-list.html" method="POST" enctype="multipart/form-data">
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-0">
+                            <i class="bi bi-info-circle me-2 text-cyan"></i>Información del Equipo
+                        </h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Equipo</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    value="Equipo Rivas" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Tag / Abreviatura</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    value="RVAS" maxlength="5" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Universidad</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option>URJC - Móstoles</option>
+                                    <option>URJC - Fuenlabrada</option>
+                                    <option selected>URJC - Alcorcón</option>
+                                    <option>UCM - Madrid</option>
+                                    <option>Politécnica de Madrid</option>
+                                    <option>Otras...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Juego Principal</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option>Valorant</option>
+                                    <option>League of Legends</option>
+                                    <option>Counter-Strike 2</option>
+                                    <option>Rocket League</option>
+                                    <option>EA FC 24</option>
+                                    <option>Dota 2</option>
+                                    <option selected>Multi-Gaming</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">
+                                    <i class="bi bi-image me-1"></i>Cambiar Logo
+                                </label>
+                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    type="file" accept="image/png, image/jpeg, image/webp">
+                                <div class="form-text text-white-50 small mt-1">
+                                    Dejar vacío para mantener el logo actual.
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">
+                                    <i class="bi bi-card-image me-1"></i>Cambiar Banner
+                                </label>
+                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    type="file" accept="image/png, image/jpeg, image/webp">
+                                <div class="form-text text-white-50 small mt-1">
+                                    Dejar vacío para mantener el banner actual.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del Equipo</label>
+                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3">Equipo universitario de la URJC, especializados en múltiples juegos competitivos.</textarea>
+                            </div>
+                        </div>
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                            <i class="bi bi-person-badge me-2 text-cyan"></i>Capitán del Equipo
+                        </h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Capitán actual</label>
+                                <select class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                    <option>PlayerONE (j.perez@alumnos.urjc.es)</option>
+                                    <option selected>RivasGG (rivas@urjc.es)</option>
+                                    <option>AquaKing (aquaking@urjc.es)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                            <i class="bi bi-people-fill me-2 text-cyan"></i>Miembros del Equipo
+                        </h4>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-dark table-hover align-middle mb-0 rounded-3 overflow-hidden">
+                                        <thead class="text-white-50 small text-uppercase">
+                                            <tr>
+                                                <th class="ps-3">Jugador</th>
+                                                <th>Rol</th>
+                                                <th class="text-end pe-3">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="ps-3 fw-bold">RivasGG <span class="badge bg-warning text-dark ms-1">Capitán</span></td>
+                                                <td><span class="text-white-50 small">Capitán</span></td>
+                                                <td class="text-end pe-3">—</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-3">PlayerONE</td>
+                                                <td>
+                                                    <select class="form-select form-select-sm bg-dark text-white border-secondary" style="width:120px;">
+                                                        <option selected>Jugador</option>
+                                                        <option>Suplente</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-end pe-3">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger">
+                                                        <i class="bi bi-person-dash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ps-3">ShadowX</td>
+                                                <td>
+                                                    <select class="form-select form-select-sm bg-dark text-white border-secondary" style="width:120px;">
+                                                        <option selected>Jugador</option>
+                                                        <option>Suplente</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-end pe-3">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger">
+                                                        <i class="bi bi-person-dash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Añadir miembro</label>
+                                <div class="d-flex gap-2">
+                                    <select class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                        <option value="" selected>— Selecciona jugador —</option>
+                                        <option>AquaKing</option>
+                                        <option>EliteGamer</option>
+                                    </select>
+                                    <button type="button" class="btn btn-outline-info text-nowrap">
+                                        <i class="bi bi-person-plus-fill me-1"></i>Añadir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-danger bg-transparent border-danger mt-4">
+                            <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
+                            <p class="text-white-50 small mb-2">Eliminar el equipo borrará todos sus datos y no podrá recuperarse.</p>
+                            <button type="button" class="btn btn-sm btn-danger"
+                                onclick="if(confirm('¿Seguro que quieres eliminar este equipo?')) window.location='teams-list.html'">
+                                <i class="bi bi-trash3-fill me-1"></i>Eliminar equipo
+                            </button>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5">
+                            <a href="teams-list.html" class="btn btn-outline-danger px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold">
+                                <i class="bi bi-check-circle-fill me-2"></i>GUARDAR CAMBIOS
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p class="text-white-50">La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams-list.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center">
+                <p class="mb-0 text-white-50">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

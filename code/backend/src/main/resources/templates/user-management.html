@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTap eLeague — Gestión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
+                OneTap eLeague
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="nav-content">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="mb-4">
+            <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase"><i
+                    class="bi bi-arrow-left"></i> Panel Admin</a>
+            <h1 class="fw-bold mt-2">Gestión de <span class="text-cyan">Usuarios</span></h1>
+            <p class="text-secondary">Administra roles, equipos y estados de todas las cuentas</p>
+        </div>
+
+        <div class="row g-3 mb-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="bg-card p-3 rounded-3">
+                    <h2 class="m-0 text-cyan">248</h2>
+                    <span class="small text-secondary text-uppercase">Usuarios</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="bg-card p-3 rounded-3">
+                    <h2 class="m-0 text-success">231</h2>
+                    <span class="small text-secondary text-uppercase">Activos</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="bg-card p-3 rounded-3">
+                    <h2 class="m-0" style="color: #9b59ff;">18</h2>
+                    <span class="small text-secondary text-uppercase">Capitanes</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="bg-card p-3 rounded-3">
+                    <h2 class="m-0 text-danger">17</h2>
+                    <span class="small text-secondary text-uppercase">Agentes Libres</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-card rounded-4 overflow-hidden">
+
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="text-secondary small text-uppercase">
+                        <tr>
+                            <th class="ps-4">Usuario</th>
+                            <th>Equipo</th>
+                            <th class="text-center">Rol</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="avatar">PO</div>
+                                    <div>
+                                        <div class="fw-bold">PlayerOne</div>
+                                        <div class="small text-secondary">player1@urjc.es</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><i text-cyan small me-1></i> Team 1</td>
+                            <td class="text-center"><span class="badge bg-info text-dark">Capitán</span></td>
+                            <td class="text-center"><span
+                                    class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
+                            <td class="text-end pe-4">
+                                <a href="profile.html" class="btn btn-sm btn-outline-info" title="Ver perfil"><i
+                                        class="bi bi-eye"></i></a>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalEquipo" title="Equipo"><i
+                                        class="bi bi-shield-plus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalRol" title="Rol"><i class="bi bi-person-gear"></i></button>
+                                <button class="btn btn-sm btn-outline-danger" title="Banear"><i
+                                        class="bi bi-ban"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="avatar">SH</div>
+                                    <div>
+                                        <div class="fw-bold">ShadowX</div>
+                                        <div class="small text-secondary">shadowx@urjc.es</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-secondary fst-italic">— Agente Libre —</td>
+                            <td class="text-center"><span class="badge bg-secondary">Jugador</span></td>
+                            <td class="text-center"><span
+                                    class="badge bg-success bg-opacity-25 text-success">Activo</span></td>
+                            <td class="text-end pe-4">
+                                <a href="profile.html" class="btn btn-sm btn-outline-info" title="Ver perfil"><i
+                                        class="bi bi-eye"></i></a>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalEquipo"><i class="bi bi-shield-plus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalRol"><i class="bi bi-person-gear"></i></button>
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-3 border-top border-secondary text-end small text-secondary">
+                Mostrando 1-2 de X usuarios
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modalEquipo" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-card text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-cyan"><i class="bi bi-shield-shaded me-2"></i>Gestionar Equipo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong
+                            class="text-white">AquaKing</strong></p>
+                    <label class="form-label small text-uppercase text-secondary">Asignar a equipo</label>
+                    <select class="form-select">
+                        <option>— Agente Libre —</option>
+                        <option>Team Fuego</option>
+                        <option selected>Team Agua</option>
+                        <option>Shadow Esports</option>
+                    </select>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Guardar
+                        cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalRol" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-card text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-cyan"><i class="bi bi-shield-shaded me-2"></i>Gestionar Rol</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-secondary mb-2">Usuario seleccionado: <strong
+                            class="text-white">AquaKing</strong></p>
+                    <label class="form-label small text-uppercase text-secondary">Nuevo Rol</label>
+                    <select class="form-select">
+                        <option>Jugador</option>
+                        <option selected>Capitán</option>
+                        <option>Administrador</option>
+                    </select>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Actualizar
+                        rol</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>OneTap eLeague</h5>
+                    <p>La plataforma líder para torneos universitarios de eSports</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
+                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
+                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p class="text-white-50">info@onetapeleague.com</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
