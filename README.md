@@ -148,7 +148,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
 
 #### **13. Página Partidos**
-![Página Partidos](images/edit-team.png)
+![Página Partidos](images/matches.png)
 
 > [Pantalla para gestionar y modificar un equipo ya creado (cambiar el logo, editar información o miembros).]
 
@@ -163,12 +163,12 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > [Vista en profundidad de un partido concreto, mostrando quiénes se enfrentan, el marcador y estadísticas del encuentro.]
 
 #### **16. Página Crear Equipos**
-![Página Crear Equipos](images/create-matches.png)
+![Página Crear Equipos](images/create-team.png)
 
 > [Interfaz para programar y generar nuevos partidos dentro del cuadro de los torneos.]
 
 #### **17. Página Editar Equipos**
-![Página Editar Equipos](images/edit-matches.png)
+![Página Editar Equipos](images/edit-team.png)
 
 > [Formulario para actualizar la información de un partido existente, como reportar el resultado final o cambiar la fecha.]
 
@@ -189,45 +189,46 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - [Pedro González Martín]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Realización de parte de las páginas de admin (como el panel, la vista de equipos, la creación y edición de partidos, y la gestión de usuarios), implementando la lógica de navegación y el flujo de trabajo entre ellas. Además, me he encargado de la creación de sus correspondientes archivos CSS, así como de una limpieza y reorganización global, eliminando código muerto y duplicados de todos los estilos del proyecto para unificar el diseño.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Limpieza y reorganización global de todos los archivos CSS eliminando código duplicado y reordenandolo](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/5f9cf4506dd7fa51b29f2320c6df2e422e7a7dce)  | [style.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/5f9cf4506dd7fa51b29f2320c6df2e422e7a7dce/code/css/style.css)   |
+|2| [Creación de la lógica de equipos desde la vista del admin. Primera versión de páginas como crear equipo, editar equipo y ver lista de equipos. ](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/ec6138b90e5bed7bae828a629598cdc00365f14b)  | [create-team.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/ec6138b90e5bed7bae828a629598cdc00365f14b/code/create-team.html)  
+|3| [Reorganización de la lógica de crear partidos y torneos por parte del admin.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/758586451eae823a07dd036d7f8e63ac198db8c2)  | [admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/758586451eae823a07dd036d7f8e63ac198db8c2/code/admin.html)   |
+|4| [Separación de las listas de equipos. Se crean dos vistas, una para usuario y otra con posibilidad de editar para el admin.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/be1ec4c3bfa6acc33d371cee2b96585704549149#diff-507df1fe7dd4ccf0b4219aa1e29df5218f5881554b163a47955b6fdda590f173)  | [team-list-admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/be1ec4c3bfa6acc33d371cee2b96585704549149/code/teams-list-admin.html)   |
+|5| [Creación de la parte del admin de edición de partidos.](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/1e9c38b540c3a140f662f830684a3e0bcf2a3623#diff-9a16d31ec12793f59b375fc3252173572f21b501f28ea33ec8e65d968ca2f766)  | [edit-matches.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/1e9c38b540c3a140f662f830684a3e0bcf2a3623/code/edit-matches.html)   |
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - [Angel Molinero Caja]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[El alumno ha liderado el diseño y desarrollo del frontend y la interfaz de usuario, encargándose de la creación de las páginas clave (perfil, registro y torneos) y la implementación de una navegación dinámica basada en el estado del usuario. Su labor incluyó la maquetación mediante HTML, CSS y JS.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Update: nav bar, profile.html, Add: profile.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/a1f4d5f) | [profile.css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/css/profile.css) |
+|2| [Update: matches.html image route](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/437386f) | [matches.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/matches.html) |
+|3| [Updated: edit and create tournament.html and .css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/9e954f9) | [create-tournament.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/create-tournament.html) |
+|4| [Add: tournaments and favourites pages](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/c9da3c5) | [favourite.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/favourite.html) |
+|5| [Add: register.html and updated comments](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/4672a50) | [register.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/register.html) |
+
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Jorge Castellano Bajo]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Realización de detalles del proyecto global mediante el styles.css y edicion de varios css individuales. Realización de páginas como detalles de equipo, página de selección de torneos o detalles de partidos individuales. También encargado de organizar el proyecto, organizandonlos comentarios de los archivos, y trabajando en el diseño y flujo de pantallas]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Update: Teams.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/350cd16effe188adba2f96c16caa1f9a69200f29)  | [Teams.html](code/teams.html)   |
+|2| [Update: Admin.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/5ce4649df9b3328c864221c858da326ed5932bb2)  | [Admin.html](code/admin.html)   |
+|3| [Update: tournaments.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/8d98369f082e6034aaf12713ee525d635bd136ae)  | [tournaments.html](code/tournaments.html)   |
+|4| [Update:css](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/45d56492f18d12edfbde6d478de726bef0e8d202)  | [styles.css](code/CSS/styles.css)   |
+|5| [Added: Match detail](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/tree/b6b33fcaeca02e7769e52b49fe77b287ea227e0d)  | [match-detail](code/match-detail)   |
 
 ---
 
