@@ -11,23 +11,25 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
     private String university;
-    private String mainGame;   
-
+    private String mainGame;
+    
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @Lob
     private Blob imageFile;
+
     private int matchesPlayed;
     private int wins;
     private int losses;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<User> players = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne 
     private User captain;
 
     public Team() {}
