@@ -6,7 +6,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
 import jakarta.annotation.PostConstruct;
-
 import java.util.List;
 import es.urjc.code.backend.model.*;
 import es.urjc.code.backend.repository.*;
