@@ -14,7 +14,10 @@ public class BaseController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model, jakarta.servlet.http.HttpServletRequest request) {
+        if (request.getParameter("error") != null) {
+            model.addAttribute("error", true);
+        }
         return "login";
     }
     
@@ -31,5 +34,25 @@ public class BaseController {
     @GetMapping("/teams")
     public String teams() {
         return "teams";
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/matches")
+    public String matches() {
+        return "matches";
+    }
+
+    @GetMapping("/favourites")
+    public String favourites() {
+        return "favourites";
     }
 }
