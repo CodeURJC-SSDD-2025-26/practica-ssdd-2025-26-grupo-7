@@ -7,27 +7,12 @@
     <title>OneTap eLeague - Crear Equipo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/create-edit-tournament.css">
-    <script src="js/auth.js"></script>
-</head>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/create-edit-tournament.css">
+    </head>
 
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
-                OneTap eLeague
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="nav-content"></ul>
-            </div>
-        </div>
-    </nav>
+    {{> header}}
 
     <!-- MAIN -->
     <main class="container py-5 mt-4">
@@ -35,7 +20,7 @@
             <div class="col-lg-9">
 
                 <div class="mb-4">
-                    <a href="admin.html" class="text-cyan text-decoration-none small text-uppercase">
+                    <a href="/admin" class="text-cyan text-decoration-none small text-uppercase">
                         <i class="bi bi-arrow-left me-1"></i>Panel Admin
                     </a>
                 </div>
@@ -50,7 +35,7 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="teams-list.html" method="POST" enctype="multipart/form-data">
+                    <form action="/teams" method="POST" enctype="multipart/form-data">
 
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-0">
                             <i class="bi bi-info-circle me-2 text-cyan"></i>Información del Equipo
@@ -183,7 +168,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end gap-3 mt-5">
-                            <a href="admin.html" class="btn btn-outline-danger px-4">Cancelar</a>
+                            <a href="/admin" class="btn btn-outline-danger px-4">Cancelar</a>
                             <button type="submit" class="btn btn-primary px-5 fw-bold">
                                 <i class="bi bi-shield-plus me-2"></i>CREAR EQUIPO
                             </button>
@@ -196,33 +181,7 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="footer bg-dark text-white py-4 mt-auto">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>OneTap eLeague</h5>
-                    <p class="text-white-50">La plataforma líder para torneos universitarios de eSports</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
-                        <li><a href="teams-list.html" class="text-white-50">Equipos</a></li>
-                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Contacto</h5>
-                    <p class="text-white-50">info@onetapeleague.com</p>
-                </div>
-            </div>
-            <hr class="border-secondary">
-            <div class="text-center">
-                <p class="mb-0 text-white-50">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

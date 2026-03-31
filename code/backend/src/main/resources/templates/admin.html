@@ -7,18 +7,17 @@
     <title>OneTap eLeague - Panel Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/admin.css">
-    <script src="js/auth.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
     <input type="checkbox" id="modal-resultado" style="display:none;">
-    <input type="checkbox" id="modal-mensaje"   style="display:none;">
+    <input type="checkbox" id="modal-mensaje" style="display:none;">
 
 
     <label for="modal-resultado" class="admin-overlay"></label>
-    <label for="modal-mensaje"   class="admin-overlay"></label>
+    <label for="modal-mensaje" class="admin-overlay"></label>
     <div class="admin-modal">
         <div class="admin-modal-content bg-card text-white p-4 rounded-4 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -48,12 +47,16 @@
                         <div class="marcador-wrap d-flex align-items-center justify-content-center gap-3 p-3 rounded-3">
                             <div class="text-center">
                                 <p class="text-white-50 small mb-1 text-uppercase">Local</p>
-                                <input type="number" class="form-control bg-dark text-white border-secondary text-center fw-bold fs-4 marcador-input" value="0" min="0">
+                                <input type="number"
+                                    class="form-control bg-dark text-white border-secondary text-center fw-bold fs-4 marcador-input"
+                                    value="0" min="0">
                             </div>
                             <span class="text-white-50 fw-bold fs-3">—</span>
                             <div class="text-center">
                                 <p class="text-white-50 small mb-1 text-uppercase">Visitante</p>
-                                <input type="number" class="form-control bg-dark text-white border-secondary text-center fw-bold fs-4 marcador-input" value="0" min="0">
+                                <input type="number"
+                                    class="form-control bg-dark text-white border-secondary text-center fw-bold fs-4 marcador-input"
+                                    value="0" min="0">
                             </div>
                         </div>
                     </div>
@@ -73,7 +76,8 @@
                 </div>
                 <div class="d-flex gap-2 mt-4">
                     <label for="modal-resultado" class="btn btn-outline-secondary w-50">Cancelar</label>
-                    <button type="submit" class="btn btn-primary fw-bold w-50"><i class="bi bi-check-circle me-2"></i>Guardar</button>
+                    <button type="submit" class="btn btn-primary fw-bold w-50"><i
+                            class="bi bi-check-circle me-2"></i>Guardar</button>
                 </div>
             </form>
         </div>
@@ -99,35 +103,25 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label text-white-50 small text-uppercase">Asunto</label>
-                        <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="Ej: Cambio de fecha en el partido">
+                        <input type="text" class="form-control bg-dark text-white border-secondary"
+                            placeholder="Ej: Cambio de fecha en el partido">
                     </div>
                     <div class="col-12">
                         <label class="form-label text-white-50 small text-uppercase">Mensaje</label>
-                        <textarea class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <textarea class="form-control bg-dark text-white border-secondary" rows="4"
+                            placeholder="Escribe tu mensaje aquí..."></textarea>
                     </div>
                 </div>
                 <div class="d-flex gap-2 mt-4">
                     <label for="modal-mensaje" class="btn btn-outline-secondary w-50">Cancelar</label>
-                    <button type="submit" class="btn btn-primary fw-bold w-50"><i class="bi bi-send-fill me-2"></i>Enviar</button>
+                    <button type="submit" class="btn btn-primary fw-bold w-50"><i
+                            class="bi bi-send-fill me-2"></i>Enviar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
-                OneTap eLeague
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center" id="nav-content"></ul>
-            </div>
-        </div>
-    </nav>
+    {{> header}}
 
     <main class="container py-5 mt-2">
 
@@ -141,7 +135,7 @@
         <div class="row g-3 mb-4">
 
             <div class="col-sm-6 col-lg-3">
-                <a href="create-tournament.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                <a href="/tournaments/create" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-plus-circle-fill fs-3 text-cyan mb-3 d-block"></i>
                     <p class="text-white fw-bold mb-1">Crear Torneo</p>
                     <p class="text-white-50 small mb-0">Configura un nuevo torneo o liga</p>
@@ -149,7 +143,7 @@
             </div>
 
             <div class="col-sm-6 col-lg-3">
-                <a href="edit-tournament.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                <a href="/admin/edit-tournament" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-pencil-square fs-3 text-cyan mb-3 d-block"></i>
                     <p class="text-white fw-bold mb-1">Editar Torneo</p>
                     <p class="text-white-50 small mb-0">Modifica un torneo existente</p>
@@ -157,7 +151,7 @@
             </div>
 
             <div class="col-sm-6 col-lg-3">
-                <a href="create-matches.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                <a href="/admin/create-matches" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-calendar-plus-fill fs-3 text-green mb-3 d-block"></i>
                     <p class="text-white fw-bold mb-1">Crear Partido</p>
                     <p class="text-white-50 small mb-0">Crea un partido dentro de un torneo</p>
@@ -165,7 +159,7 @@
             </div>
 
             <div class="col-sm-6 col-lg-3">
-                <a href="edit-matches.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                <a href="/admin/edit-matches" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-controller fs-3 text-orange mb-3 d-block"></i>
                     <p class="text-white fw-bold mb-1">Editar Partido</p>
                     <p class="text-white-50 small mb-0">Modifica un partido existente</p>
@@ -173,11 +167,11 @@
             </div>
 
             <p class="section-label mt-4">Equipos</p>
-            
+
             <div class="row g-3 mb-4">
 
                 <div class="col-sm-6 col-lg-3">
-                    <a href="teams-list-admin.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                    <a href="/admin/teams-list" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                         <i class="bi bi-shield-fill fs-3 text-cyan mb-3 d-block"></i>
                         <p class="text-white fw-bold mb-1">Ver Equipos</p>
                         <p class="text-white-50 small mb-0">Lista todos los equipos registrados</p>
@@ -185,7 +179,7 @@
                 </div>
 
                 <div class="col-sm-6 col-lg-3">
-                    <a href="create-team.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                    <a href="/teams/create" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                         <i class="bi bi-shield-plus fs-3 text-green mb-3 d-block"></i>
                         <p class="text-white fw-bold mb-1">Crear Equipo</p>
                         <p class="text-white-50 small mb-0">Registra un nuevo equipo en la liga</p>
@@ -193,7 +187,7 @@
                 </div>
 
             </div>
-            
+
 
         </div>
 
@@ -201,7 +195,7 @@
         <div class="row g-3 mb-5">
 
             <div class="col-sm-6 col-lg-3">
-                <a href="user-management.html" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
+                <a href="/users" class="admin-card d-block p-4 rounded-3 h-100 text-decoration-none">
                     <i class="bi bi-shield-lock-fill fs-3 text-warning mb-3 d-block"></i>
                     <p class="text-white fw-bold mb-1">Gestión de Usuarios</p>
                     <p class="text-white-50 small mb-0">Modifica roles, equipos y permisos</p>
@@ -220,34 +214,10 @@
 
     </main>
 
-    <footer class="footer bg-dark text-white py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>OneTap eLeague</h5>
-                    <p class="text-white-50">La plataforma líder para torneos universitarios de eSports</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Enlaces Directos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
-                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
-                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Contacto</h5>
-                    <p class="text-white-50">info@onetapeleague.com</p>
-                </div>
-            </div>
-            <hr class="border-secondary">
-            <div class="text-center">
-                <p class="mb-0 text-white-50">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

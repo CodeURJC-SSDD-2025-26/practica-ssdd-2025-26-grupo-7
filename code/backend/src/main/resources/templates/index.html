@@ -6,46 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneTap eLeague - Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/tournaments.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/tournaments.css">
 </head>
 
 <body>
-    <!--- NAVBAR --->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
-                OneTap eLeague
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="nav-content">
-                    <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/tournaments">Torneos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/teams">Equipos</a></li>
-                    {{#logged}}
-                        {{#admin}}
-                        <li class="nav-item"><a class="nav-link" href="/admin">Admin Panel</a></li>
-                        {{/admin}}
-                        <li class="nav-item"><a class="nav-link" href="/profile">Mi Perfil ({{userName}})</a></li>
-                        <li class="nav-item">
-                            <form action="/logout" method="post" class="d-inline">
-                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                                <button type="submit" class="nav-link btn btn-link" style="border:none;">Cerrar Sesión</button>
-                            </form>
-                        </li>
-                    {{/logged}}
-                    {{^logged}}
-                        <li class="nav-item"><a class="nav-link" href="/login">Acceder</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register">Registro</a></li>
-                    {{/logged}}
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {{> header}}
     <!-- MAIN SECTION -->
     <section class="hero-section">
         <div class="container">
@@ -54,7 +20,7 @@
                     <h1 class="display-4 fw-bold">Bienvenidos a OneTap eLeague</h1>
                     <p class="lead">La plataforma líder para torneos universitarios de eSports</p>
                     <div class="mt-4">
-                        <a href="tournaments.html" class="btn btn-primary btn-lg me-2">Ver Torneos</a>
+                        <a href="/tournaments" class="btn btn-primary btn-lg me-2">Ver Torneos</a>
                     </div>
                 </div>
             </div>
@@ -66,48 +32,22 @@
         <div class="container">
             <h2 class="text-center mb-5">Torneos Activos Ahora</h2>
             <div class="row">
+                {{#activeTournaments}}
                 <div class="col-md-4 mb-4">
                     <div class="card tournament-card">
-                        <img src="assets/images/valorant-tournament.png" class="card-img-top tournament-img"
-                            alt="Valorant Tournament">
+                        <img src="/assets/images/valorant-tournament.png" class="card-img-top tournament-img"
+                            alt="Torneo">
                         <div class="card-body">
-                            <h5 class="card-title">Torneo de Invierno Valorant</h5>
-                            <p class="card-text">16 equipos para un único título</p>
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{description}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="badge bg-success">Activo</span>
-                                <a href="tournament-detail.html" class="btn btn-sm btn-primary">Ver Detalles</a>
+                                <a href="/tournaments/{{id}}" class="btn btn-sm btn-primary">Ver Detalles</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card tournament-card">
-                        <img src="assets/images/lol-tournament.png" class="card-img-top tournament-img"
-                            alt="LoL Tournament">
-                        <div class="card-body">
-                            <h5 class="card-title">Copa League of Legends</h5>
-                            <p class="card-text">Batalla de 8 equipos por la corona</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-warning">Proximamente</span>
-                                <a href="tournament-detail.html" class="btn btn-sm btn-primary">Ver Detalles</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card tournament-card">
-                        <img src="assets/images/csgo-tournament.png" class="card-img-top tournament-img"
-                            alt="CS:GO Tournament">
-                        <div class="card-body">
-                            <h5 class="card-title">Liga Invierno CS:GO</h5>
-                            <p class="card-text">12 equipos compitiendo</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-success">Activo</span>
-                                <a href="tournament-detail.html" class="btn btn-sm btn-primary">Ver Detalles</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{/activeTournaments}}
             </div>
         </div>
     </section>
@@ -145,32 +85,7 @@
     </section>
 
     <!--FOOTER -->
-    <footer class="footer bg-dark text-white py-4 mt-auto">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>OneTap eLeague</h5>
-                    <p>La plataforma líder para torneos universitarios de eSports</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
-                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
-                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Contacto</h5>
-                    <p class="text-white-50">info@onetapeleague.com</p>
-                </div>
-            </div>
-            <hr class="bg-white">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

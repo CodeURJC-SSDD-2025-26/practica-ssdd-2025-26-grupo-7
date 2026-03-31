@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/images/logo.png" alt="OneTap eLeague" height="40">
+            OneTap eLeague
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="nav-content">
+                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/tournaments">Torneos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/teams">Equipos</a></li>
+                {{#logged}}
+                {{#admin}}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin Panel</a></li>
+                {{/admin}}
+                <li class="nav-item"><a class="nav-link" href="/profile">Mi Perfil ({{userName}})</a></li>
+                <li class="nav-item">
+                    <form action="/logout" method="post" class="d-inline">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                        <button type="submit" class="nav-link btn btn-link" style="border:none;">Cerrar Sesión</button>
+                    </form>
+                </li>
+                {{/logged}}
+                {{^logged}}
+                <li class="nav-item"><a class="nav-link" href="/login">Acceder</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Registro</a></li>
+                {{/logged}}
+            </ul>
+        </div>
+    </div>
+</nav>

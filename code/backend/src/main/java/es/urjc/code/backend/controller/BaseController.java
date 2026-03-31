@@ -45,6 +45,16 @@ public class BaseController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
+
     // PROFILE
     @GetMapping("/profile")
     public String profile(Model model,
@@ -74,6 +84,26 @@ public class BaseController {
         model.addAttribute("tournaments", tournamentRepository.findAll());
         model.addAttribute("teams", teamRepository.findAll());
         return "admin";
+    }
+
+    @GetMapping("/admin/edit-tournament")
+    public String editTournamentStatic() {
+        return "edit-tournament";
+    }
+
+    @GetMapping("/admin/create-matches")
+    public String createMatchesStatic() {
+        return "create-matches";
+    }
+
+    @GetMapping("/admin/edit-matches")
+    public String editMatchesStatic() {
+        return "edit-matches";
+    }
+
+    @GetMapping("/admin/teams-list")
+    public String teamsListAdminStatic() {
+        return "teams-list-admin";
     }
 
     // ERROR 403 no permision)

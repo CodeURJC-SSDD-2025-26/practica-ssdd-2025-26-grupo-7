@@ -6,28 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneTap eLeague - Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/matches.css">
-    <script src="js/auth.js"></script>
-</head>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/matches.css">
+    </head>
 
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/logo.png" alt="OneTap eLeague" height="40">
-                OneTap eLeague
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="nav-content">
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {{> header}}
 
   
     <!--HEADER SECTION-->
@@ -57,7 +41,7 @@
                                 <div class="match-team left">
                                     <h4 class="team-name d-none d-md-block">Agua</h4>
                                     <div class="team-icon-container">
-                                        <img src="assets/images/team_water.png" alt="Agua" class="team-icon">
+                                        <img src="/assets/images/team_water.png" alt="Agua" class="team-icon">
                                     </div>
                                 </div>
 
@@ -72,7 +56,7 @@
 
                                 <div class="match-team right">
                                     <div class="team-icon-container">
-                                        <img src="assets/images/team_fire.png" alt="Fuego" class="team-icon">
+                                        <img src="/assets/images/team_fire.png" alt="Fuego" class="team-icon">
                                     </div>
                                     <h4 class="team-name d-none d-md-block">Fuego</h4>
                                 </div>
@@ -92,7 +76,7 @@
                             <div class="match-team left">
                                 <h4 class="team-name d-none d-md-block">Rivas</h4>
                                 <div class="team-icon-container border-cyan">
-                                    <img src="assets/images/team_rivas.png" alt="Rivas" class="team-icon">
+                                    <img src="/assets/images/team_rivas.png" alt="Rivas" class="team-icon">
                                 </div>
                             </div>
 
@@ -102,7 +86,7 @@
 
                             <div class="match-team right">
                                 <div class="team-icon-container border-cyan">
-                                    <img src="assets/images/team_shadow.png" alt="Sombra" class="team-icon">
+                                    <img src="/assets/images/team_shadow.png" alt="Sombra" class="team-icon">
                                 </div>
                                 <h4 class="team-name d-none d-md-block">Sombra</h4>
                             </div>
@@ -122,7 +106,7 @@
                             <div class="match-team left">
                                 <h4 class="team-name d-none d-md-block">Elite</h4>
                                 <div class="team-icon-container border-cyan">
-                                    <img src="assets/images/team_elite.png" alt="Elite" class="team-icon">
+                                    <img src="/assets/images/team_elite.png" alt="Elite" class="team-icon">
                                 </div>
                             </div>
 
@@ -132,7 +116,7 @@
 
                             <div class="match-team right">
                                 <div class="team-icon-container border-cyan">
-                                    <img src="assets/images/team_water.png" alt="Agua" class="team-icon">
+                                    <img src="/assets/images/team_water.png" alt="Agua" class="team-icon">
                                 </div>
                                 <h4 class="team-name d-none d-md-block">Agua</h4>
                             </div>
@@ -152,7 +136,7 @@
                             <div class="match-team left">
                                 <h4 class="team-name d-none d-md-block">Sombra</h4>
                                 <div class="team-icon-container">
-                                    <img src="assets/images/team_shadow.png" alt="Sombra" class="team-icon">
+                                    <img src="/assets/images/team_shadow.png" alt="Sombra" class="team-icon">
                                 </div>
                             </div>
 
@@ -166,7 +150,7 @@
 
                             <div class="match-team right text-success">
                                 <div class="team-icon-container border-success">
-                                    <img src="assets/images/team_fire.png" alt="Fuego" class="team-icon">
+                                    <img src="/assets/images/team_fire.png" alt="Fuego" class="team-icon">
                                 </div>
                                 <h4 class="team-name d-none d-md-block fw-bold">Fuego</h4>
                             </div>
@@ -177,34 +161,7 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
-
-    <footer class="footer bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>OneTap eLeague</h5>
-                    <p>La plataforma líder para torneos universitarios de eSports</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="tournaments.html" class="text-white-50">Torneos</a></li>
-                        <li><a href="teams.html" class="text-white-50">Equipos</a></li>
-                        <li><a href="matches.html" class="text-white-50">Enfrentamientos</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Contacto</h5>
-                    <p class="text-white-50">info@onetapeleague.com</p>
-                </div>
-            </div>
-            <hr class="bg-white">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2026 OneTap eLeague. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
