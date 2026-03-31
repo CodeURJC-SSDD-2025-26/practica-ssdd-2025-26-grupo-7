@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/create-edit-tournament.css">
-    </head>
+</head>
 
 <body>
 
@@ -18,7 +18,8 @@
     <!-- MAIN -->
     <main class="container py-5">
         <div class="mb-4">
-            <a href="/admin" class="text-cyan text-decoration-none small text-uppercase"><i class="bi bi-arrow-left"></i> Panel Admin</a>
+            <a href="/admin" class="text-cyan text-decoration-none small text-uppercase"><i
+                    class="bi bi-arrow-left"></i> Panel Admin</a>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -43,7 +44,9 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-8">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Torneo a editar</label>
-                                <select id="sel-torneo" class="form-select bg-dark text-white border-secondary border-opacity-50" onchange="cargarTorneo(this.value)">
+                                <select id="sel-torneo"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                    onchange="cargarTorneo(this.value)">
                                     <option value="" disabled selected>— Selecciona un torneo —</option>
                                     <option value="valorant">Valorant Winter Cup 2026</option>
                                     <option value="lol">LoL University Series</option>
@@ -52,7 +55,9 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego</label>
-                                <input id="f-juego" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" readonly placeholder="Auto">
+                                <input id="f-juego" type="text"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" readonly
+                                    placeholder="Auto">
                             </div>
                         </div>
 
@@ -65,12 +70,17 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Torneo</label>
-                                    <input id="f-nombre" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del
+                                        Torneo</label>
+                                    <input id="f-nombre" type="text"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
-                                    <select id="f-juego-select" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <select id="f-juego-select"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="valorant">Valorant</option>
                                         <option value="lol">League of Legends</option>
                                         <option value="cs2">Counter-Strike 2</option>
@@ -78,12 +88,18 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Inicio</label>
-                                    <input id="f-inicio" type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de
+                                        Inicio</label>
+                                    <input id="f-inicio" type="date"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Finalización</label>
-                                    <input id="f-fin" type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de
+                                        Finalización</label>
+                                    <input id="f-fin" type="date"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                 </div>
                             </div>
 
@@ -94,23 +110,33 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Máx. Equipos</label>
-                                    <input id="f-equipos" type="number" class="form-control bg-dark text-white border-secondary border-opacity-50" min="4" max="64" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Máx.
+                                        Equipos</label>
+                                    <input id="f-equipos" type="number"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        min="4" max="64" required>
                                 </div>
                                 <div class="col-md-8">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize Pool)</label>
-                                    <input id="f-premio" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50">
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize
+                                        Pool)</label>
+                                    <input id="f-premio" type="text"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50">
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">
                                         <i class="bi bi-image me-2"></i>Banner / Imagen del Torneo
                                     </label>
-                                    <input class="form-control bg-dark text-white border-secondary border-opacity-50" type="file" accept="image/png, image/jpeg">
-                                    <div class="form-text text-white-50 small mt-1">Deja vacío para mantener el banner actual.</div>
+                                    <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        type="file" accept="image/png, image/jpeg">
+                                    <div class="form-text text-white-50 small mt-1">Deja vacío para mantener el banner
+                                        actual.</div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y Descripción</label>
-                                    <textarea id="f-reglas" class="form-control bg-dark text-white border-secondary border-opacity-50" rows="4"></textarea>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y
+                                        Descripción</label>
+                                    <textarea id="f-reglas"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        rows="4"></textarea>
                                 </div>
                             </div>
 
@@ -127,10 +153,12 @@
                             </a>
 
                             <div class="alert alert-danger bg-transparent border-danger mt-4">
-                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
-                                <p class="text-white-50 small mb-2">Eliminar el torneo borrará todos sus datos y no podrá recuperarse.</p>
+                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona
+                                    de Peligro</h6>
+                                <p class="text-white-50 small mb-2">Eliminar el torneo borrará todos sus datos y no
+                                    podrá recuperarse.</p>
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="if(confirm('¿Seguro que quieres eliminar este torneo?')) window.location='admin.html'">
+                                    onclick="if(confirm('¿Seguro que quieres eliminar este torneo?')) window.location='/admin'">
                                     <i class="bi bi-trash3-fill me-1"></i>Eliminar torneo
                                 </button>
                             </div>
@@ -161,7 +189,7 @@
                 equipos: 16, premio: "500€ + Setup Gaming",
                 reglas: "BO3 en playoff, BO1 en grupos. Sin smurfs.",
                 partidos: [
-                    { equipos: "Fuego vs Agua",  fase: "Semifinal",       fecha: "2026-02-10", hora: "18:00", formato: "BO3" },
+                    { equipos: "Fuego vs Agua", fase: "Semifinal", fecha: "2026-02-10", hora: "18:00", formato: "BO3" },
                     { equipos: "Rivas vs Elite", fase: "Cuartos de Final", fecha: "2026-02-08", hora: "17:00", formato: "BO1" },
                 ]
             },
@@ -188,14 +216,14 @@
             if (!t) return;
 
             // Rellenar campos
-            document.getElementById('f-juego').value        = t.nombre.split(' ')[0]; // display readonly
-            document.getElementById('f-nombre').value       = t.nombre;
+            document.getElementById('f-juego').value = t.nombre.split(' ')[0]; // display readonly
+            document.getElementById('f-nombre').value = t.nombre;
             document.getElementById('f-juego-select').value = t.juego;
-            document.getElementById('f-inicio').value       = t.inicio;
-            document.getElementById('f-fin').value          = t.fin;
-            document.getElementById('f-equipos').value      = t.equipos;
-            document.getElementById('f-premio').value       = t.premio;
-            document.getElementById('f-reglas').value       = t.reglas;
+            document.getElementById('f-inicio').value = t.inicio;
+            document.getElementById('f-fin').value = t.fin;
+            document.getElementById('f-equipos').value = t.equipos;
+            document.getElementById('f-premio').value = t.premio;
+            document.getElementById('f-reglas').value = t.reglas;
 
             // Partidos
             const lista = document.getElementById('partidos-lista');
@@ -220,4 +248,5 @@
     </script>
 
 </body>
+
 </html>

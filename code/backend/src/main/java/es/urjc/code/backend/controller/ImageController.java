@@ -32,19 +32,28 @@ public class ImageController {
         switch (entity.toLowerCase()) {
             case "tournaments":
                 return tournamentRepository.findById(id)
-                        .map(t -> blobToResponse(t.getImageFile()))
-                        .orElse(ResponseEntity.notFound().build());
+                        .map(t -> t.getImageFile() != null ? blobToResponse(t.getImageFile())
+                                : redirectFallback("/assets/images/valorant-tournament.png"))
+                        .orElseGet(() -> redirectFallback("/assets/images/valorant-tournament.png"));
             case "teams":
                 return teamRepository.findById(id)
-                        .map(t -> blobToResponse(t.getImageFile()))
-                        .orElse(ResponseEntity.notFound().build());
+                        .map(t -> t.getImageFile() != null ? blobToResponse(t.getImageFile())
+                                : redirectFallback("/assets/images/team_fire.png"))
+                        .orElseGet(() -> redirectFallback("/assets/images/team_fire.png"));
             case "users":
                 return userRepository.findById(id)
-                        .map(u -> blobToResponse(u.getImageFile()))
-                        .orElse(ResponseEntity.notFound().build());
+                        .map(u -> u.getImageFile() != null ? blobToResponse(u.getImageFile())
+                                : redirectFallback("/assets/images/default-avatar.png"))
+                        .orElseGet(() -> redirectFallback("/assets/images/default-avatar.png"));
             default:
                 return ResponseEntity.badRequest().build();
         }
+    }
+
+    private ResponseEntity<byte[]> redirectFallback(String fallbackUrl) {
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, fallbackUrl)
+                .build();
     }
 
     private ResponseEntity<byte[]> blobToResponse(Blob blob) {

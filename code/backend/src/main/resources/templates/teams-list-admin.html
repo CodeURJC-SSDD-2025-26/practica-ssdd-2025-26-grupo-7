@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/team-list.css">
 
-    </head>
+</head>
 
 <body>
     {{> header}}
-    
+
 
     <header class="page-header text-center">
         <div class="container">
@@ -26,13 +26,14 @@
     <main class="container py-5">
 
         <div class="mb-4">
-                    <a href="/admin" class="text-cyan text-decoration-none small text-uppercase">
-                        <i class="bi bi-arrow-left me-1"></i>Panel Admin
-                    </a>
+            <a href="/admin" class="text-cyan text-decoration-none small text-uppercase">
+                <i class="bi bi-arrow-left me-1"></i>Panel Admin
+            </a>
         </div>
 
         <p class="text-white-50 small mb-4">
-            <i class="bi bi-shield-fill me-1 text-cyan"></i>Mostrando <strong class="text-white">5</strong> equipos registrados
+            <i class="bi bi-shield-fill me-1 text-cyan"></i>Mostrando <strong class="text-white">5</strong> equipos
+            registrados
         </p>
 
         <div class="row g-4">
@@ -41,7 +42,8 @@
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_fire.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                        <img src="/assets/images/team_fire.png" alt="Logo"
+                            class="team-card-logo rounded-circle shadow-sm">
                     </div>
                     <div class="team-card-body text-center ">
                         <div class="team-card-info">
@@ -83,7 +85,8 @@
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_elite.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                        <img src="/assets/images/team_elite.png" alt="Logo"
+                            class="team-card-logo rounded-circle shadow-sm">
                     </div>
                     <div class="team-card-body text-center">
                         <div class="team-card-info">
@@ -125,12 +128,14 @@
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_water.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                        <img src="/assets/images/team_water.png" alt="Logo"
+                            class="team-card-logo rounded-circle shadow-sm">
                     </div>
                     <div class="team-card-body text-center">
                         <div class="team-card-info">
                             <h5 class="text-white fw-bold mb-1">Equipo Agua</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Fuenlabrada</p>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Fuenlabrada
+                            </p>
                             <div class="d-flex gap-2 mb-3 flex-wrap">
                                 <span class="badge bg-danger">CS:GO</span>
                             </div>
@@ -167,12 +172,14 @@
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_shadow.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                        <img src="/assets/images/team_shadow.png" alt="Logo"
+                            class="team-card-logo rounded-circle shadow-sm">
                     </div>
-                    <div class="team-card-body text-center"> 
+                    <div class="team-card-body text-center">
                         <div class="team-card-info">
                             <h5 class="text-white fw-bold mb-1">Equipo Sombra</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>Politécnica de Madrid</p>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>Politécnica de Madrid
+                            </p>
                             <div class="d-flex gap-2 mb-3 flex-wrap">
                                 <span class="badge bg-secondary">Rocket League</span>
                             </div>
@@ -209,7 +216,8 @@
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_rivas.png" alt="Logo" class="team-card-logo rounded-circle shadow-sm">
+                        <img src="/assets/images/team_rivas.png" alt="Logo"
+                            class="team-card-logo rounded-circle shadow-sm">
                     </div>
                     <div class="team-card-body text-center">
                         <div class="team-card-info">
@@ -247,17 +255,20 @@
                 </div>
             </div>
 
-        </div></main>
+        </div>
+    </main>
 
     <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-card text-white border border-danger border-opacity-25">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar Equipo</h5>
+                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar
+                        Equipo</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-white-50">¿Estás seguro de que quieres eliminar a <strong class="text-white" id="nombreEquipoEliminar"></strong>? Esta acción no se puede deshacer.</p>
+                    <p class="text-white-50">¿Estás seguro de que quieres eliminar a <strong class="text-white"
+                            id="nombreEquipoEliminar"></strong>? Esta acción no se puede deshacer.</p>
                 </div>
                 <div class="modal-footer border-secondary">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -279,4 +290,5 @@
         }
     </script>
 </body>
+
 </html>

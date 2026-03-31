@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/create-edit-tournament.css">
-    </head>
+</head>
 
 <body>
 
@@ -18,7 +18,8 @@
     <!-- MAIN -->
     <main class="container py-5">
         <div class="mb-4">
-            <a href="/admin" class="text-cyan text-decoration-none small text-uppercase"><i class="bi bi-arrow-left"></i> Panel Admin</a>
+            <a href="/admin" class="text-cyan text-decoration-none small text-uppercase"><i
+                    class="bi bi-arrow-left"></i> Panel Admin</a>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -27,7 +28,8 @@
                     <h2 class="text-white text-uppercase">
                         <i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Partido</span>
                     </h2>
-                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el resultado.</p>
+                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el
+                        resultado.</p>
                 </div>
 
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
@@ -42,7 +44,9 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-8">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Torneo</label>
-                                <select id="sel-torneo" class="form-select bg-dark text-white border-secondary border-opacity-50" onchange="cargarTorneo(this.value)">
+                                <select id="sel-torneo"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                    onchange="cargarTorneo(this.value)">
                                     <option value="" disabled selected>— Selecciona un torneo —</option>
                                     <option value="valorant">Valorant Winter Cup 2026</option>
                                     <option value="lol">LoL University Series</option>
@@ -51,7 +55,9 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego</label>
-                                <input id="f-juego" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" readonly placeholder="Auto">
+                                <input id="f-juego" type="text"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" readonly
+                                    placeholder="Auto">
                             </div>
                         </div>
 
@@ -63,8 +69,11 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a editar</label>
-                                    <select id="sel-partido" class="form-select bg-dark text-white border-secondary border-opacity-50" onchange="cargarPartido(this.value)">
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a
+                                        editar</label>
+                                    <select id="sel-partido"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        onchange="cargarPartido(this.value)">
                                         <option value="" disabled selected>— Selecciona un partido —</option>
                                     </select>
                                 </div>
@@ -80,8 +89,11 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Local</label>
-                                    <select id="f-local" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo
+                                        Local</label>
+                                    <select id="f-local"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="" disabled>Selecciona equipo...</option>
                                         <option>Fuego</option>
                                         <option>Agua</option>
@@ -92,8 +104,11 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Visitante</label>
-                                    <select id="f-visitante" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo
+                                        Visitante</label>
+                                    <select id="f-visitante"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="" disabled>Selecciona equipo...</option>
                                         <option>Fuego</option>
                                         <option>Agua</option>
@@ -112,7 +127,9 @@
                             <div class="row g-4 mb-4">
                                 <div class="col-md-4">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
-                                    <select id="f-fase" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <select id="f-fase"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="" disabled>Selecciona fase...</option>
                                         <option>Fase de Grupos</option>
                                         <option>Cuartos de Final</option>
@@ -122,7 +139,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
-                                    <select id="f-formato" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <select id="f-formato"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="" disabled>Selecciona...</option>
                                         <option>BO1</option>
                                         <option>BO3</option>
@@ -131,7 +150,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
-                                    <select id="f-estado" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <select id="f-estado"
+                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                         <option value="" disabled>Selecciona...</option>
                                         <option>Programado</option>
                                         <option>En Vivo</option>
@@ -141,15 +162,22 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
-                                    <input id="f-fecha" type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                    <input id="f-fecha" type="date"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
-                                    <input id="f-hora" type="time" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                    <input id="f-hora" type="time"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        required>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales</label>
-                                    <input id="f-notas" type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: Sala privada #1234...">
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Notas
+                                        adicionales</label>
+                                    <input id="f-notas" type="text"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        placeholder="Ej: Sala privada #1234...">
                                 </div>
                             </div>
 
@@ -160,23 +188,33 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-md-5">
-                                    <label id="label-local" class="form-label small text-uppercase fw-bold text-cyan">Puntuacion Local</label>
-                                    <input id="f-score-local" type="number" min="0" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="0">
+                                    <label id="label-local"
+                                        class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
+                                        Local</label>
+                                    <input id="f-score-local" type="number" min="0"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        placeholder="0">
                                 </div>
                                 <div class="col-md-2 d-flex align-items-end justify-content-center pb-2">
                                     <span class="text-white-50 fs-3 fw-bold">:</span>
                                 </div>
                                 <div class="col-md-5">
-                                    <label id="label-visitante" class="form-label small text-uppercase fw-bold text-cyan">Puntuacion Visitante</label>
-                                    <input id="f-score-visitante" type="number" min="0" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="0">
+                                    <label id="label-visitante"
+                                        class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
+                                        Visitante</label>
+                                    <input id="f-score-visitante" type="number" min="0"
+                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                        placeholder="0">
                                 </div>
                             </div>
 
                             <div class="alert alert-danger bg-transparent border-danger mt-4">
-                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
-                                <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no podra recuperarse.</p>
+                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona
+                                    de Peligro</h6>
+                                <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no
+                                    podra recuperarse.</p>
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="if(confirm('Seguro que quieres eliminar este partido?')) window.location='admin.html'">
+                                    onclick="if(confirm('Seguro que quieres eliminar este partido?')) window.location='/admin'">
                                     <i class="bi bi-trash3-fill me-1"></i>Eliminar partido
                                 </button>
                             </div>
@@ -251,19 +289,19 @@
             const p = torneo.partidos.find(x => x.id === id);
             if (!p) return;
 
-            setSelect('f-local',     p.local);
+            setSelect('f-local', p.local);
             setSelect('f-visitante', p.visitante);
-            setSelect('f-fase',      p.fase);
-            setSelect('f-formato',   p.formato);
-            setSelect('f-estado',    p.estado);
+            setSelect('f-fase', p.fase);
+            setSelect('f-formato', p.formato);
+            setSelect('f-estado', p.estado);
 
-            document.getElementById('f-fecha').value           = p.fecha;
-            document.getElementById('f-hora').value            = p.hora;
-            document.getElementById('f-notas').value           = p.notas;
-            document.getElementById('f-score-local').value     = p.scoreLocal     > 0 ? p.scoreLocal     : '';
+            document.getElementById('f-fecha').value = p.fecha;
+            document.getElementById('f-hora').value = p.hora;
+            document.getElementById('f-notas').value = p.notas;
+            document.getElementById('f-score-local').value = p.scoreLocal > 0 ? p.scoreLocal : '';
             document.getElementById('f-score-visitante').value = p.scoreVisitante > 0 ? p.scoreVisitante : '';
 
-            document.getElementById('label-local').textContent     = p.local     + ' (Local)';
+            document.getElementById('label-local').textContent = p.local + ' (Local)';
             document.getElementById('label-visitante').textContent = p.visitante + ' (Visitante)';
 
             document.getElementById('campos-partido').classList.add('visible');
@@ -281,4 +319,5 @@
     </script>
 
 </body>
+
 </html>

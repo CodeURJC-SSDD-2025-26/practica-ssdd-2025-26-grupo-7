@@ -106,6 +106,16 @@ public class BaseController {
         return "teams-list-admin";
     }
 
+    @GetMapping("/matches")
+    public String showMatchesPage() {
+        return "matches";
+    }
+
+    @GetMapping("/match-detail")
+    public String showMatchesDetailPage() {
+        return "match-detail";
+    }
+
     // ERROR 403 no permision)
     @GetMapping("/error-403")
     public String error403(Model model) {
