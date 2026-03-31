@@ -26,28 +26,25 @@ public class ImageController {
     @Autowired
     private UserRepository userRepository;
 
-    // Tournament image
-    @GetMapping("/images/tournaments/{id}")
-    public ResponseEntity<byte[]> getTournamentImage(@PathVariable Long id) {
-        return tournamentRepository.findById(id)
-                .map(t -> blobToResponse(t.getImageFile()))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // Team image
-    @GetMapping("/images/teams/{id}")
-    public ResponseEntity<byte[]> getTeamImage(@PathVariable Long id) {
-        return teamRepository.findById(id)
-                .map(t -> blobToResponse(t.getImageFile()))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // User image
-    @GetMapping("/images/users/{id}")
-    public ResponseEntity<byte[]> getUserImage(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(u -> blobToResponse(u.getImageFile()))
-                .orElse(ResponseEntity.notFound().build());
+    // Download image genérico
+    @GetMapping("/images/{entity}/{id}")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable String entity, @PathVariable Long id) {
+        switch (entity.toLowerCase()) {
+            case "tournaments":
+                return tournamentRepository.findById(id)
+                        .map(t -> blobToResponse(t.getImageFile()))
+                        .orElse(ResponseEntity.notFound().build());
+            case "teams":
+                return teamRepository.findById(id)
+                        .map(t -> blobToResponse(t.getImageFile()))
+                        .orElse(ResponseEntity.notFound().build());
+            case "users":
+                return userRepository.findById(id)
+                        .map(u -> blobToResponse(u.getImageFile()))
+                        .orElse(ResponseEntity.notFound().build());
+            default:
+                return ResponseEntity.badRequest().build();
+        }
     }
 
     private ResponseEntity<byte[]> blobToResponse(Blob blob) {
@@ -64,7 +61,6 @@ public class ImageController {
         }
     }
 
-    
     private MediaType detectMediaType(byte[] bytes) {
         if (bytes.length >= 4
                 && bytes[0] == (byte) 0x89
