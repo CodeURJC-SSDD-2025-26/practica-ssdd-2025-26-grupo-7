@@ -89,27 +89,37 @@
                 <h5 class="text-purple m-0"><i class="bi bi-envelope-fill me-2"></i>Enviar Mensaje</h5>
                 <label for="modal-mensaje" class="btn-close btn-close-white"></label>
             </div>
-            <form>
+
+            {{#msgSent}}
+            <div class="alert alert-success py-2 small mb-3">
+                <i class="bi bi-check-circle me-2"></i>¡Mensaje enviado correctamente!
+            </div>
+            {{/msgSent}}
+
+            <form action="/admin/messages/send" method="POST">
+                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                 <div class="row g-3">
                     <div class="col-12">
                         <label class="form-label text-white-50 small text-uppercase">Destinatario</label>
-                        <select class="form-select bg-dark text-white border-secondary">
-                            <option>Todos los capitanes</option>
-                            <option>PlayerONE — Fuego</option>
-                            <option>AquaKing — Agua</option>
-                            <option> xSniper99 — Rivas</option>
-                            <option>ShadowX — Shadow</option>
+                        <select name="recipientId" class="form-select bg-dark text-white border-secondary">
+                            <option value="-1">📢 Todos los capitanes</option>
+                            {{#captains}}
+                            <option value="{{id}}">{{nickname}} — {{team.name}}</option>
+                            {{/captains}}
+                            {{^captains}}
+                            <option disabled>No hay capitanes registrados</option>
+                            {{/captains}}
                         </select>
                     </div>
                     <div class="col-12">
                         <label class="form-label text-white-50 small text-uppercase">Asunto</label>
-                        <input type="text" class="form-control bg-dark text-white border-secondary"
-                            placeholder="Ej: Cambio de fecha en el partido">
+                        <input type="text" name="subject" class="form-control bg-dark text-white border-secondary"
+                            placeholder="Ej: Cambio de fecha en el partido" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label text-white-50 small text-uppercase">Mensaje</label>
-                        <textarea class="form-control bg-dark text-white border-secondary" rows="4"
-                            placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <textarea name="content" class="form-control bg-dark text-white border-secondary" rows="4"
+                            placeholder="Escribe tu mensaje aquí..." required></textarea>
                     </div>
                 </div>
                 <div class="d-flex gap-2 mt-4">

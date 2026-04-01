@@ -1,6 +1,7 @@
 package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.repository.MatchRepository;
+import es.urjc.code.backend.repository.MessageRepository;
 import es.urjc.code.backend.repository.TeamRepository;
 import es.urjc.code.backend.repository.TournamentRepository;
 import es.urjc.code.backend.repository.UserRepository;
@@ -26,6 +27,9 @@ public class BaseController {
 
     @Autowired
     private MatchRepository matchRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     // HOME
     @GetMapping("/")
@@ -74,10 +78,14 @@ public class BaseController {
             
             if (user != null) {
                 model.addAttribute("user", user);
+                // Load messages for this user (inbox)
+                java.util.List<es.urjc.code.backend.model.Message> messages =
+                        messageRepository.findByRecipientOrderBySentAtDesc(user);
+                model.addAttribute("messages", messages);
+                model.addAttribute("hasMessages", !messages.isEmpty());
             }
             return "profile";
         } else {
-            // Failsafe for invalid session
             return "redirect:/login";
         }
     }
@@ -135,10 +143,19 @@ public class BaseController {
 
     // ADMIN PANEL
     @GetMapping("/admin")
-    public String admin(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+    public String admin(Model model,
+            @org.springframework.web.bind.annotation.RequestParam(value = "msgSent", required = false) Boolean msgSent) {
+        java.util.List<es.urjc.code.backend.model.User> allUsers = userRepository.findAll();
+        java.util.List<es.urjc.code.backend.model.User> captains = allUsers.stream()
+                .filter(es.urjc.code.backend.model.User::getIsCaptain)
+                .collect(java.util.stream.Collectors.toList());
+        model.addAttribute("users", allUsers);
+        model.addAttribute("captains", captains);
         model.addAttribute("tournaments", tournamentRepository.findAll());
         model.addAttribute("teams", teamRepository.findAll());
+        if (Boolean.TRUE.equals(msgSent)) {
+            model.addAttribute("msgSent", true);
+        }
         return "admin";
     }
 

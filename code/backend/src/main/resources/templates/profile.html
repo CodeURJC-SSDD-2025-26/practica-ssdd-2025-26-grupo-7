@@ -218,6 +218,41 @@
                     </div>
                 </div>
 
+                <!-- INBOX: Messages from Admin -->
+                <div class="card bg-card border-0 shadow-lg p-4 mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mt-0 mb-0 text-cyan text-uppercase fs-5">
+                            <i class="bi bi-envelope-fill me-2"></i>Bandeja de Entrada
+                        </h4>
+                        {{#hasMessages}}
+                        <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
+                            {{messages.size}} mensaje(s)
+                        </span>
+                        {{/hasMessages}}
+                    </div>
+
+                    {{^hasMessages}}
+                    <div class="text-center py-5 text-white-50">
+                        <i class="bi bi-inbox fs-1 d-block mb-3 opacity-25"></i>
+                        <p class="mb-0 small">Sin mensajes por ahora.</p>
+                    </div>
+                    {{/hasMessages}}
+
+                    {{#messages}}
+                    <div class="border border-secondary border-opacity-25 rounded-3 p-3 mb-3"
+                        style="background: rgba(255,255,255,0.03);">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="fw-bold text-white">{{subject}}</span>
+                            <span class="small text-white-50 text-nowrap ms-3">{{formattedDate}}</span>
+                        </div>
+                        <p class="text-white-50 small mb-1">
+                            <i class="bi bi-person-fill me-1"></i> De: {{sender.name}}
+                        </p>
+                        <p class="text-white mb-0">{{content}}</p>
+                    </div>
+                    {{/messages}}
+                </div>
+
             </div>
         </div>
     </main>
