@@ -16,6 +16,9 @@
                 {{#admin}}
                 <li class="nav-item"><a class="nav-link" href="/admin">Admin Panel</a></li>
                 {{/admin}}
+                {{^admin}}
+                <li class="nav-item"><a class="nav-link" href="/favourites">Favoritos</a></li>
+                {{/admin}}
                 <li class="nav-item"><a class="nav-link" href="/profile">Mi Perfil ({{userName}})</a></li>
                 <li class="nav-item">
                     <form action="/logout" method="post" class="d-inline">
