@@ -36,14 +36,14 @@ public class CustomErrorController implements ErrorController {
             return raw.toString();
         }
         HttpStatus status = HttpStatus.resolve(code);
-        if (status == null) return "Ha ocurrido un error inesperado.";
+        if (status == null) return "An unexpected error occurred.";
         return switch (status) {
-            case NOT_FOUND          -> "La página que buscas no existe.";
-            case FORBIDDEN          -> "No tienes permiso para acceder a este recurso.";
-            case UNAUTHORIZED       -> "Debes iniciar sesión para acceder a esta página.";
-            case METHOD_NOT_ALLOWED -> "El método HTTP utilizado no está permitido en esta URL.";
-            case BAD_REQUEST        -> "Tu petición era incorrecta o faltaban campos obligatorios.";
-            default                 -> "Ha ocurrido un error inesperado en el servidor. Por favor, inténtalo de nuevo más tarde.";
+            case NOT_FOUND          -> "The page you are looking for does not exist.";
+            case FORBIDDEN          -> "You do not have permission to access this resource.";
+            case UNAUTHORIZED       -> "You must be logged in to access this page.";
+            case METHOD_NOT_ALLOWED -> "The HTTP method used is not allowed for this endpoint.";
+            case BAD_REQUEST        -> "Your request was malformed or missing required fields.";
+            default                 -> "An unexpected server error occurred. Please try again later.";
         };
     }
 }
