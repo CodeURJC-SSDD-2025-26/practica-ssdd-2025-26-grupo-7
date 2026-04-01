@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private es.urjc.code.backend.repository.UserRepository userRepository;
+
 	@ModelAttribute
 	public void addAttributes(org.springframework.ui.Model model, HttpServletRequest request) {
 
@@ -25,6 +28,19 @@ public class GlobalControllerAdvice {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
             
+            userRepository.findByEmail(principal.getName())
+                .or(() -> userRepository.findByName(principal.getName()))
+                .ifPresentOrElse(
+                    u -> {
+                        model.addAttribute("userId", u.getId());
+                        model.addAttribute("userNickname", u.getNickname());
+                    },
+                    () -> {
+                        model.addAttribute("userId", "0");
+                        model.addAttribute("userNickname", "Usuario");
+                    }
+                );
+
             org.springframework.security.core.Authentication auth = 
                 org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
             

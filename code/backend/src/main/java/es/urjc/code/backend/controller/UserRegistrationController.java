@@ -26,12 +26,13 @@ public class UserRegistrationController {
     // REGISTER
     @PostMapping("/register")
     public String register(
-            @RequestParam String name,
-            @RequestParam String nickname,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String confirmPassword,
-            @RequestParam(required = false) MultipartFile imageFile,
+            @RequestParam("name") String name,
+            @RequestParam("nickname") String nickname,
+            @RequestParam("email") String email,
+            @RequestParam("university") String university,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirmPassword,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             Model model) throws IOException {
 
         // Basic validations
@@ -44,8 +45,8 @@ public class UserRegistrationController {
             return "register";
         }
 
-        User user = new User(name, nickname, email,
-                passwordEncoder.encode(password), List.of("USER"));
+        User user = new User(name, nickname, email, university,
+                passwordEncoder.encode(password), new java.util.ArrayList<>(List.of("USER")));
 
         if (imageFile != null && !imageFile.isEmpty()) {
             user.setImageFile(

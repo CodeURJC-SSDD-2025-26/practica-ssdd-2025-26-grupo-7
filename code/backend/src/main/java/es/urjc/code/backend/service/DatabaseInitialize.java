@@ -33,10 +33,10 @@ public class DatabaseInitialize {
     public void init() {
         // 1. Initialize Users if not present
         if (userRepository.findByEmail("admin@onetapeleague.com").isEmpty()) {
-            User admin = new User("Administrador", "admin", "admin@onetapeleague.com", passwordEncoder.encode("pass123"),
+            User admin = new User("Administrador", "admin", "admin@onetapeleague.com", "", passwordEncoder.encode("pass123"),
                     List.of("USER", "ADMIN"));
-            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", passwordEncoder.encode("pass123"), List.of("USER"));
-            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", passwordEncoder.encode("pass123"), List.of("USER"));
+            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
+            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
 
             userRepository.save(admin);
             userRepository.save(player1);

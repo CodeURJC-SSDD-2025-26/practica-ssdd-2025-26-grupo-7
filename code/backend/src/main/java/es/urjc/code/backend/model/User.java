@@ -19,6 +19,8 @@ public class User {
     private String email;
 
     private String password;
+    
+    private String university;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
@@ -31,10 +33,11 @@ public class User {
 
     public User() {}
 
-    public User(String name, String nickname, String email, String password, List<String> roles) {
+    public User(String name, String nickname, String email, String university, String password, List<String> roles) {
         this.name = name;
         this.nickname = nickname;
         this.email = email;
+        this.university = university;
         this.password = password;
         this.roles = roles;
     }
@@ -51,6 +54,9 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getUniversity() { return university != null ? university : ""; }
+    public void setUniversity(String university) { this.university = university; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }

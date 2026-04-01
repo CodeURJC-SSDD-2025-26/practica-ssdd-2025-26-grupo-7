@@ -27,6 +27,12 @@
                             </div>
 
                             <form action="/login" method="post">
+                                {{#registered}}
+                                <div class="alert alert-success mt-3 mb-3 fw-bold text-center" role="alert" style="background-color: var(--accent-green); color: black; border: none;">
+                                    ¡Cuenta creada con éxito! Ya puedes entrar.
+                                </div>
+                                {{/registered}}
+                                
                                 {{#error}}
                                 <div class="alert alert-danger mb-3" role="alert">
                                     Usuario o contraseña incorrectos.

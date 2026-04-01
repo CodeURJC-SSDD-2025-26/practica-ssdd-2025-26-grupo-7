@@ -28,49 +28,57 @@
                                 <p class="text-white-50">Crea tu perfil de competidor</p>
                             </div>
 
-                            <form action="/login" method="POST">
+                            <form action="/register" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                
+                                {{#error}}
+                                <div class="alert alert-danger" role="alert">
+                                    {{error}}
+                                </div>
+                                {{/error}}
+                            
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Nombre Completo</label>
-                                        <input type="text" class="form-control custom-input"
+                                        <input type="text" name="name" class="form-control custom-input"
                                             placeholder="Ej: Juan Pérez" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Gamertag (ID)</label>
-                                        <input type="text" class="form-control custom-input"
+                                        <input type="text" name="nickname" class="form-control custom-input"
                                             placeholder="Ej: NoobMaster" required>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Email</label>
-                                        <input type="email" class="form-control custom-input" placeholder="tu@mail.com"
+                                        <input type="email" name="email" class="form-control custom-input" placeholder="tu@mail.com"
                                             required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Universidad</label>
-                                        <select class="form-select custom-input text-white-50">
-                                            <option selected disabled>Selecciona tu centro</option>
-                                            <option value="1">Universidad Rey Juan Carlos</option>
-                                            <option value="2">Universidad Complutense</option>
-                                            <option value="3">Politécnica de Madrid</option>
-                                            <option value="4">Otras...</option>
-                                        </select>
+                                        <input type="text" name="university" class="form-control custom-input" placeholder="Ej. URJC - Móstoles"
+                                            required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small text-uppercase fw-bold"
+                                            style="color: var(--primary-cyan);">Avatar (Opcional)</label>
+                                        <input type="file" name="imageFile" class="form-control custom-input text-white-50" accept="image/*">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Contraseña</label>
-                                        <input type="password" class="form-control custom-input" placeholder="••••••••"
+                                        <input type="password" name="password" class="form-control custom-input" placeholder="••••••••"
                                             required>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <label class="form-label small text-uppercase fw-bold"
                                             style="color: var(--primary-cyan);">Confirmar Contraseña</label>
-                                        <input type="password" class="form-control custom-input" placeholder="••••••••"
+                                        <input type="password" name="confirmPassword" class="form-control custom-input" placeholder="••••••••"
                                             required>
                                     </div>
                                 </div>

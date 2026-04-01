@@ -46,7 +46,16 @@ public class BaseController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(
+            org.springframework.ui.Model model,
+            @org.springframework.web.bind.annotation.RequestParam(value = "error", required = false) String error,
+            @org.springframework.web.bind.annotation.RequestParam(value = "registered", required = false) String registered) {
+        if (error != null) {
+            model.addAttribute("error", true);
+        }
+        if (registered != null) {
+            model.addAttribute("registered", true);
+        }
         return "login";
     }
 
@@ -62,9 +71,46 @@ public class BaseController {
         if (currentUser == null) {
             return "redirect:/login";
         }
-        userRepository.findByEmail(currentUser.getUsername())
-                .ifPresent(u -> model.addAttribute("user", u));
-        return "profile";
+        
+        es.urjc.code.backend.model.User u = userRepository.findByEmail(currentUser.getUsername())
+                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
+                
+        if (u != null) {
+            model.addAttribute("user", u);
+            return "profile";
+        } else {
+            // Failsafe for invalid session
+            return "redirect:/login";
+        }
+    }
+
+    @org.springframework.web.bind.annotation.PostMapping("/profile/edit")
+    public String editProfile(
+            @org.springframework.web.bind.annotation.RequestParam("nickname") String nickname,
+            @org.springframework.web.bind.annotation.RequestParam(value = "university", required = false) String university,
+            @org.springframework.web.bind.annotation.RequestParam(value = "imageFile", required = false) org.springframework.web.multipart.MultipartFile imageFile,
+            @AuthenticationPrincipal UserDetails currentUser) throws java.io.IOException {
+        
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+        
+        es.urjc.code.backend.model.User user = userRepository.findByEmail(currentUser.getUsername())
+                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
+                
+        if (user != null) {
+            user.setNickname(nickname);
+            if (university != null) {
+                user.setUniversity(university);
+            }
+            if (imageFile != null && !imageFile.isEmpty()) {
+                user.setImageFile(
+                    org.hibernate.engine.jdbc.BlobProxy.generateProxy(
+                        imageFile.getInputStream(), imageFile.getSize()));
+            }
+            userRepository.save(user);
+        }
+        return "redirect:/profile";
     }
 
     // FAVOURITES
