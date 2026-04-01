@@ -8,25 +8,44 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto" id="nav-content">
+            <ul class="navbar-nav ms-auto align-items-center" id="nav-content">
                 <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="/tournaments">Torneos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/matches">Partidos</a></li>
                 <li class="nav-item"><a class="nav-link" href="/teams">Equipos</a></li>
+
                 {{#logged}}
-                {{#admin}}
-                <li class="nav-item"><a class="nav-link" href="/admin">Admin Panel</a></li>
-                {{/admin}}
                 {{^admin}}
                 <li class="nav-item"><a class="nav-link" href="/favourites">Favoritos</a></li>
                 {{/admin}}
-                <li class="nav-item"><a class="nav-link" href="/profile">Mi Perfil ({{userName}})</a></li>
-                <li class="nav-item">
-                    <form action="/logout" method="post" class="d-inline">
-                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                        <button type="submit" class="nav-link btn btn-link" style="border:none;">Cerrar Sesión</button>
-                    </form>
+                {{#admin}}
+                <li class="nav-item"><a class="nav-link" href="/admin">Panel Admin</a></li>
+                {{/admin}}
+
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        <div class="nav-avatar-container me-2">
+                            <img src="/assets/images/avatar-player.png" class="nav-avatar" id="nav-avatar-img">
+                        </div>
+                        <span class="text-white fw-bold">Mi Cuenta</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg">
+                        <li><a class="dropdown-item" href="/profile">Mi Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider border-secondary">
+                        </li>
+                        <li>
+                            <form action="/logout" method="post" class="m-0 p-0 w-100">
+                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                <button type="submit"
+                                    class="dropdown-item text-danger w-100 text-start bg-transparent border-0">Cerrar
+                                    Sesión</button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
                 {{/logged}}
+
                 {{^logged}}
                 <li class="nav-item"><a class="nav-link" href="/login">Acceder</a></li>
                 <li class="nav-item"><a class="nav-link" href="/register">Registro</a></li>
@@ -35,3 +54,27 @@
         </div>
     </div>
 </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const path = window.location.pathname;
+        const navLinks = document.querySelectorAll('#nav-content .nav-link');
+        
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+                // Determine if this nav item is active
+                let isActive = false;
+                if (href === '/') {
+                    isActive = (path === '/');
+                } else {
+                    isActive = path.startsWith(href);
+                }
+                
+                if (isActive) {
+                    link.classList.add('active', 'text-white', 'fw-bold');
+                }
+            }
+        });
+    });
+</script>

@@ -24,7 +24,18 @@ public class GlobalControllerAdvice {
 		if (principal != null) {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
-			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+            
+            org.springframework.security.core.Authentication auth = 
+                org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+            
+            boolean isAdmin = auth != null && (
+                auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) ||
+                auth.getName().equals("Administrador") ||
+                auth.getName().equals("admin@onetapeleague.com") ||
+                auth.getName().equals("admin")
+            );
+                
+			model.addAttribute("admin", isAdmin);
 		} else {
 			model.addAttribute("logged", false);
 		}

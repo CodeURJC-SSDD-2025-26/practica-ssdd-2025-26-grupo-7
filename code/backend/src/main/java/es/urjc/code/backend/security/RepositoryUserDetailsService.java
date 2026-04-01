@@ -23,13 +23,23 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = userRepository.findByName(username)
-				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		User user = userRepository.findByEmail(username)
+				.orElseGet(() -> userRepository.findByNickname(username)
+						.orElseGet(() -> userRepository.findByName(username)
+								.orElseThrow(() -> new UsernameNotFoundException("User not found"))));
 
 		List<GrantedAuthority> roles = new ArrayList<>();
 		for (String role : user.getRoles()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
+        
+        // Failsafe to guarantee ADMIN role for the admin user regardless of database state
+        if (user.getNickname().equals("admin") || user.getName().equals("Administrador") || user.getEmail().equals("admin@onetapeleague.com")) {
+            boolean hasAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            if (!hasAdmin) {
+                roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            }
+        }
 
 		return new org.springframework.security.core.userdetails.User(user.getName(), 
 				user.getPassword(), roles);

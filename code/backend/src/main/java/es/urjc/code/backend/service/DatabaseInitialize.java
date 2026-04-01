@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import es.urjc.code.backend.model.*;
 import es.urjc.code.backend.repository.*;
 
@@ -20,23 +21,35 @@ public class DatabaseInitialize {
     private TeamRepository teamRepository;
 
     @Autowired
+    private MatchRepository matchRepository;
+
+    @Autowired
     private TournamentRepository tournamentRepository;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() {
-        if (userRepository.count() == 0) {
-
-            User admin = new User("Administrador", "admin", "admin@onetapeleague.com", "pass123",
+        // 1. Initialize Users if not present
+        if (userRepository.findByEmail("admin@onetapeleague.com").isEmpty()) {
+            User admin = new User("Administrador", "admin", "admin@onetapeleague.com", passwordEncoder.encode("pass123"),
                     List.of("USER", "ADMIN"));
-            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "pass123", List.of("USER"));
-            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "pass123", List.of("USER"));
+            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", passwordEncoder.encode("pass123"), List.of("USER"));
+            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", passwordEncoder.encode("pass123"), List.of("USER"));
 
             userRepository.save(admin);
             userRepository.save(player1);
             userRepository.save(player2);
+        }
+
+        // 2. Initialize Teams and Tournaments if none exist
+        if (tournamentRepository.count() == 0) {
+            User admin = userRepository.findByEmail("admin@onetapeleague.com").orElse(null);
+            User player1 = userRepository.findByEmail("juan@gmail.com").orElse(null);
+            User player2 = userRepository.findByEmail("ana@gmail.com").orElse(null);
+
+            if (admin == null || player1 == null || player2 == null) return;
 
             Team team1 = new Team("Rivas eSports", "URJC", "Valorant", "El equipo oficial del campus de Rivas.");
             team1.setCaptain(player1);
