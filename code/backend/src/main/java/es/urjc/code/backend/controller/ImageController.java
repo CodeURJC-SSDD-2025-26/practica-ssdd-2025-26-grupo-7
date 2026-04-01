@@ -43,8 +43,8 @@ public class ImageController {
             case "users":
                 return userRepository.findById(id)
                         .map(u -> u.getImageFile() != null ? blobToResponse(u.getImageFile())
-                                : redirectFallback("/assets/images/default-avatar.png"))
-                        .orElseGet(() -> redirectFallback("/assets/images/default-avatar.png"));
+                                : redirectFallback("/assets/images/avatar-player.png"))
+                        .orElseGet(() -> redirectFallback("/assets/images/avatar-player.png"));
             default:
                 return ResponseEntity.badRequest().build();
         }

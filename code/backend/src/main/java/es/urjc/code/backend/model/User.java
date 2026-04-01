@@ -61,6 +61,31 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
+    @Transient
+    public boolean getIsAdmin() {
+        return roles != null && roles.contains("ADMIN");
+    }
+
+    @Transient
+    public boolean getHasTeam() {
+        return team != null;
+    }
+
+    @Transient
+    public boolean getIsCaptain() {
+        return team != null && team.getCaptain() != null && this.id != null && this.id.equals(team.getCaptain().getId());
+    }
+
+    @Transient
+    public String getAvatarInitials() {
+        if (nickname != null && nickname.length() >= 2) {
+            return nickname.substring(0, 2).toUpperCase();
+        } else if (nickname != null && nickname.length() == 1) {
+            return nickname.toUpperCase();
+        }
+        return "U";
+    }
+
     public List<String> getRoles() { return roles; }
     public void setRoles(List<String> roles) { this.roles = roles; }
 

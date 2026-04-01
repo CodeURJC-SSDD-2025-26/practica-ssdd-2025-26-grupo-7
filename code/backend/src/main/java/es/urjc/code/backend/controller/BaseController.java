@@ -66,21 +66,31 @@ public class BaseController {
 
     // PROFILE
     @GetMapping("/profile")
-    public String profile(Model model,
-            @AuthenticationPrincipal UserDetails currentUser) {
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-        
-        es.urjc.code.backend.model.User u = userRepository.findByEmail(currentUser.getUsername())
-                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
-                
-        if (u != null) {
-            model.addAttribute("user", u);
+    public String profile(Model model, java.security.Principal principal) {
+        if (principal != null) {
+            String identifier = principal.getName();
+            es.urjc.code.backend.model.User user = userRepository.findByEmail(identifier)
+                .orElseGet(() -> userRepository.findByName(identifier).orElse(null));
+            
+            if (user != null) {
+                model.addAttribute("user", user);
+            }
             return "profile";
         } else {
             // Failsafe for invalid session
             return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/profile/{id}")
+    public String viewProfile(@org.springframework.web.bind.annotation.PathVariable Long id, Model model) {
+        es.urjc.code.backend.model.User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            model.addAttribute("user", user);
+            model.addAttribute("viewingOther", true);
+            return "profile";
+        } else {
+            return "redirect:/";
         }
     }
 
