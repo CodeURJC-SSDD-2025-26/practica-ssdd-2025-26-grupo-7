@@ -120,7 +120,7 @@ public class BaseController {
     @GetMapping("/error-403")
     public String error403(Model model) {
         model.addAttribute("errorCode", 403);
-        model.addAttribute("errorMessage", "You do not have permission to access this page.");
+        model.addAttribute("errorMessage", "No tienes permiso para acceder a esta página.");
         return "error";
     }
 }
