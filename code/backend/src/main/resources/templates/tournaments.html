@@ -25,32 +25,58 @@
 
         <div class="row mb-5">
             <div class="col-12">
-                <div class="filter-bar d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                <form method="get" action="/tournaments"
+                    class="filter-bar d-flex flex-wrap gap-3 align-items-center justify-content-between">
                     <div class="d-flex gap-3 flex-wrap flex-grow-1">
-                        <input type="text" class="form-control bg-dark text-white border-secondary"
-                            placeholder="Buscar torneo..." style="max-width: 300px;">
-
-                        <select class="form-select bg-dark text-white border-secondary" style="max-width: 200px;">
-                            <option selected>Todos los Juegos</option>
-                            <option value="1">Valorant</option>
-                            <option value="2">League of Legends</option>
-                            <option value="3">CS:GO</option>
-                            <option value="4">Rocket League</option>
+                        <input type="text" name="search" value="{{filterSearch}}"
+                            class="form-control bg-dark text-white border-secondary" placeholder="Buscar torneo..."
+                            style="max-width: 300px;">
+                        <select name="game" class="form-select bg-dark text-white border-secondary"
+                            style="max-width: 200px;">
+                            <option value="">Todos los Juegos</option>
+                            <option value="Valorant" {{#filterGameValorant}}selected{{/filterGameValorant}}>Valorant
+                            </option>
+                            <option value="League of Legends" {{#filterGameLoL}}selected{{/filterGameLoL}}>League of
+                                Legends</option>
+                            <option value="CS:GO" {{#filterGameCSGO}}selected{{/filterGameCSGO}}>CS:GO</option>
+                            <option value="Rocket League" {{#filterGameRL}}selected{{/filterGameRL}}>Rocket League
+                            </option>
                         </select>
-
-                        <select class="form-select bg-dark text-white border-secondary" style="max-width: 200px;">
-                            <option selected>Estado</option>
-                            <option value="1">Inscripción Abierta</option>
-                            <option value="2">En Curso</option>
-                            <option value="3">Finalizado</option>
+                        <select name="state" class="form-select bg-dark text-white border-secondary"
+                            style="max-width: 200px;">
+                            <option value="">Estado</option>
+                            <option value="Próximamente" {{#filterStateUpcoming}}selected{{/filterStateUpcoming}}>
+                                Próximamente</option>
+                            <option value="En Curso" {{#filterStateActive}}selected{{/filterStateActive}}>En Curso
+                            </option>
+                            <option value="Finalizado" {{#filterStateFinished}}selected{{/filterStateFinished}}>
+                                Finalizado</option>
                         </select>
                     </div>
-                    <div>
-                        <button class="btn btn-primary"><i class="fas fa-filter me-2"></i>Filtrar</button>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-filter me-2"></i>Filtrar
+                        </button>
+                        <a href="/tournaments" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-1"></i>Limpiar
+                        </a>
                     </div>
-                </div>
+
+                </form>
             </div>
         </div>
+        {{#hasFilters}}
+        <div class="row mb-3">
+            <div class="col-12">
+                <p class="text-white-50">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Mostrando resultados filtrados.
+                    <a href="/tournaments" class="text-info">Ver todos</a>
+                </p>
+            </div>
+        </div>
+        {{/hasFilters}}
 
         <div class="row g-4">
             {{#tournaments}}
@@ -74,7 +100,8 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">{{name}}</h5>
                             <div class="like-container">
-                                <input type="checkbox" id="like-{{id}}" class="d-none like-checkbox" {{#isFavourite}}checked{{/isFavourite}} data-tournament-id="{{id}}">
+                                <input type="checkbox" id="like-{{id}}" class="d-none like-checkbox"
+                                    {{#isFavourite}}checked{{/isFavourite}} data-tournament-id="{{id}}">
                                 <label for="like-{{id}}" class="text-danger mb-0 cursor-pointer">
                                     <i class="far fa-heart fs-4 heart-empty"></i>
                                     <i class="fas fa-heart fs-4 heart-filled d-none"></i>
@@ -90,6 +117,13 @@
                 </div>
             </div>
             {{/tournaments}}
+            {{#noResults}}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h5 class="text-white-50">No se encontraron torneos con esos filtros.</h5>
+                <a href="/tournaments" class="btn btn-outline-info mt-2">Ver todos los torneos</a>
+            </div>
+            {{/noResults}}
         </div>
 
         <nav aria-label="Navegación de torneos" class="mt-5">
@@ -115,7 +149,7 @@
             const csrfHeader = '{{_csrf.headerName}}';
 
             document.querySelectorAll('.like-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     const tournamentId = this.getAttribute('data-tournament-id');
                     const isChecked = this.checked;
 
@@ -126,18 +160,18 @@
                             'Content-Type': 'application/json'
                         }
                     })
-                    .then(response => {
-                        if (!response.ok) {
-                            this.checked = !isChecked; // Revert
-                            if (response.status === 401 || response.status === 403) {
-                                window.location.href = '/login';
+                        .then(response => {
+                            if (!response.ok) {
+                                this.checked = !isChecked;
+                                if (response.status === 401 || response.status === 403) {
+                                    window.location.href = '/login';
+                                }
                             }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error toggling favorite:', error);
-                        this.checked = !isChecked;
-                    });
+                        })
+                        .catch(error => {
+                            console.error('Error toggling favorite:', error);
+                            this.checked = !isChecked;
+                        });
                 });
             });
         });
