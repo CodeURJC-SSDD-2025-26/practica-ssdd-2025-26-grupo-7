@@ -138,6 +138,30 @@ public class BaseController {
         if (currentUser == null) {
             return "redirect:/login";
         }
+        es.urjc.code.backend.model.User user = userRepository.findByEmail(currentUser.getUsername())
+                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
+        
+        if (user != null) {
+            java.util.List<java.util.Map<String, Object>> enriched = user.getFavoriteTournaments().stream()
+                .map(t -> {
+                    java.util.Map<String, Object> m = new java.util.LinkedHashMap<>();
+                    m.put("id", t.getId());
+                    m.put("name", t.getName());
+                    m.put("game", t.getGame());
+                    m.put("platform", t.getPlatform());
+                    m.put("mode", t.getMode());
+                    m.put("maxTeams", t.getMaxTeams());
+                    m.put("startDate", t.getStartDate());
+                    m.put("description", t.getDescription());
+                    m.put("state", t.getState());
+                    m.put("stateActive",   "En Curso".equals(t.getState()));
+                    m.put("stateUpcoming", "Próximamente".equals(t.getState()));
+                    m.put("stateFinished", "Finalizado".equals(t.getState()));
+                    m.put("isFavourite", true); // They are all favourites on this page
+                    return m;
+                }).toList();
+            model.addAttribute("tournaments", enriched);
+        }
         return "favourites";
     }
 

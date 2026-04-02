@@ -22,72 +22,105 @@
     </header>
 
     <div class="container my-5" id="favourites-container">
+        {{^tournaments}}
+        <div class="alert alert-info text-center" role="alert">
+            Todavía no tienes ningún torneo en tus favoritos. ¡Explora los <a href="/tournaments" class="alert-link">torneos disponibles</a>!
+        </div>
+        {{/tournaments}}
         <div class="row g-4">
-            <!-- Simulación de torneo favorito 1 -->
-            <div class="col-lg-4 col-md-6">
+            {{#tournaments}}
+            <div class="col-lg-4 col-md-6 fav-card-container">
                 <div class="card tournament-card h-100 border-primary">
-                    <img src="/assets/images/valorant-tournament.png" class="card-img-top" alt="Valorant">
+                    <img src="/images/tournaments/{{id}}" class="card-img-top" alt="{{name}}">
                     <div class="card-body d-flex flex-column">
                         <div class="mb-2">
+                            {{#stateActive}}
                             <span class="badge bg-warning text-dark">En curso</span>
-                            <span class="badge bg-secondary ms-1">PC</span>
+                            {{/stateActive}}
+                            {{#stateUpcoming}}
+                            <span class="badge bg-info text-dark">Próximamente</span>
+                            {{/stateUpcoming}}
+                            {{#stateFinished}}
+                            <span class="badge bg-danger">Finalizado</span>
+                            {{/stateFinished}}
+
+                            <span class="badge bg-secondary ms-1">{{platform}}</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-start">
-                            <h5 class="card-title text-primary">Valorant Winter Cup</h5>
+                            <h5 class="card-title text-primary">{{name}}</h5>
                             <div class="like-container">
-                                <input type="checkbox" id="like-fav-1" class="d-none like-checkbox" checked>
-                                <label for="like-fav-1" class="text-danger mb-0 cursor-pointer">
+                                <input type="checkbox" id="like-{{id}}" class="d-none like-checkbox" {{#isFavourite}}checked{{/isFavourite}} data-tournament-id="{{id}}">
+                                <label for="like-{{id}}" class="text-danger mb-0 cursor-pointer">
                                     <i class="far fa-heart fs-4 heart-empty"></i>
                                     <i class="fas fa-heart fs-4 heart-filled d-none"></i>
                                 </label>
                             </div>
                         </div>
-                        <p class="card-text flex-grow-1">Demuestra tu puntería en el torneo más competitivo de la
-                            temporada.</p>
+                        <p class="card-text flex-grow-1">{{description}}</p>
                         <div class="mt-3 d-flex justify-content-between align-items-center">
-                            <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> 1 Enero 2026</small>
-                            <a href="/tournaments" class="btn btn-sm btn-outline-info">Ver Detalles</a>
+                            <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> {{startDate}}</small>
+                            <a href="/tournaments/{{id}}" class="btn btn-sm btn-outline-info">Ver Detalles</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Simulación de torneo favorito 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card tournament-card h-100 border-primary">
-                    <img src="/assets/images/lol-tournament.png" class="card-img-top" alt="LoL">
-                    <div class="card-body d-flex flex-column">
-                        <div class="mb-2">
-                            <span class="badge bg-success text-white">Inscripción abierta</span>
-                            <span class="badge bg-secondary ms-1">PC</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-start">
-                            <h5 class="card-title text-primary">LoL University Series</h5>
-                            <div class="like-container">
-                                <input type="checkbox" id="like-fav-2" class="d-none like-checkbox" checked>
-                                <label for="like-fav-2" class="text-danger mb-0 cursor-pointer">
-                                    <i class="far fa-heart fs-4 heart-empty"></i>
-                                    <i class="fas fa-heart fs-4 heart-filled d-none"></i>
-                                </label>
-                            </div>
-                        </div>
-                        <p class="card-text flex-grow-1">La grieta del invocador espera a los mejores equipos
-                            universitarios.</p>
-                        <div class="mt-3 d-flex justify-content-between align-items-center">
-                            <small class="text-muted"><i class="far fa-user me-1"></i> 8/16 Equipos</small>
-                            <button class="btn btn-sm btn-secondary" disabled>Espera</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {{/tournaments}}
         </div>
     </div>
     <!--FOOTER -->
     {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const csrfToken = '{{_csrf.token}}';
+            const csrfHeader = '{{_csrf.headerName}}';
 
+            document.querySelectorAll('.like-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const tournamentId = this.getAttribute('data-tournament-id');
+                    const isChecked = this.checked;
+
+                    fetch(`/tournaments/${tournamentId}/toggle-favorite`, {
+                        method: 'POST',
+                        headers: {
+                            [csrfHeader]: csrfToken,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            this.checked = !isChecked; // Revert
+                            if (response.status === 401 || response.status === 403) {
+                                window.location.href = '/login';
+                            }
+                        } else {
+                            if (!this.checked) {
+                                const card = this.closest('.fav-card-container');
+                                if (card) {
+                                    card.style.transition = 'opacity 0.4s';
+                                    card.style.opacity = '0';
+                                    setTimeout(() => card.remove(), 400);
+                                    
+                                    // Comprobar si se han quedado sin cards
+                                    setTimeout(() => {
+                                        const remaining = document.querySelectorAll('.fav-card-container');
+                                        if(remaining.length === 0) {
+                                            location.reload(); // Recarga para enseñar el mensaje de vacío
+                                        }
+                                    }, 410);
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error toggling favorite:', error);
+                        this.checked = !isChecked;
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

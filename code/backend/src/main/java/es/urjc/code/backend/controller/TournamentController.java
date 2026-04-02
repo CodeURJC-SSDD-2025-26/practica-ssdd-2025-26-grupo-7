@@ -26,12 +26,22 @@ public class TournamentController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private es.urjc.code.backend.repository.UserRepository userRepository;
+
     // LIST
     @GetMapping("/tournaments")
-    public String tournaments(Model model) {
+    public String tournaments(Model model, java.security.Principal principal) {
+        es.urjc.code.backend.model.User currentUser = null;
+        if (principal != null) {
+            currentUser = userRepository.findByEmail(principal.getName())
+                    .orElseGet(() -> userRepository.findByName(principal.getName()).orElse(null));
+        }
+        final es.urjc.code.backend.model.User finalUser = currentUser;
+
         List<Map<String, Object>> enriched = tournamentRepository.findAll()
                 .stream()
-                .map(this::enrichTournament)
+                .map(t -> enrichTournament(t, finalUser))
                 .toList();
         model.addAttribute("tournaments", enriched);
         return "tournaments";
@@ -178,8 +188,33 @@ public class TournamentController {
         return "redirect:/tournaments/" + id;
     }
 
+    // FAVORITES
+    @PostMapping("/tournaments/{id}/toggle-favorite")
+    @ResponseBody
+    public org.springframework.http.ResponseEntity<?> toggleFavorite(@PathVariable Long id, java.security.Principal principal) {
+        if (principal == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        Optional<es.urjc.code.backend.model.User> optUser = userRepository.findByEmail(principal.getName())
+                .or(() -> userRepository.findByName(principal.getName()));
+        Optional<Tournament> optTour = tournamentRepository.findById(id);
+
+        if (optUser.isPresent() && optTour.isPresent()) {
+            es.urjc.code.backend.model.User user = optUser.get();
+            Tournament t = optTour.get();
+            if (user.getFavoriteTournaments().contains(t)) {
+                user.getFavoriteTournaments().remove(t);
+            } else {
+                user.getFavoriteTournaments().add(t);
+            }
+            userRepository.save(user);
+            return org.springframework.http.ResponseEntity.ok().build();
+        }
+        return org.springframework.http.ResponseEntity.badRequest().build();
+    }
+
     
-    private Map<String, Object> enrichTournament(Tournament t) {
+    private Map<String, Object> enrichTournament(Tournament t, es.urjc.code.backend.model.User currentUser) {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("id", t.getId());
         m.put("name", t.getName());
@@ -193,6 +228,13 @@ public class TournamentController {
         m.put("stateActive",   "En Curso".equals(t.getState()));
         m.put("stateUpcoming", "Próximamente".equals(t.getState()));
         m.put("stateFinished", "Finalizado".equals(t.getState()));
+        
+        boolean isFav = false;
+        if (currentUser != null && currentUser.getFavoriteTournaments().contains(t)) {
+            isFav = true;
+        }
+        m.put("isFavourite", isFav);
+        
         return m;
     }
 }
