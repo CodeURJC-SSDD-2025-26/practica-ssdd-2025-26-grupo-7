@@ -35,8 +35,8 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/tournaments" method="POST" enctype="multipart/form-data">
-
+                    <form action="/tournaments/create" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                         <!-- ── Información Principal ── -->
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
                             Información Principal
@@ -45,22 +45,26 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Torneo</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: URJC Spring Cup 2026" required>
+                                <input type="text" name="name" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: URJC Spring Cup 2026" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="game" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="" disabled selected>Selecciona un juego...</option>
-                                    <option value="valorant">Valorant</option>
-                                    <option value="lol">League of Legends</option>
-                                    <option value="cs2">Counter-Strike 2</option>
-                                    <option value="rocket">Rocket League</option>
+                                    <option value="Valorant">Valorant</option>
+                                    <option value="League of Legends">League of Legends</option>
+                                    <option value="CS2">Counter-Strike 2</option>
+                                    <option value="Rocket League">Rocket League</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Inicio</label>
-                                <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                <input type="date" name="startDate" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
+                            <!-- Hidden inputs for missing attributes from original template design vs controller -->
+                            <input type="hidden" name="platform" value="PC">
+                            <input type="hidden" name="mode" value="5v5">
+                            <!-- Fecha Fin is ignored as not present in DB model -->
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Finalización</label>
                                 <input type="date" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
@@ -75,22 +79,22 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Máx. Equipos</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-50" min="4" max="64" placeholder="Ej: 16" required>
+                                <input type="number" name="maxTeams" class="form-control bg-dark text-white border-secondary border-opacity-50" min="4" max="64" placeholder="Ej: 16" required>
                             </div>
                             <div class="col-md-8">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize Pool)</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: 500€ + Setup Gaming">
+                                <input type="text" name="rules" class="form-control bg-dark text-white border-secondary border-opacity-50" placeholder="Ej: 500€ + Setup Gaming">
                             </div>
                             <div class="col-12">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-image me-2"></i>Banner / Imagen del Torneo
                                 </label>
-                                <input class="form-control bg-dark text-white border-secondary border-opacity-50" type="file" accept="image/png, image/jpeg" required>
+                                <input name="imageFile" class="form-control bg-dark text-white border-secondary border-opacity-50" type="file" accept="image/png, image/jpeg" required>
                                 <div class="form-text text-white-50 small mt-1">Formato recomendado: 1920x1080px (PNG o JPG). Peso máximo: 2MB.</div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y Descripción</label>
-                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50" rows="4" placeholder="Describe las normativas del torneo, horarios de los partidos, formato (BO1, BO3)..." required></textarea>
+                                <textarea name="description" class="form-control bg-dark text-white border-secondary border-opacity-50" rows="4" placeholder="Describe las normativas del torneo, horarios de los partidos, formato (BO1, BO3)..." required></textarea>
                             </div>
                         </div>
 
