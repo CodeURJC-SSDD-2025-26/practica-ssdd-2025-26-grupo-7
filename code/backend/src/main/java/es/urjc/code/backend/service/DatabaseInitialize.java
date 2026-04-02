@@ -32,14 +32,26 @@ public class DatabaseInitialize {
     @PostConstruct
     public void init() {
         // 1. Initialize Users if not present
-        if (userRepository.findByEmail("admin@onetapeleague.com").isEmpty()) {
-            User admin = new User("Administrador", "admin", "admin@onetapeleague.com", "", passwordEncoder.encode("pass123"),
+        User adminUser = userRepository.findByEmail("admin@onetapeleague.com").orElse(null);
+        if (adminUser == null) {
+            adminUser = new User("Administrador", "admin", "admin@onetapeleague.com", "", passwordEncoder.encode("pass123"),
                     List.of("USER", "ADMIN"));
-            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
-            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
+            userRepository.save(adminUser);
+        } else {
+            // Fix para cuando la base de datos se creó antes de usar PasswordEncoder
+            if (!adminUser.getPassword().startsWith("$2a$")) {
+                adminUser.setPassword(passwordEncoder.encode("pass123"));
+                userRepository.save(adminUser);
+            }
+        }
 
-            userRepository.save(admin);
+        if (userRepository.findByEmail("juan@gmail.com").isEmpty()) {
+            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
             userRepository.save(player1);
+        }
+
+        if (userRepository.findByEmail("ana@gmail.com").isEmpty()) {
+            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
             userRepository.save(player2);
         }
 
