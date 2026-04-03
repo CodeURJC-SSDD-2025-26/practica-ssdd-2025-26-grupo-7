@@ -6,6 +6,7 @@ import es.urjc.code.backend.repository.MessageRepository;
 import es.urjc.code.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -59,5 +60,28 @@ public class MessageController {
         }
 
         return "redirect:/admin?msgSent=true";
+    }
+
+    @PostMapping("/messages/mark-read/{id}")
+    public String markAsRead(@PathVariable Long id, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        messageRepository.findById(id).ifPresent(msg -> {
+            if (msg.getRecipient().getEmail().equals(principal.getName())) {
+                msg.setRead(true);
+                messageRepository.save(msg);
+            }
+        });
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/messages/delete/{id}")
+    public String deleteMessage(@PathVariable Long id, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        messageRepository.findById(id).ifPresent(msg -> {
+            if (msg.getRecipient().getEmail().equals(principal.getName())) {
+                messageRepository.delete(msg);
+            }
+        });
+        return "redirect:/profile";
     }
 }

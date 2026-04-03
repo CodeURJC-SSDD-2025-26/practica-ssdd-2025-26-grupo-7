@@ -239,16 +239,42 @@
                     {{/hasMessages}}
 
                     {{#messages}}
-                    <div class="border border-secondary border-opacity-25 rounded-3 p-3 mb-3"
-                        style="background: rgba(255,255,255,0.03);">
+                    <div class="border border-secondary border-opacity-25 rounded-3 p-3 mb-3 position-relative"
+                        style="background: {{#isRead}}rgba(255,255,255,0.02){{/isRead}}{{^isRead}}rgba(61, 153, 245, 0.05){{/isRead}};">
+                        
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="fw-bold text-white">{{subject}}</span>
+                            <div class="d-flex align-items-center gap-2">
+                                {{^isRead}}
+                                <span class="badge bg-primary text-uppercase" style="font-size: 0.6rem;">Nuevo</span>
+                                {{/isRead}}
+                                <span class="fw-bold text-white">{{subject}}</span>
+                            </div>
                             <span class="small text-white-50 text-nowrap ms-3">{{formattedDate}}</span>
                         </div>
-                        <p class="text-white-50 small mb-1">
-                            <i class="bi bi-person-fill me-1"></i> De: {{sender.name}}
+                        
+                        <p class="text-white-50 small mb-2">
+                            <i class="bi bi-person-fill me-1"></i> De: {{sender.nickname}}
                         </p>
-                        <p class="text-white mb-0">{{content}}</p>
+                        
+                        <p class="text-white mb-3" style="font-size: 0.95rem;">{{content}}</p>
+                        
+                        <div class="d-flex gap-2">
+                            {{^isRead}}
+                            <form action="/messages/mark-read/{{id}}" method="POST" class="m-0">
+                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.75rem;">
+                                    <i class="bi bi-check2-all me-1"></i>Marcar como leído
+                                </button>
+                            </form>
+                            {{/isRead}}
+                            <form action="/messages/delete/{{id}}" method="POST" class="m-0">
+                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 0.75rem;" 
+                                        onclick="return confirm('¿Estás seguro de eliminar este mensaje?')">
+                                    <i class="bi bi-trash3-fill me-1"></i>Eliminar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     {{/messages}}
                 </div>

@@ -107,8 +107,9 @@ public class User {
 
     @Transient
     public boolean getIsCaptain() {
-        return team != null && team.getCaptain() != null && this.id != null
-                && this.id.equals(team.getCaptain().getId());
+        return (roles != null && roles.contains("CAPTAIN")) ||
+               (team != null && team.getCaptain() != null && this.id != null
+                && this.id.equals(team.getCaptain().getId()));
     }
 
     @Transient

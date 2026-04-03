@@ -67,6 +67,8 @@ public class DatabaseInitialize {
             team1.setCaptain(player1);
             team1.getPlayers().add(player1);
             team1.getPlayers().add(player2);
+            player1.setTeam(team1);
+            player2.setTeam(team1);
 
             try {
                 Resource image = new ClassPathResource("static/assets/images/team-logo.png");

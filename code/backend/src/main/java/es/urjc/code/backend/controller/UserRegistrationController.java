@@ -118,6 +118,14 @@ public class UserRegistrationController {
             roles.add("USER");
             if ("ADMIN".equals(role)) {
                 roles.add("ADMIN");
+            } else if ("CAPTAIN".equals(role)) {
+                roles.add("CAPTAIN");
+                // Also set as captain of their team if they have one
+                if (user.getTeam() != null) {
+                    es.urjc.code.backend.model.Team team = user.getTeam();
+                    team.setCaptain(user);
+                    teamRepository.save(team);
+                }
             }
             user.setRoles(roles);
             userRepository.save(user);
