@@ -209,15 +209,14 @@
     {{^match}}
     <script>
         // Pre-load matches data for filtering in JS
-        const ALL_MATCHES = [
-            {{#allMatches}}
-            { 
-                id: "{{id}}", 
-                tournamentId: "{{tournament.id}}", 
-                label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})" 
-            },
-            {{/allMatches}}
-        ];
+        const ALL_MATCHES = [];
+        /* {{#allMatches}} */
+        ALL_MATCHES.push({ 
+            id: "{{id}}", 
+            tournamentId: "{{tournament.id}}", 
+            label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})" 
+        });
+        /* {{/allMatches}} */
 
         function filtrarPartidos(tournamentId) {
             const sel = document.getElementById('sel-partido-edit');
