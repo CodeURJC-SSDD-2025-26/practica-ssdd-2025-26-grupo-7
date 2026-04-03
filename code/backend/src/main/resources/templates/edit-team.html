@@ -35,11 +35,11 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-3 mb-4 p-3 bg-card rounded-3 border border-secondary border-opacity-25">
-                    <img src="/assets/images/team_rivas.png" alt="Logo" width="56" height="56"
+                    <img src="/images/teams/{{team.id}}" alt="Logo" width="56" height="56"
                         class="rounded-circle border border-2" style="border-color: var(--primary-cyan) !important; object-fit:contain; background: #0f1216; padding:4px;">
                     <div>
-                        <div class="fw-bold text-white">Equipo Rivas</div>
-                        <div class="text-white-50 small">Multi-Gaming · URJC · 5 miembros</div>
+                        <div class="fw-bold text-white">{{team.name}}</div>
+                        <div class="text-white-50 small">{{team.mainGame}} · {{team.university}} · {{totalPlayers}} miembros</div>
                     </div>
                     <span class="badge bg-success ms-auto">Activo</span>
                 </div>
@@ -47,7 +47,8 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/teams" method="POST" enctype="multipart/form-data">
+                    <form action="/teams/{{team.id}}/edit" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-0">
                             <i class="bi bi-info-circle me-2 text-cyan"></i>Información del Equipo
@@ -56,43 +57,45 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Equipo</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                    value="Equipo Rivas" required>
+                                <input type="text" name="name" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    value="{{team.name}}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Tag / Abreviatura</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                    value="RVAS" maxlength="5" required>
+                                <input type="text" name="tag" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    value="{{#team.tag}}{{team.tag}}{{/team.tag}}" maxlength="5" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Universidad</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
-                                    <option>URJC - Móstoles</option>
-                                    <option>URJC - Fuenlabrada</option>
-                                    <option selected>URJC - Alcorcón</option>
-                                    <option>UCM - Madrid</option>
-                                    <option>Politécnica de Madrid</option>
-                                    <option>Otras...</option>
+                                <select name="university" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="URJC - Móstoles">URJC - Móstoles</option>
+                                    <option value="URJC - Fuenlabrada">URJC - Fuenlabrada</option>
+                                    <option value="URJC - Alcorcón">URJC - Alcorcón</option>
+                                    <option value="UCM - Madrid">UCM - Madrid</option>
+                                    <option value="Politécnica de Madrid">Politécnica de Madrid</option>
+                                    <option value="Otras...">Otras...</option>
                                 </select>
+                                <script>document.querySelector('select[name="university"]').value = "{{team.university}}";</script>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego Principal</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
-                                    <option>Valorant</option>
-                                    <option>League of Legends</option>
-                                    <option>Counter-Strike 2</option>
-                                    <option>Rocket League</option>
-                                    <option>EA FC 24</option>
-                                    <option>Dota 2</option>
-                                    <option selected>Multi-Gaming</option>
+                                <select name="mainGame" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="Valorant">Valorant</option>
+                                    <option value="League of Legends">League of Legends</option>
+                                    <option value="Counter-Strike 2">Counter-Strike 2</option>
+                                    <option value="Rocket League">Rocket League</option>
+                                    <option value="EA FC 24">EA FC 24</option>
+                                    <option value="Dota 2">Dota 2</option>
+                                    <option value="Multi-Gaming">Multi-Gaming</option>
                                 </select>
+                                <script>document.querySelector('select[name="mainGame"]').value = "{{team.mainGame}}";</script>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-image me-1"></i>Cambiar Logo
                                 </label>
-                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="imageFile" class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp">
                                 <div class="form-text text-white-50 small mt-1">
                                     Dejar vacío para mantener el logo actual.
@@ -106,13 +109,13 @@
                                 <input class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp">
                                 <div class="form-text text-white-50 small mt-1">
-                                    Dejar vacío para mantener el banner actual.
+                                    Dejar vacío para mantener el banner actual. (Próximamente)
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del Equipo</label>
-                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3">Equipo universitario de la URJC, especializados en múltiples juegos competitivos.</textarea>
+                                <textarea name="description" class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3">{{team.description}}</textarea>
                             </div>
                         </div>
 
@@ -123,11 +126,13 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Capitán actual</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                    <option>PlayerONE (j.perez@alumnos.urjc.es)</option>
-                                    <option selected>RivasGG (rivas@urjc.es)</option>
-                                    <option>AquaKing (aquaking@urjc.es)</option>
+                                <select name="captainId" class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                    <option value="">— Sin Capitán —</option>
+                                    {{#allUsers}}
+                                    <option value="{{id}}">{{nickname}} ({{email}})</option>
+                                    {{/allUsers}}
                                 </select>
+                                <script>document.querySelector('select[name="captainId"]').value = "{{team.captain.id}}";</script>
                             </div>
                         </div>
 
@@ -147,55 +152,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {{#playersList}}
                                             <tr>
-                                                <td class="ps-3 fw-bold">RivasGG <span class="badge bg-warning text-dark ms-1">Capitán</span></td>
-                                                <td><span class="text-white-50 small">Capitán</span></td>
-                                                <td class="text-end pe-3">—</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-3">PlayerONE</td>
-                                                <td>
-                                                    <select class="form-select form-select-sm bg-dark text-white border-secondary" style="width:120px;">
-                                                        <option selected>Jugador</option>
-                                                        <option>Suplente</option>
-                                                    </select>
+                                                <td class="ps-3 fw-bold">
+                                                    {{nickname}}
+                                                    {{#isCaptain}}
+                                                    <span class="badge bg-warning text-dark ms-1">Capitán</span>
+                                                    {{/isCaptain}}
                                                 </td>
+                                                <td><span class="text-white-50 small">Jugador</span></td>
                                                 <td class="text-end pe-3">
-                                                    <button type="button" class="btn btn-sm btn-outline-danger">
-                                                        <i class="bi bi-person-dash"></i>
-                                                    </button>
+                                                    <form action="/teams/{{teamId}}/remove-player" method="POST" class="d-inline">
+                                                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                                        <input type="hidden" name="userId" value="{{id}}" />
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                            <i class="bi bi-person-dash"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td class="ps-3">ShadowX</td>
-                                                <td>
-                                                    <select class="form-select form-select-sm bg-dark text-white border-secondary" style="width:120px;">
-                                                        <option selected>Jugador</option>
-                                                        <option>Suplente</option>
-                                                    </select>
-                                                </td>
-                                                <td class="text-end pe-3">
-                                                    <button type="button" class="btn btn-sm btn-outline-danger">
-                                                        <i class="bi bi-person-dash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                            {{/playersList}}
+                                            {{^playersList}}
+                                            <tr><td colspan="3" class="text-center text-white-50 small py-3">No hay miembros en el equipo</td></tr>
+                                            {{/playersList}}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Añadir miembro</label>
-                                <div class="d-flex gap-2">
-                                    <select class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                <form action="/teams/{{teamId}}/add-player" method="POST" class="d-flex gap-2">
+                                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                    <select name="userId" class="form-select bg-dark text-white border-secondary border-opacity-50">
                                         <option value="" selected>— Selecciona jugador —</option>
-                                        <option>AquaKing</option>
-                                        <option>EliteGamer</option>
+                                        {{#availableUsers}}
+                                        <option value="{{id}}">{{nickname}}</option>
+                                        {{/availableUsers}}
                                     </select>
-                                    <button type="button" class="btn btn-outline-info text-nowrap">
+                                    <button type="submit" class="btn btn-outline-info text-nowrap">
                                         <i class="bi bi-person-plus-fill me-1"></i>Añadir
                                     </button>
-                                </div>
+                                </form>
                             </div>
                         </div>
 

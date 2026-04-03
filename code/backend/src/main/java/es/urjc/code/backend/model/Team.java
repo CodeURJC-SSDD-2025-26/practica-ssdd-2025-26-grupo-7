@@ -15,6 +15,7 @@ public class Team {
     private String name;
     private String university;
     private String mainGame;
+    private String tag;
     
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -108,6 +109,12 @@ public class Team {
     }
     public void setWins(int wins) {
         this.wins = wins;
+    }
+    public String getTag() {
+        return tag;
+    }
+    public void setTag(String tag) {
+        this.tag = tag;
     }
     
 }
