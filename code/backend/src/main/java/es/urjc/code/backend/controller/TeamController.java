@@ -189,4 +189,28 @@ public class TeamController {
         }
         return "redirect:/teams";
     }
+
+    @PostMapping("/admin/teams/{id}/delete")
+    public String adminDeleteTeam(@PathVariable Long id,
+            @AuthenticationPrincipal UserDetails currentUser) {
+        
+        if (currentUser == null) return "redirect:/login";
+
+        Optional<Team> opt = teamRepository.findById(id);
+        if (opt.isPresent()) {
+            boolean isAdmin = currentUser.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+            if (isAdmin) {
+                // Unlink players first
+                Team team = opt.get();
+                for (User player : team.getPlayers()) {
+                    player.setTeam(null);
+                    userRepository.save(player);
+                }
+                teamRepository.deleteById(id);
+            }
+        }
+        return "redirect:/admin/teams-list";
+    }
 }

@@ -32,47 +32,47 @@
         </div>
 
         <p class="text-white-50 small mb-4">
-            <i class="bi bi-shield-fill me-1 text-cyan"></i>Mostrando <strong class="text-white">5</strong> equipos
+            <i class="bi bi-shield-fill me-1 text-cyan"></i>Mostrando <strong class="text-white">{{totalTeams}}</strong> equipos
             registrados
         </p>
 
         <div class="row g-4">
-
+            {{#teams}}
             <div class="col-lg-4 col-md-6">
                 <div class="team-card h-100">
                     <div class="team-card-banner"></div>
                     <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_fire.png" alt="Logo"
+                        <img src="/images/teams/{{id}}" alt="Logo"
                             class="team-card-logo rounded-circle shadow-sm">
                     </div>
                     <div class="team-card-body text-center ">
                         <div class="team-card-info">
-                            <h5 class="text-white fw-bold mb-1">Equipo Fuego</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Móstoles</p>
-                            <div class="d-flex gap-2 mb-3 flex-wrap">
-                                <span class="badge bg-warning text-dark">Valorant</span>
+                            <h5 class="text-white fw-bold mb-1">{{name}}</h5>
+                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>{{university}}</p>
+                            <div class="d-flex gap-2 mb-3 flex-wrap justify-content-center">
+                                <span class="badge bg-warning text-dark">{{mainGame}}</span>
                             </div>
-                            <div class="team-stats-mini d-flex gap-3 mb-3">
+                            <div class="team-stats-mini d-flex gap-3 mb-3 justify-content-center text-center">
                                 <div class="text-center">
-                                    <div class="fw-bold text-white">21</div>
+                                    <div class="fw-bold text-white">{{points}}</div>
                                     <div class="text-white-50 stat-label">PUNTOS</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="fw-bold text-success">7V</div>
+                                    <div class="fw-bold text-success">{{wins}}V</div>
                                     <div class="text-white-50 stat-label">VICTORIAS</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="fw-bold text-warning">87%</div>
+                                    <div class="fw-bold text-warning">{{winRate}}%</div>
                                     <div class="text-white-50 stat-label">WIN RATE</div>
                                 </div>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="/teams" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
-                                <a href="/admin/edit-team" class="btn btn-sm btn-outline-secondary" title="Editar">
+                                <a href="/teams/{{id}}" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
+                                <a href="/teams/{{id}}/edit" class="btn btn-sm btn-outline-secondary" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <button class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                    onclick="confirmarEliminar('Equipo Fuego')">
+                                    onclick="confirmarEliminar('{{name}}', '{{id}}')">
                                     <i class="bi bi-trash3"></i>
                                 </button>
                             </div>
@@ -80,202 +80,37 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card h-100">
-                    <div class="team-card-banner"></div>
-                    <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_elite.png" alt="Logo"
-                            class="team-card-logo rounded-circle shadow-sm">
-                    </div>
-                    <div class="team-card-body text-center">
-                        <div class="team-card-info">
-                            <h5 class="text-white fw-bold mb-1">Gaming Elite</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>UCM - Madrid</p>
-                            <div class="d-flex gap-2 mb-3 flex-wrap">
-                                <span class="badge bg-info text-dark">LoL</span>
-                            </div>
-                            <div class="team-stats-mini d-flex gap-3 mb-3">
-                                <div class="text-center">
-                                    <div class="fw-bold text-white">18</div>
-                                    <div class="text-white-50 stat-label">PUNTOS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-success">6V</div>
-                                    <div class="text-white-50 stat-label">VICTORIAS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-warning">75%</div>
-                                    <div class="text-white-50 stat-label">WIN RATE</div>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="/teams" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
-                                <a href="/admin/edit-team" class="btn btn-sm btn-outline-secondary" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                    onclick="confirmarEliminar('Gaming Elite')">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {{/teams}}
+            {{^teams}}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-shield-x fs-1 text-white-50 mb-3"></i>
+                <p class="text-white-50">No hay equipos registrados todavía.</p>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card h-100">
-                    <div class="team-card-banner"></div>
-                    <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_water.png" alt="Logo"
-                            class="team-card-logo rounded-circle shadow-sm">
-                    </div>
-                    <div class="team-card-body text-center">
-                        <div class="team-card-info">
-                            <h5 class="text-white fw-bold mb-1">Equipo Agua</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Fuenlabrada
-                            </p>
-                            <div class="d-flex gap-2 mb-3 flex-wrap">
-                                <span class="badge bg-danger">CS:GO</span>
-                            </div>
-                            <div class="team-stats-mini d-flex gap-3 mb-3">
-                                <div class="text-center">
-                                    <div class="fw-bold text-white">15</div>
-                                    <div class="text-white-50 stat-label">PUNTOS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-success">5V</div>
-                                    <div class="text-white-50 stat-label">VICTORIAS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-warning">62%</div>
-                                    <div class="text-white-50 stat-label">WIN RATE</div>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="/teams" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
-                                <a href="/admin/edit-team" class="btn btn-sm btn-outline-secondary" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                    onclick="confirmarEliminar('Equipo Agua')">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card h-100">
-                    <div class="team-card-banner"></div>
-                    <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_shadow.png" alt="Logo"
-                            class="team-card-logo rounded-circle shadow-sm">
-                    </div>
-                    <div class="team-card-body text-center">
-                        <div class="team-card-info">
-                            <h5 class="text-white fw-bold mb-1">Equipo Sombra</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>Politécnica de Madrid
-                            </p>
-                            <div class="d-flex gap-2 mb-3 flex-wrap">
-                                <span class="badge bg-secondary">Rocket League</span>
-                            </div>
-                            <div class="team-stats-mini d-flex gap-3 mb-3">
-                                <div class="text-center">
-                                    <div class="fw-bold text-white">12</div>
-                                    <div class="text-white-50 stat-label">PUNTOS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-success">4V</div>
-                                    <div class="text-white-50 stat-label">VICTORIAS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-warning">50%</div>
-                                    <div class="text-white-50 stat-label">WIN RATE</div>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="/teams" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
-                                <a href="/admin/edit-team" class="btn btn-sm btn-outline-secondary" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                    onclick="confirmarEliminar('Equipo Sombra')">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card h-100">
-                    <div class="team-card-banner"></div>
-                    <div class="team-card-logo-wrapper">
-                        <img src="/assets/images/team_rivas.png" alt="Logo"
-                            class="team-card-logo rounded-circle shadow-sm">
-                    </div>
-                    <div class="team-card-body text-center">
-                        <div class="team-card-info">
-                            <h5 class="text-white fw-bold mb-1">Equipo Rivas</h5>
-                            <p class="text-white-50 small mb-2"><i class="bi bi-building me-1"></i>URJC - Alcorcón</p>
-                            <div class="d-flex gap-2 mb-3 flex-wrap">
-                                <span class="badge bg-warning text-dark">Multi-Gaming</span>
-                            </div>
-                            <div class="team-stats-mini d-flex gap-3 mb-3">
-                                <div class="text-center">
-                                    <div class="fw-bold text-white">6</div>
-                                    <div class="text-white-50 stat-label">PUNTOS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-success">2V</div>
-                                    <div class="text-white-50 stat-label">VICTORIAS</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="fw-bold text-warning">25%</div>
-                                    <div class="text-white-50 stat-label">WIN RATE</div>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="/teams" class="btn btn-sm btn-outline-info flex-grow-1">Ver Equipo</a>
-                                <a href="/admin/edit-team" class="btn btn-sm btn-outline-secondary" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                    onclick="confirmarEliminar('Equipo Rivas')">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {{/teams}}
         </div>
     </main>
 
     <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-card text-white border border-danger border-opacity-25">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar
-                        Equipo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-white-50">¿Estás seguro de que quieres eliminar a <strong class="text-white"
-                            id="nombreEquipoEliminar"></strong>? Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer border-secondary">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal">
-                        <i class="bi bi-trash3-fill me-1"></i>Eliminar
-                    </button>
-                </div>
+                <form id="formEliminar" method="POST">
+                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar
+                            Equipo</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-white-50">¿Estás seguro de que quieres eliminar a <strong class="text-white"
+                                id="nombreEquipoEliminar"></strong>? Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="modal-footer border-secondary">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger fw-bold">
+                            <i class="bi bi-trash3-fill me-1"></i>Eliminar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -284,8 +119,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function confirmarEliminar(nombre) {
+        function confirmarEliminar(nombre, id) {
             document.getElementById('nombreEquipoEliminar').textContent = nombre;
+            document.getElementById('formEliminar').action = '/admin/teams/' + id + '/delete';
             new bootstrap.Modal(document.getElementById('modalEliminar')).show();
         }
     </script>

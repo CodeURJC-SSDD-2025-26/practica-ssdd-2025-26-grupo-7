@@ -199,7 +199,24 @@ public class BaseController {
     }
 
     @GetMapping("/admin/teams-list")
-    public String teamsListAdminStatic() {
+    public String teamsListAdmin(Model model) {
+        var teams = teamRepository.findAll().stream().map(t -> {
+            java.util.Map<String, Object> m = new java.util.HashMap<>();
+            m.put("id", t.getId());
+            m.put("name", t.getName());
+            m.put("university", t.getUniversity());
+            m.put("mainGame", t.getMainGame());
+            m.put("wins", t.getWins());
+            m.put("losses", t.getLosses());
+            m.put("matchesPlayed", t.getMatchesPlayed());
+            int winRate = t.getMatchesPlayed() > 0 ? (int) Math.round((t.getWins() * 100.0) / t.getMatchesPlayed()) : 0;
+            m.put("winRate", winRate);
+            m.put("points", t.getWins() * 3);
+            return m;
+        }).toList();
+        
+        model.addAttribute("teams", teams);
+        model.addAttribute("totalTeams", teams.size());
         return "teams-list-admin";
     }
 
