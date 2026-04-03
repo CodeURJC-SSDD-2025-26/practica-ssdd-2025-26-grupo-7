@@ -188,48 +188,6 @@ public class BaseController {
         return "edit-tournament";
     }
 
-    @GetMapping("/admin/create-matches")
-    public String createMatchesStatic() {
-        return "create-matches";
-    }
-
-    @GetMapping("/admin/edit-matches")
-    public String editMatchesStatic() {
-        return "edit-matches";
-    }
-
-    @GetMapping("/admin/teams-list")
-    public String teamsListAdmin(Model model) {
-        var teams = teamRepository.findAll().stream().map(t -> {
-            java.util.Map<String, Object> m = new java.util.HashMap<>();
-            m.put("id", t.getId());
-            m.put("name", t.getName());
-            m.put("university", t.getUniversity());
-            m.put("mainGame", t.getMainGame());
-            m.put("wins", t.getWins());
-            m.put("losses", t.getLosses());
-            m.put("matchesPlayed", t.getMatchesPlayed());
-            int winRate = t.getMatchesPlayed() > 0 ? (int) Math.round((t.getWins() * 100.0) / t.getMatchesPlayed()) : 0;
-            m.put("winRate", winRate);
-            m.put("points", t.getWins() * 3);
-            return m;
-        }).toList();
-        
-        model.addAttribute("teams", teams);
-        model.addAttribute("totalTeams", teams.size());
-        return "teams-list-admin";
-    }
-
-    @GetMapping("/matches")
-    public String showMatchesPage() {
-        return "matches";
-    }
-
-    @GetMapping("/match-detail")
-    public String showMatchesDetailPage() {
-        return "match-detail";
-    }
-
     // ERROR 403 no permision)
     @GetMapping("/error-403")
     public String error403(Model model) {

@@ -28,15 +28,20 @@
                     <h2 class="text-white text-uppercase">
                         <i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Partido</span>
                     </h2>
-                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el
-                        resultado.</p>
+                    {{#match}}
+                    <p class="text-white-50">Modificando enfrentamiento: <span class="text-cyan">{{match.localTeam.name}} vs {{match.awayTeam.name}}</span></p>
+                    {{/match}}
+                    {{^match}}
+                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el resultado.</p>
+                    {{/match}}
                 </div>
 
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/admin" method="POST">
-
+                    {{^match}}
+                    <!-- EXPLICIT SELECTION FORM -->
+                    <div id="selection-flow">
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
                             Seleccionar Torneo
                         </h4>
@@ -44,191 +49,154 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-8">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Torneo</label>
-                                <select id="sel-torneo"
+                                <select id="sel-torneo-edit"
                                     class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                    onchange="cargarTorneo(this.value)">
+                                    onchange="filtrarPartidos(this.value)">
                                     <option value="" disabled selected>— Selecciona un torneo —</option>
-                                    <option value="valorant">Valorant Winter Cup 2026</option>
-                                    <option value="lol">LoL University Series</option>
-                                    <option value="cs2">CS2 Spring Split</option>
+                                    {{#tournaments}}
+                                    <option value="{{id}}">{{name}}</option>
+                                    {{/tournaments}}
                                 </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Juego</label>
-                                <input id="f-juego" type="text"
-                                    class="form-control bg-dark text-white border-secondary border-opacity-50" readonly
-                                    placeholder="Auto">
                             </div>
                         </div>
 
                         <div id="sel-partido-wrap" class="campos-ocultos">
-
                             <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-3">
                                 Seleccionar Partido
                             </h4>
 
                             <div class="row g-4 mb-4">
                                 <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a
-                                        editar</label>
-                                    <select id="sel-partido"
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a editar</label>
+                                    <select id="sel-partido-edit"
                                         class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        onchange="cargarPartido(this.value)">
+                                        onchange="window.location.href='/admin/matches/edit/' + this.value">
                                         <option value="" disabled selected>— Selecciona un partido —</option>
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    {{/match}}
 
+                    {{#match}}
+                    <!-- ACTUAL EDIT FORM -->
+                    <form action="/admin/matches/edit/{{match.id}}" method="POST">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-3">
+                            Equipos
+                        </h4>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Local</label>
+                                <select name="localTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    {{#teams}}
+                                    <option value="{{id}}">{{name}}</option>
+                                    {{/teams}}
+                                </select>
+                                <script>document.getElementsByName('localTeamId')[0].value = "{{match.localTeam.id}}";</script>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Visitante</label>
+                                <select name="awayTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    {{#teams}}
+                                    <option value="{{id}}">{{name}}</option>
+                                    {{/teams}}
+                                </select>
+                                <script>document.getElementsByName('awayTeamId')[0].value = "{{match.awayTeam.id}}";</script>
+                            </div>
                         </div>
 
-                        <div id="campos-partido" class="campos-ocultos">
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Detalles del Partido
+                        </h4>
 
-                            <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-3">
-                                Equipos
-                            </h4>
-
-                            <div class="row g-4 mb-4">
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo
-                                        Local</label>
-                                    <select id="f-local"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="" disabled>Selecciona equipo...</option>
-                                        <option>Fuego</option>
-                                        <option>Agua</option>
-                                        <option>Rivas Gaming</option>
-                                        <option>Shadow</option>
-                                        <option>Elite Squad</option>
-                                        <option>Water Wolves</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Equipo
-                                        Visitante</label>
-                                    <select id="f-visitante"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="" disabled>Selecciona equipo...</option>
-                                        <option>Fuego</option>
-                                        <option>Agua</option>
-                                        <option>Rivas Gaming</option>
-                                        <option>Shadow</option>
-                                        <option>Elite Squad</option>
-                                        <option>Water Wolves</option>
-                                    </select>
-                                </div>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
+                                <select name="phase" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="Fase de Grupos">Fase de Grupos</option>
+                                    <option value="Cuartos de Final">Cuartos de Final</option>
+                                    <option value="Semifinal">Semifinal</option>
+                                    <option value="Final">Final</option>
+                                </select>
+                                <script>document.getElementsByName('phase')[0].value = "{{match.phase}}";</script>
                             </div>
-
-                            <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
-                                Detalles del Partido
-                            </h4>
-
-                            <div class="row g-4 mb-4">
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
-                                    <select id="f-fase"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="" disabled>Selecciona fase...</option>
-                                        <option>Fase de Grupos</option>
-                                        <option>Cuartos de Final</option>
-                                        <option>Semifinal</option>
-                                        <option>Final</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
-                                    <select id="f-formato"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="" disabled>Selecciona...</option>
-                                        <option>BO1</option>
-                                        <option>BO3</option>
-                                        <option>BO5</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
-                                    <select id="f-estado"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="" disabled>Selecciona...</option>
-                                        <option>Programado</option>
-                                        <option>En Vivo</option>
-                                        <option>Finalizado</option>
-                                        <option>Cancelado</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
-                                    <input id="f-fecha" type="date"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
-                                    <input id="f-hora" type="time"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Notas
-                                        adicionales</label>
-                                    <input id="f-notas" type="text"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        placeholder="Ej: Sala privada #1234...">
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
+                                <select name="format" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="BO1">BO1</option>
+                                    <option value="BO3">BO3</option>
+                                    <option value="BO5">BO5</option>
+                                </select>
+                                <script>document.getElementsByName('format')[0].value = "{{match.format}}";</script>
                             </div>
-
-                            <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
-                                Resultado
-                            </h4>
-                            <p class="text-white-50 small mb-4">Rellena solo si el partido ya ha finalizado.</p>
-
-                            <div class="row g-4 mb-4">
-                                <div class="col-md-5">
-                                    <label id="label-local"
-                                        class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
-                                        Local</label>
-                                    <input id="f-score-local" type="number" min="0"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        placeholder="0">
-                                </div>
-                                <div class="col-md-2 d-flex align-items-end justify-content-center pb-2">
-                                    <span class="text-white-50 fs-3 fw-bold">:</span>
-                                </div>
-                                <div class="col-md-5">
-                                    <label id="label-visitante"
-                                        class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
-                                        Visitante</label>
-                                    <input id="f-score-visitante" type="number" min="0"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        placeholder="0">
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
+                                <select name="state" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="Programado">Programado</option>
+                                    <option value="En Vivo">En Vivo</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                                <script>document.getElementsByName('state')[0].value = "{{match.state}}";</script>
                             </div>
-
-                            <div class="alert alert-danger bg-transparent border-danger mt-4">
-                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona
-                                    de Peligro</h6>
-                                <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no
-                                    podra recuperarse.</p>
-                                <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="if(confirm('Seguro que quieres eliminar este partido?')) window.location='/admin'">
-                                    <i class="bi bi-trash3-fill me-1"></i>Eliminar partido
-                                </button>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
+                                <input type="date" name="date" value="{{matchDay}}" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
-
-                            <div class="d-flex justify-content-end gap-3 mt-5">
-                                <a href="/admin" class="btn btn-outline-danger px-4">Cancelar</a>
-                                <button type="submit" class="btn btn-primary px-5 fw-bold">
-                                    <i class="bi bi-floppy-fill me-2"></i>GUARDAR CAMBIOS
-                                </button>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
+                                <input type="time" name="time" value="{{matchTime}}" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
-
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales</label>
+                                <input type="text" name="notes" value="{{match.notes}}" class="form-control bg-dark text-white border-secondary border-opacity-50">
+                            </div>
                         </div>
 
+                        <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Resultado
+                        </h4>
+                        <p class="text-white-50 small mb-4">Rellena solo si el partido ya ha finalizado o está en curso.</p>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-5">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.localTeam.name}}</label>
+                                <input type="number" name="scoreLocal" min="0" value="{{match.scoreLocal}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end justify-content-center pb-2">
+                                <span class="text-white-50 fs-3 fw-bold">:</span>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.awayTeam.name}}</label>
+                                <input type="number" name="scoreAway" min="0" value="{{match.scoreAway}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5">
+                            <a href="/admin/matches/edit" class="btn btn-outline-secondary px-4">Volver atrás</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold">
+                                <i class="bi bi-floppy-fill me-2"></i>GUARDAR CAMBIOS
+                            </button>
+                        </div>
                     </form>
+
+                    <div class="alert alert-danger bg-transparent border-danger mt-4">
+                        <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
+                        <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no podrá recuperarse.</p>
+                        <form action="/admin/matches/delete/{{match.id}}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este partido?')">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash3-fill me-1"></i>Eliminar partido
+                            </button>
+                        </form>
+                    </div>
+                    {{/match}}
                 </div>
 
             </div>
@@ -238,85 +206,43 @@
     {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{^match}}
     <script>
-        const TORNEOS = {
-            valorant: {
-                juego: "Valorant",
-                partidos: [
-                    {
-                        id: "v1",
-                        label: "Fuego vs Agua — Semifinal (2026-02-10)",
-                        local: "Fuego", visitante: "Agua",
-                        fase: "Semifinal", formato: "BO3", estado: "Finalizado",
-                        fecha: "2026-02-10", hora: "18:00",
-                        scoreLocal: 2, scoreVisitante: 1,
-                        notas: "Stream en Twitch @onetapeleague"
-                    },
-                ]
-            }
-        };
+        // Pre-load matches data for filtering in JS
+        const ALL_MATCHES = [
+            {{#allMatches}}
+            { 
+                id: "{{id}}", 
+                tournamentId: "{{tournament.id}}", 
+                label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})" 
+            },
+            {{/allMatches}}
+        ];
 
-        function cargarTorneo(val) {
-            const t = TORNEOS[val];
-            if (!t) return;
-
-            document.getElementById('f-juego').value = t.juego;
-
-            document.getElementById('campos-partido').classList.remove('visible');
-            const sel = document.getElementById('sel-partido');
+        function filtrarPartidos(tournamentId) {
+            const sel = document.getElementById('sel-partido-edit');
+            const wrap = document.getElementById('sel-partido-wrap');
             sel.innerHTML = '<option value="" disabled selected>— Selecciona un partido —</option>';
 
-            if (t.partidos.length === 0) {
+            const filtered = ALL_MATCHES.filter(m => m.tournamentId == tournamentId);
+
+            if (filtered.length === 0) {
                 const opt = document.createElement('option');
                 opt.disabled = true;
-                opt.textContent = 'No hay partidos creados aun en este torneo';
+                opt.textContent = 'No hay partidos creados en este torneo';
                 sel.appendChild(opt);
             } else {
-                t.partidos.forEach(p => {
+                filtered.forEach(m => {
                     const opt = document.createElement('option');
-                    opt.value = p.id;
-                    opt.textContent = p.label;
+                    opt.value = m.id;
+                    opt.textContent = m.label;
                     sel.appendChild(opt);
                 });
             }
-
-            document.getElementById('sel-partido-wrap').classList.add('visible');
-        }
-
-        function cargarPartido(id) {
-            const torneo = TORNEOS[document.getElementById('sel-torneo').value];
-            if (!torneo) return;
-            const p = torneo.partidos.find(x => x.id === id);
-            if (!p) return;
-
-            setSelect('f-local', p.local);
-            setSelect('f-visitante', p.visitante);
-            setSelect('f-fase', p.fase);
-            setSelect('f-formato', p.formato);
-            setSelect('f-estado', p.estado);
-
-            document.getElementById('f-fecha').value = p.fecha;
-            document.getElementById('f-hora').value = p.hora;
-            document.getElementById('f-notas').value = p.notas;
-            document.getElementById('f-score-local').value = p.scoreLocal > 0 ? p.scoreLocal : '';
-            document.getElementById('f-score-visitante').value = p.scoreVisitante > 0 ? p.scoreVisitante : '';
-
-            document.getElementById('label-local').textContent = p.local + ' (Local)';
-            document.getElementById('label-visitante').textContent = p.visitante + ' (Visitante)';
-
-            document.getElementById('campos-partido').classList.add('visible');
-        }
-
-        function setSelect(id, value) {
-            const sel = document.getElementById(id);
-            for (const opt of sel.options) {
-                if (opt.value === value || opt.textContent === value) {
-                    sel.value = opt.value;
-                    return;
-                }
-            }
+            wrap.classList.add('visible');
         }
     </script>
+    {{/match}}
 
 </body>
 

@@ -27,6 +27,9 @@ public class DatabaseInitialize {
     private TournamentRepository tournamentRepository;
 
     @Autowired
+    private PlayerMatchStatsRepository statsRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostConstruct
@@ -77,13 +80,15 @@ public class DatabaseInitialize {
                 System.out.println("Aviso: No se pudo cargar la imagen base del equipo.");
             }
 
-            teamRepository.save(team1);
+            Team team2 = new Team("Fuego eSports", "URJC", "Valorant", "Rivales directos.");
+            teamRepository.save(team2);
 
             Tournament tournament1 = new Tournament(
                     "Valorant Winter Cup", "Valorant", "PC", "5v5", 16,
                     "2026-11-01", "El gran torneo de invierno de la universidad.", "Reglas estándar de Riot Games.");
             tournament1.setCreator(admin);
             tournament1.getTeams().add(team1);
+            tournament1.getTeams().add(team2);
 
             try {
                 Resource image = new ClassPathResource("static/assets/images/tournament-banner.png");
@@ -94,8 +99,12 @@ public class DatabaseInitialize {
 
             tournamentRepository.save(tournament1);
 
-            Match match1 = new Match("2026-11-05 18:00", "Fase de Grupos", tournament1, team1, null);
+            Match match1 = new Match("2026-11-05 18:00", "Fase de Grupos", tournament1, team1, team2, "BO3");
             matchRepository.save(match1);
+
+            // Seed stats for player1 and player2 in team1
+            statsRepository.save(new PlayerMatchStats(match1, player1, 24, 12, 8, 285));
+            statsRepository.save(new PlayerMatchStats(match1, player2, 18, 14, 12, 210));
         }
     }
 }

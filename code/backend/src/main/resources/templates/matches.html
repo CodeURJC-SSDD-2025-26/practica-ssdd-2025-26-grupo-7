@@ -4,162 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneTap eLeague - Inicio</title>
+    <title>OneTap eLeague - Partidos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/matches.css">
-    </head>
+</head>
 
 <body>
     {{> header}}
 
-  
     <!--HEADER SECTION-->
     <header class="page-header text-center">
         <div class="container">
-                <h1 class="text-white">Calendario de <span style="color: var(--primary-cyan);">partidos</span></h1>
-                <p class="text-white-50">Resultados en tiempo real y próximos encuentros</p>
-            </div>
+            <h1 class="text-white">Calendario de <span style="color: var(--primary-cyan);">partidos</span></h1>
+            <p class="text-white-50">Resultados en tiempo real y próximos encuentros</p>
+        </div>
     </header>
 
-     <!-- MAIN SECTION-->
+    <!-- MAIN SECTION-->
     <main class="matches-container py-5">
         <div class="container">
-            
 
             <div class="row g-4">
+                {{#matches}}
                 <div class="col-12">
-                    <a href="/match-detail" class="stretched-link"></a>
-                        <div class="match-card border-live">
-                            <div class="match-info-top">
-                                <span class="badge badge-live pulse">EN VIVO</span>
-                                <span class="text-white-50 small fw-bold">VALORANT - SEMIFINAL</span>
-                                <span class="text-white-50 small">HOY</span>
-                            </div>
-
-                            <div class="match-main-content">
-                                <div class="match-team left">
-                                    <h4 class="team-name d-none d-md-block">Agua</h4>
-                                    <div class="team-icon-container">
-                                        <img src="/assets/images/team_water.png" alt="Agua" class="team-icon">
-                                    </div>
-                                </div>
-
-                                <div class="match-score">
-                                    <div class="score-box live-score">
-                                        <span class="score-value">13</span>
-                                        <span class="score-divider">:</span>
-                                        <span class="score-value">11</span>
-                                    </div>
-                                    <div class="match-status-text text-danger small mt-1 fw-bold">MAPA 2</div>
-                                </div>
-
-                                <div class="match-team right">
-                                    <div class="team-icon-container">
-                                        <img src="/assets/images/team_fire.png" alt="Fuego" class="team-icon">
-                                    </div>
-                                    <h4 class="team-name d-none d-md-block">Fuego</h4>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="match-card">
-                        <a href="/match-detail" class="stretched-link"></a>
+                    <div class="match-card position-relative">
+                        <a href="/matches/{{id}}" class="stretched-link"></a>
                         <div class="match-info-top">
-                            <span class="badge bg-dark border border-info text-info">18:00h</span>
-                            <span class="text-white-50 small fw-bold">ROCKET LEAGUE</span>
-                            <span class="text-white-50 small">MAÑANA</span>
+                            <span class="badge bg-dark border border-info text-info">{{matchDate}}</span>
+                            <span class="text-white-50 small fw-bold text-uppercase">{{tournament.name}} — {{phase}}</span>
+                            <span class="badge bg-primary ms-auto">{{state}}</span>
                         </div>
 
                         <div class="match-main-content">
                             <div class="match-team left">
-                                <h4 class="team-name d-none d-md-block">Rivas</h4>
-                                <div class="team-icon-container border-cyan">
-                                    <img src="/assets/images/team_rivas.png" alt="Rivas" class="team-icon">
-                                </div>
-                            </div>
-
-                            <div class="match-score">
-                                <div class="vs-circle text-white-50">VS</div>
-                            </div>
-
-                            <div class="match-team right">
-                                <div class="team-icon-container border-cyan">
-                                    <img src="/assets/images/team_shadow.png" alt="Sombra" class="team-icon">
-                                </div>
-                                <h4 class="team-name d-none d-md-block">Sombra</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="match-card">
-                        <a href="/match-detail" class="stretched-link"></a>
-                        <div class="match-info-top">
-                            <span class="badge bg-dark border border-secondary text-white">20:30h</span>
-                            <span class="text-white-50 small fw-bold">LEAGUE OF LEGENDS - GRUPO B</span>
-                            <span class="text-white-50 small">HOY</span>
-                        </div>
-
-                        <div class="match-main-content">
-                            <div class="match-team left">
-                                <h4 class="team-name d-none d-md-block">Elite</h4>
-                                <div class="team-icon-container border-cyan">
-                                    <img src="/assets/images/team_elite.png" alt="Elite" class="team-icon">
-                                </div>
-                            </div>
-
-                            <div class="match-score">
-                                <div class="vs-circle text-white-50">VS</div>
-                            </div>
-
-                            <div class="match-team right">
-                                <div class="team-icon-container border-cyan">
-                                    <img src="/assets/images/team_water.png" alt="Agua" class="team-icon">
-                                </div>
-                                <h4 class="team-name d-none d-md-block">Agua</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="match-card finished-card">
-                        <a href="/match-detail" class="stretched-link"></a>
-                        <div class="match-info-top">
-                            <span class="badge bg-secondary">FINALIZADO</span>
-                            <span class="text-white-50 small fw-bold">CS2 - JORNADA 5</span>
-                            <span class="text-white-50 small">12 FEB</span>
-                        </div>
-
-                        <div class="match-main-content opacity-75">
-                            <div class="match-team left">
-                                <h4 class="team-name d-none d-md-block">Sombra</h4>
+                                {{#localTeam}}
+                                <h4 class="team-name d-none d-md-block">{{name}}</h4>
                                 <div class="team-icon-container">
-                                    <img src="/assets/images/team_shadow.png" alt="Sombra" class="team-icon">
+                                    <img src="/images/teams/{{id}}" alt="{{name}}" onerror="this.src='/assets/images/team_placeholder.png'" class="team-icon">
                                 </div>
+                                {{/localTeam}}
+                                {{^localTeam}}
+                                <h4 class="team-name d-none d-md-block text-white-50 small">POR DEFINIR</h4>
+                                <div class="team-icon-container">
+                                    <img src="/assets/images/team_placeholder.png" alt="TBD" class="team-icon">
+                                </div>
+                                {{/localTeam}}
                             </div>
 
                             <div class="match-score">
-                                <div class="score-box border-secondary">
-                                    <span class="score-value">0</span>
-                                    <span class="score-divider">-</span>
-                                    <span class="score-value text-success">2</span>
+                                <div class="score-box">
+                                    <span class="score-value">{{scoreLocal}}</span>
+                                    <span class="score-divider">:</span>
+                                    <span class="score-value">{{scoreAway}}</span>
                                 </div>
                             </div>
 
-                            <div class="match-team right text-success">
-                                <div class="team-icon-container border-success">
-                                    <img src="/assets/images/team_fire.png" alt="Fuego" class="team-icon">
+                            <div class="match-team right">
+                                {{#awayTeam}}
+                                <div class="team-icon-container">
+                                    <img src="/images/teams/{{id}}" alt="{{name}}" onerror="this.src='/assets/images/team_placeholder.png'" class="team-icon">
                                 </div>
-                                <h4 class="team-name d-none d-md-block fw-bold">Fuego</h4>
+                                <h4 class="team-name d-none d-md-block">{{name}}</h4>
+                                {{/awayTeam}}
+                                {{^awayTeam}}
+                                <div class="team-icon-container">
+                                    <img src="/assets/images/team_placeholder.png" alt="TBD" class="team-icon">
+                                </div>
+                                <h4 class="team-name d-none d-md-block text-white-50 small">POR DEFINIR</h4>
+                                {{/awayTeam}}
                             </div>
                         </div>
                     </div>
                 </div>
+                {{/matches}}
+                {{^matches}}
+                <div class="col-12 text-center py-5">
+                    <p class="text-white-50">No hay partidos programados por ahora.</p>
+                </div>
+                {{/matches}}
             </div>
         </div>
     </main>

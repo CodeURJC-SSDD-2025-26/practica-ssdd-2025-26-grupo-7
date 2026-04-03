@@ -15,42 +15,70 @@
     {{> header}}
 
     <main class="container py-4">
-        <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <a href="/matches" class="text-cyan text-decoration-none small text-uppercase">
                 <i class="bi bi-arrow-left me-1"></i> Volver a Partidos
             </a>
+            {{#admin}}
+            <a href="/admin/matches/{{match.id}}/report" class="btn btn-sm btn-outline-cyan text-uppercase fw-bold">
+                <i class="bi bi-pencil-square me-1"></i> Editar Resultados
+            </a>
+            {{/admin}}
         </div>
 
         <div class="bg-card rounded-4 p-4 p-md-5 mb-5 border border-secondary border-opacity-25 position-relative overflow-hidden shadow-lg">
             <div class="text-center mb-4">
-                <span class="badge bg-danger pulse-live me-2"><i class="bi bi-broadcast me-1"></i> EN VIVO</span>
-                <span class="text-white-50 small fw-bold text-uppercase">Valorant - Semifinal - Mapa 2</span>
+                <span class="badge bg-primary me-2">{{match.state}}</span>
+                <span class="text-white-50 small fw-bold text-uppercase">
+                    {{#match.tournament}}{{name}}{{/match.tournament}}{{^match.tournament}}Torneo Desconocido{{/match.tournament}} — {{match.phase}} — {{match.format}}
+                </span>
             </div>
 
             <div class="d-flex justify-content-center align-items-center gap-3 gap-md-5">
                 <div class="text-center team-block">
                     <div class="logo-wrapper border-cyan mb-3 mx-auto">
-                        <img src="/assets/images/team_water.png" alt="Team Agua" class="detail-team-logo">
+                        {{#match.localTeam}}
+                        <img src="/images/teams/{{id}}" alt="{{name}}" class="detail-team-logo" onerror="this.src='/assets/images/team_placeholder.png'">
+                        {{/match.localTeam}}
+                        {{^match.localTeam}}
+                        <img src="/assets/images/team_placeholder.png" alt="TBD" class="detail-team-logo">
+                        {{/match.localTeam}}
                     </div>
-                    <h3 class="text-white mb-0 font-sans text-uppercase">Agua</h3>
+                    <h3 class="text-white mb-0 font-sans text-uppercase">
+                        {{#match.localTeam}}{{name}}{{/match.localTeam}}
+                        {{^match.localTeam}}POR DEFINIR{{/match.localTeam}}
+                    </h3>
                 </div>
 
                 <div class="text-center score-block">
                     <div class="d-flex align-items-center justify-content-center gap-3">
-                        <span class="score-number text-white">13</span>
+                        <span class="score-number text-white">{{match.scoreLocal}}</span>
                         <span class="score-divider text-white-50">:</span>
-                        <span class="score-number text-white">11</span>
+                        <span class="score-number text-white">{{match.scoreAway}}</span>
                     </div>
-                    <div class="mt-2 text-cyan small fw-bold">ASCENT</div>
+                    <div class="mt-2 text-cyan small fw-bold">{{match.matchDate}}</div>
                 </div>
 
                 <div class="text-center team-block">
                     <div class="logo-wrapper border-danger mb-3 mx-auto">
-                        <img src="/assets/images/team_fire.png" alt="Team Fuego" class="detail-team-logo">
+                        {{#match.awayTeam}}
+                        <img src="/images/teams/{{id}}" alt="{{name}}" class="detail-team-logo" onerror="this.src='/assets/images/team_placeholder.png'">
+                        {{/match.awayTeam}}
+                        {{^match.awayTeam}}
+                        <img src="/assets/images/team_placeholder.png" alt="TBD" class="detail-team-logo">
+                        {{/match.awayTeam}}
                     </div>
-                    <h3 class="text-white mb-0 font-sans text-uppercase">Fuego</h3>
+                    <h3 class="text-white mb-0 font-sans text-uppercase">
+                        {{#match.awayTeam}}{{name}}{{/match.awayTeam}}
+                        {{^match.awayTeam}}POR DEFINIR{{/match.awayTeam}}
+                    </h3>
                 </div>
             </div>
+            {{#match.notes}}
+            <div class="text-center mt-4 pt-3 border-top border-secondary border-opacity-10">
+                <p class="text-white-50 small mb-0"><i class="bi bi-info-circle me-1"></i> {{match.notes}}</p>
+            </div>
+            {{/match.notes}}
         </div>
 
         <div class="row g-4">
@@ -61,7 +89,12 @@
                 
                 <div class="mb-5">
                     <h5 class="text-cyan mb-3 text-uppercase fw-bold d-flex align-items-center">
-                        <img src="/assets/images/team_water.png" alt="Agua" width="30" class="me-2"> Team Agua
+                        {{#match.localTeam}}
+                        <img src="/images/teams/{{id}}" alt="{{name}}" width="30" class="me-2" onerror="this.src='/assets/images/team_placeholder.png'"> {{name}}
+                        {{/match.localTeam}}
+                        {{^match.localTeam}}
+                        <img src="/assets/images/team_placeholder.png" alt="TBD" width="30" class="me-2"> Team Local (TBD)
+                        {{/match.localTeam}}
                     </h5>
                     <div class="table-responsive bg-card rounded-3 border border-secondary border-opacity-25 shadow-sm">
                         <table class="table table-dark table-hover align-middle mb-0 text-center stats-table">
@@ -76,46 +109,21 @@
                                 </tr>
                             </thead>
                             <tbody class="border-top-0 border-secondary border-opacity-25">
+                                {{#localStats}}
                                 <tr>
-                                    <td class="text-start ps-4 fw-bold">AquaKing <span class="badge bg-info text-dark ms-2 badge-team-leader">TEAM LEADER</span></td>
-                                    <td class="text-success fw-bold">24</td>
-                                    <td class="text-danger">12</td>
-                                    <td>8</td>
-                                    <td>2.00</td>
-                                    <td class="pe-4 fw-bold text-cyan text-end">285</td>
+                                    <td class="text-start ps-4 fw-bold">{{player.nickname}}</td>
+                                    <td class="text-success fw-bold">{{kills}}</td>
+                                    <td class="text-danger">{{deaths}}</td>
+                                    <td>{{assists}}</td>
+                                    <td>{{kd}}</td>
+                                    <td class="pe-4 fw-bold text-cyan text-end">{{acs}}</td>
                                 </tr>
+                                {{/localStats}}
+                                {{^localStats}}
                                 <tr>
-                                    <td class="text-start ps-4">RiverFlow</td>
-                                    <td class="text-success">18</td>
-                                    <td class="text-danger">14</td>
-                                    <td>12</td>
-                                    <td>1.28</td>
-                                    <td class="pe-4 text-white-50 text-end">210</td>
+                                    <td colspan="6" class="py-4 text-white-50 small">No hay estadísticas disponibles para este equipo.</td>
                                 </tr>
-                                <tr>
-                                    <td class="text-start ps-4">TidalWave</td>
-                                    <td class="text-success">15</td>
-                                    <td class="text-danger">15</td>
-                                    <td>5</td>
-                                    <td>1.00</td>
-                                    <td class="pe-4 text-white-50 text-end">195</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start ps-4">DeepBlue</td>
-                                    <td class="text-success">12</td>
-                                    <td class="text-danger">16</td>
-                                    <td>9</td>
-                                    <td>0.75</td>
-                                    <td class="pe-4 text-white-50 text-end">160</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start ps-4">OceanMist</td>
-                                    <td class="text-success">9</td>
-                                    <td class="text-danger">17</td>
-                                    <td>11</td>
-                                    <td>0.52</td>
-                                    <td class="pe-4 text-white-50 text-end">135</td>
-                                </tr>
+                                {{/localStats}}
                             </tbody>
                         </table>
                     </div>
@@ -123,7 +131,12 @@
 
                 <div class="mb-4">
                     <h5 class="text-danger mb-3 text-uppercase fw-bold d-flex align-items-center">
-                        <img src="/assets/images/team_fire.png" alt="Fuego" width="30" class="me-2"> Team Fuego
+                        {{#match.awayTeam}}
+                        <img src="/images/teams/{{id}}" alt="{{name}}" width="30" class="me-2" onerror="this.src='/assets/images/team_placeholder.png'"> {{name}}
+                        {{/match.awayTeam}}
+                        {{^match.awayTeam}}
+                        <img src="/assets/images/team_placeholder.png" alt="TBD" width="30" class="me-2"> Team Visitante (TBD)
+                        {{/match.awayTeam}}
                     </h5>
                     <div class="table-responsive bg-card rounded-3 border border-secondary border-opacity-25 shadow-sm">
                         <table class="table table-dark table-hover align-middle mb-0 text-center stats-table">
@@ -138,46 +151,21 @@
                                 </tr>
                             </thead>
                             <tbody class="border-top-0 border-secondary border-opacity-25">
+                                {{#awayStats}}
                                 <tr>
-                                    <td class="text-start ps-4 fw-bold">BlazeMaster <span class="badge bg-danger text-white ms-2 badge-team-leader">TEAM LEADER</span></td>
-                                    <td class="text-success fw-bold">22</td>
-                                    <td class="text-danger">16</td>
-                                    <td>5</td>
-                                    <td>1.37</td>
-                                    <td class="pe-4 fw-bold text-danger text-end">260</td>
+                                    <td class="text-start ps-4 fw-bold">{{player.nickname}}</td>
+                                    <td class="text-success fw-bold">{{kills}}</td>
+                                    <td class="text-danger">{{deaths}}</td>
+                                    <td>{{assists}}</td>
+                                    <td>{{kd}}</td>
+                                    <td class="pe-4 fw-bold text-danger text-end">{{acs}}</td>
                                 </tr>
+                                {{/awayStats}}
+                                {{^awayStats}}
                                 <tr>
-                                    <td class="text-start ps-4">Inferno</td>
-                                    <td class="text-success">19</td>
-                                    <td class="text-danger">15</td>
-                                    <td>4</td>
-                                    <td>1.26</td>
-                                    <td class="pe-4 text-white-50 text-end">225</td>
+                                    <td colspan="6" class="py-4 text-white-50 small">No hay estadísticas disponibles para este equipo.</td>
                                 </tr>
-                                <tr>
-                                    <td class="text-start ps-4">EmberSpark</td>
-                                    <td class="text-success">16</td>
-                                    <td class="text-danger">14</td>
-                                    <td>10</td>
-                                    <td>1.14</td>
-                                    <td class="pe-4 text-white-50 text-end">205</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start ps-4">AshCloud</td>
-                                    <td class="text-success">10</td>
-                                    <td class="text-danger">16</td>
-                                    <td>8</td>
-                                    <td>0.62</td>
-                                    <td class="pe-4 text-white-50 text-end">150</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start ps-4">Wildfire</td>
-                                    <td class="text-success">7</td>
-                                    <td class="text-danger">17</td>
-                                    <td>6</td>
-                                    <td>0.41</td>
-                                    <td class="pe-4 text-white-50 text-end">110</td>
-                                </tr>
+                                {{/awayStats}}
                             </tbody>
                         </table>
                     </div>
