@@ -1,5 +1,6 @@
 package es.urjc.code.backend.controller;
 
+import es.urjc.code.backend.model.Match;
 import es.urjc.code.backend.model.Team;
 import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.repository.TeamRepository;
@@ -57,6 +58,43 @@ public class TournamentController {
         return m;
     }
 
+    private Map<String, Object> enrichMatch(Match match) {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("id", match.getId());
+        m.put("matchDate", match.getMatchDate());
+        m.put("phase", match.getPhase());
+        m.put("format", match.getFormat());
+        m.put("state", match.getState());
+        m.put("scoreLocal", match.getScoreLocal());
+        m.put("scoreAway", match.getScoreAway());
+        m.put("result", match.getResult());
+        m.put("notes", match.getNotes());
+
+        String state = match.getState() != null ? match.getState() : "";
+        m.put("matchLive", "En Vivo".equals(state));
+        m.put("matchFinished", "Finalizado".equals(state));
+        m.put("matchScheduled", "Programado".equals(state));
+        m.put("matchCancelled", "Cancelado".equals(state));
+
+        if (match.getLocalTeam() != null) {
+            Team lt = match.getLocalTeam();
+            Map<String, Object> ltMap = new LinkedHashMap<>();
+            ltMap.put("id", lt.getId());
+            ltMap.put("name", lt.getName());
+            m.put("localTeam", ltMap);
+        }
+
+        if (match.getAwayTeam() != null) {
+            Team at = match.getAwayTeam();
+            Map<String, Object> atMap = new LinkedHashMap<>();
+            atMap.put("id", at.getId());
+            atMap.put("name", at.getName());
+            m.put("awayTeam", atMap);
+        }
+
+        return m;
+    }
+
     @GetMapping("/tournaments")
     public String getTournaments(
             Model model,
@@ -93,13 +131,24 @@ public class TournamentController {
             return "redirect:/tournaments";
 
         Tournament tournament = opt.get();
-        AtomicInteger rank = new AtomicInteger(1);
 
+        String tState = tournament.getState() != null ? tournament.getState() : "";
+        model.addAttribute("stateActive", "En Curso".equals(tState));
+        model.addAttribute("stateUpcoming", "Próximamente".equals(tState));
+        model.addAttribute("stateFinished", "Finalizado".equals(tState));
+
+        // ── Ranked teams ──
+        AtomicInteger rank = new AtomicInteger(1);
         List<Map<String, Object>> rankedTeams = tournament.getTeams().stream()
                 .sorted(Comparator.comparingInt(Team::getWins).reversed())
                 .map(t -> {
+                    int r = rank.getAndIncrement();
                     Map<String, Object> m = new LinkedHashMap<>();
-                    m.put("rank", rank.getAndIncrement());
+                    m.put("rank", r);
+                    m.put("rankIs1", r == 1);
+                    m.put("rankIs2", r == 2);
+                    m.put("rankIs3", r == 3);
+                    m.put("rankGt3", r > 3);
                     m.put("id", t.getId());
                     m.put("name", t.getName());
                     m.put("matchesPlayed", t.getMatchesPlayed());
@@ -110,9 +159,13 @@ public class TournamentController {
                 })
                 .toList();
 
+        List<Map<String, Object>> enrichedMatches = tournament.getMatches().stream()
+                .map(this::enrichMatch)
+                .collect(Collectors.toList());
+
         model.addAttribute("tournament", tournament);
         model.addAttribute("teams", rankedTeams);
-        model.addAttribute("matches", tournament.getMatches());
+        model.addAttribute("matches", enrichedMatches);
         model.addAttribute("teamsCount", tournament.getTeams().size());
         model.addAttribute("allTeams", teamRepository.findAll());
         return "tournament-detail";

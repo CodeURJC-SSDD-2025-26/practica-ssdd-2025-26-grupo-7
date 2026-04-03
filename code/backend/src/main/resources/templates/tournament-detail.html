@@ -1,35 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Torneo - OneTap eLeague</title>
+    <title>{{tournament.name}} - OneTap eLeague</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/tournament-details.css">
-    </head>
+</head>
+
 <body>
     {{> header}}
-<!-- HEADER -->
+
     <header class="page-header text-center">
         <div class="container">
-            <h4 class="display-5 text-white fw-bold">Valorant Winter Cup</h4>
-            <p class="lead text-white-50">16 equipos · Round Robin · Premio: €5,000</p>
-            <span class="badge bg-success">En Curso</span>
-            <span class="badge bg-secondary ms-1">16/16 Equipos</span>
+            <p class="text-white-50 small text-uppercase mb-2">
+                <a href="/tournaments" class="text-white-50 text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Torneos
+                </a>
+            </p>
+
+            <h1 class="display-5 fw-bold text-white mb-2">{{tournament.name}}</h1>
+
+            <p class="lead text-white-50 mb-3">
+                {{tournament.maxTeams}} equipos · {{tournament.mode}} · {{tournament.platform}}
+            </p>
+
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                {{#tournament.state}}
+                <span class="badge px-3 py-2
+                    {{#stateActive}}state-active{{/stateActive}}
+                    {{#stateUpcoming}}state-upcoming{{/stateUpcoming}}
+                    {{#stateFinished}}state-finished{{/stateFinished}}
+                    ">
+                    {{#stateActive}}<i class="bi bi-play-circle-fill me-1"></i>En Curso{{/stateActive}}
+                    {{#stateUpcoming}}<i class="bi bi-clock-fill me-1"></i>Próximamente{{/stateUpcoming}}
+                    {{#stateFinished}}<i class="bi bi-check-circle-fill me-1"></i>Finalizado{{/stateFinished}}
+                </span>
+                {{/tournament.state}}
+                <span class="badge bg-secondary px-3 py-2">
+                    <i class="bi bi-people-fill me-1"></i>{{teamsCount}} / {{tournament.maxTeams}} equipos
+                </span>
+                <span class="badge bg-dark border border-secondary px-3 py-2">
+                    <i class="bi bi-controller me-1"></i>{{tournament.game}}
+                </span>
+            </div>
+
+            {{#admin}}
+            <div class="admin-actions-bar d-inline-flex gap-2 mt-4">
+                <a href="/tournaments/{{tournament.id}}/edit" class="btn btn-sm btn-outline-warning">
+                    <i class="bi bi-pencil-square me-1"></i>Editar torneo
+                </a>
+                <a href="/admin/matches/create" class="btn btn-sm btn-outline-success">
+                    <i class="bi bi-calendar-plus me-1"></i>Crear partido
+                </a>
+                <form action="/tournaments/{{tournament.id}}/delete" method="POST" class="m-0"
+                    onsubmit="return confirm('¿Eliminar este torneo? Esta acción no se puede deshacer.')">
+                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash3 me-1"></i>Eliminar
+                    </button>
+                </form>
+            </div>
+            {{/admin}}
         </div>
     </header>
 
-    <div class="container mb-5">
+    <div class="container py-5">
         <div class="row g-4">
+
             <div class="col-lg-8">
+
                 <div class="detail-card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-trophy me-2" style="color: #ecc94b;"></i>Clasificación
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-dark table-hover standings-table mb-0">
+                        <table class="table table-dark standings-table mb-0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width:48px;">#</th>
                                     <th>Equipo</th>
                                     <th class="text-center">J</th>
                                     <th class="text-center">V</th>
@@ -38,31 +91,40 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{#teams}}
                                 <tr>
-                                    <td><strong>1</strong></td>
-                                    <td><img src="/assets/images/team_fire.png" width="28" class="me-2" style="object-fit:contain;">Equipo Fuego</td>
-                                    <td class="text-center">8</td><td class="text-center text-success">7</td><td class="text-center text-danger">1</td><td class="text-center fw-bold">21</td>
+                                    <td class="fw-bold text-center">
+                                        {{#rank}}
+                                        <span class="rank-medal">
+                                            {{#rankIs1}}🥇{{/rankIs1}}
+                                            {{#rankIs2}}🥈{{/rankIs2}}
+                                            {{#rankIs3}}🥉{{/rankIs3}}
+                                            {{#rankGt3}}{{rank}}{{/rankGt3}}
+                                        </span>
+                                        {{/rank}}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-mini"
+                                                onerror="this.src='/assets/images/team_placeholder.png'">
+                                            <a href="/teams/{{id}}"
+                                                class="text-white text-decoration-none fw-semibold">{{name}}</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-white-50">{{matchesPlayed}}</td>
+                                    <td class="text-center text-success fw-bold">{{wins}}</td>
+                                    <td class="text-center text-danger">{{losses}}</td>
+                                    <td class="text-center fw-bold text-white">{{points}}</td>
                                 </tr>
+                                {{/teams}}
+                                {{^teams}}
                                 <tr>
-                                    <td><strong>2</strong></td>
-                                    <td><img src="/assets/images/team_elite.png" width="28" class="me-2" style="object-fit:contain;">Gaming Elite</td>
-                                    <td class="text-center">8</td><td class="text-center text-success">6</td><td class="text-center text-danger">2</td><td class="text-center fw-bold">18</td>
+                                    <td colspan="6" class="text-center py-5 text-white-50">
+                                        <i class="bi bi-shield-x d-block fs-2 mb-2 opacity-25"></i>
+                                        Aún no hay equipos inscritos en este torneo.
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td><strong>3</strong></td>
-                                    <td><img src="/assets/images/team_water.png" width="28" class="me-2" style="object-fit:contain;">Equipo Agua</td>
-                                    <td class="text-center">8</td><td class="text-center text-success">5</td><td class="text-center text-danger">3</td><td class="text-center fw-bold">15</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>4</strong></td>
-                                    <td><img src="/assets/images/team_shadow.png" width="28" class="me-2" style="object-fit:contain;">Equipo Sombra</td>
-                                    <td class="text-center">8</td><td class="text-center text-success">4</td><td class="text-center text-danger">4</td><td class="text-center fw-bold">12</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>5</strong></td>
-                                    <td><img src="/assets/images/team_rivas.png" width="28" class="me-2" style="object-fit:contain;">Equipo Rivas</td>
-                                    <td class="text-center">8</td><td class="text-center text-success">2</td><td class="text-center text-danger">6</td><td class="text-center fw-bold">6</td>
-                                </tr>
+                                {{/teams}}
                             </tbody>
                         </table>
                     </div>
@@ -70,87 +132,193 @@
 
                 <div class="detail-card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-gamepad me-2"></i>Partidos Recientes</span>
-                        <a href="/matches" class="btn btn-sm btn-outline-info me-4">Ver todos</a>
+                        <span><i class="fas fa-gamepad me-2" style="color: var(--primary-cyan, #00e5ff);"></i>Partidos
+                            del Torneo</span>
+                        <a href="/matches" class="btn btn-sm btn-outline-info">Ver todos</a>
                     </div>
                     <div class="p-3 d-flex flex-column gap-3">
-
-                        <div class="match-card">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-secondary">Finalizado</span>
-                                <small class="text">15 Feb 2026</small>
+                        {{#matches}}
+                        <div class="match-mini position-relative {{#matchLive}}border-live{{/matchLive}}">
+                            <a href="/matches/{{id}}" class="stretched-link"></a>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge
+                                    {{#matchLive}}badge-live{{/matchLive}}
+                                    {{#matchFinished}}bg-secondary{{/matchFinished}}
+                                    {{#matchScheduled}}bg-dark border border-secondary text-white-50{{/matchScheduled}}
+                                    {{#matchCancelled}}bg-danger bg-opacity-25 text-danger{{/matchCancelled}}
+                                    ">
+                                    {{#matchLive}}<i class="bi bi-broadcast me-1"></i>EN VIVO{{/matchLive}}
+                                    {{#matchFinished}}Finalizado{{/matchFinished}}
+                                    {{#matchScheduled}}{{state}}{{/matchScheduled}}
+                                    {{#matchCancelled}}Cancelado{{/matchCancelled}}
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span
+                                        class="badge bg-dark border border-secondary text-white-50 small">{{phase}}</span>
+                                    <small class="text-white-50">{{matchDate}}</small>
+                                </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">Equipo Fuego</span>
-                                <span class="fs-5 fw-bold text-white mx-3">13 – 8</span>
-                                <span class="fw-bold">Gaming Elite</span>
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                    {{#localTeam}}
+                                    <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
+                                        onerror="this.src='/assets/images/team_placeholder.png'">
+                                    <span class="fw-bold text-white">{{name}}</span>
+                                    {{/localTeam}}
+                                    {{^localTeam}}<span class="text-white-50 small">POR DEFINIR</span>{{/localTeam}}
+                                </div>
+
+                                <div class="text-center px-3">
+                                    <span class="fs-5 fw-bold
+                                        {{#matchLive}}text-warning{{/matchLive}}
+                                        {{^matchLive}}text-white{{/matchLive}}
+                                        ">{{scoreLocal}} – {{scoreAway}}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2 flex-grow-1 justify-content-end">
+                                    {{#awayTeam}}
+                                    <span class="fw-bold text-white">{{name}}</span>
+                                    <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
+                                        onerror="this.src='/assets/images/team_placeholder.png'">
+                                    {{/awayTeam}}
+                                    {{^awayTeam}}<span class="text-white-50 small">POR DEFINIR</span>{{/awayTeam}}
+                                </div>
                             </div>
                         </div>
-
-                        <div class="match-card">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-secondary">Finalizado</span>
-                                <small class="text">14 Feb 2026</small>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">Equipo Agua</span>
-                                <span class="fs-5 fw-bold text-white mx-3">13 – 11</span>
-                                <span class="fw-bold">Equipo Rivas</span>
-                            </div>
+                        {{/matches}}
+                        {{^matches}}
+                        <div class="text-center py-5 text-white-50">
+                            <i class="bi bi-calendar-x d-block fs-2 mb-2 opacity-25"></i>
+                            No hay partidos programados todavía para este torneo.
                         </div>
-
-                        <div class="match-card border-live">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge badge-live"></i>EN VIVO</span>
-                                <small class="text">18 Feb 2026</small>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-bold">Equipo Sombra</span>
-                                <span class="fs-5 fw-bold live-score mx-3">9 – 7</span>
-                                <span class="fw-bold">Equipo Rivas</span>
-                            </div>
-                        </div>
+                        {{/matches}}
                     </div>
                 </div>
+
             </div>
 
             <div class="col-lg-4">
-
                 <div class="detail-card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-info-circle me-2"></i>Detalles del Torneo
+                        <i class="fas fa-info-circle me-2"></i>Información General
                     </div>
                     <div class="p-3">
-                        <p class="mb-2"><strong>Juego:</strong> Valorant</p>
-                        <p class="mb-2"><strong>Formato:</strong> Round Robin</p>
-                        <p class="mb-2"><strong>Premio:</strong> €5,000</p>
-                        <p class="mb-2"><strong>Inicio:</strong> 1 Enero, 2026</p>
-                        <p class="mb-2"><strong>Fin:</strong> 31 Marzo, 2026</p>
-                        <p class="mb-2"><strong>Equipos:</strong> 16 / 16</p>
-                        <p class="mb-0"><strong>Estado:</strong> <span class="badge bg-success ms-1">En Curso</span></p>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-controller me-1"></i>Juego</span>
+                            <span class="info-value">{{tournament.game}}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-diagram-3 me-1"></i>Modo</span>
+                            <span class="info-value">{{tournament.mode}}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-display me-1"></i>Plataforma</span>
+                            <span class="info-value">{{tournament.platform}}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-calendar-event me-1"></i>Inicio</span>
+                            <span class="info-value">{{tournament.startDate}}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-people me-1"></i>Equipos</span>
+                            <span class="info-value">{{teamsCount}} / {{tournament.maxTeams}}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="bi bi-flag me-1"></i>Estado</span>
+                            <span class="info-value">{{tournament.state}}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="detail-card">
+                {{#tournament.description}}
+                <div class="detail-card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-scroll me-2"></i>Reglas
+                        <i class="fas fa-align-left me-2"></i>Descripción
                     </div>
                     <div class="p-3">
-                        <ul class="text-white-50 ps-3 mb-0" style="line-height: 2;">
-                            <li>Todos los enfrentamientos son al mejor de 3</li>
-                            <li>Los equipos deben tener 5 jugadores registrados</li>
-                            <li>Se aplican las reglas competitivas estándar de Valorant</li>
-                            <li>Los partidos deben jugarse según el calendario establecido</li>
-                            <li>No se permiten sustituciones después del registro</li>
-                        </ul>
+                        <p class="text-white-50 mb-0 tournament-text">
+                            {{tournament.description}}</p>
                     </div>
                 </div>
+                {{/tournament.description}}
+
+                {{#tournament.rules}}
+                <div class="detail-card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-scroll me-2"></i>Reglas / Prize Pool
+                    </div>
+                    <div class="p-3">
+                        <p class="text-white-50 mb-0 tournament-text">{{tournament.rules}}</p>
+                    </div>
+                </div>
+                {{/tournament.rules}}
+
+                <div class="detail-card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-shield-fill me-2" style="color: var(--primary-cyan,#00e5ff);"></i>Equipos
+                            Inscritos</span>
+                        <span class="badge bg-dark border border-secondary">{{teamsCount}}</span>
+                    </div>
+                    <div class="p-3 d-flex flex-column gap-2">
+                        {{#teams}}
+                        <a href="/teams/{{id}}" class="d-flex align-items-center gap-2 text-decoration-none">
+                            <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-small"
+                                onerror="this.src='/assets/images/team_placeholder.png'">
+                            <span class="text-white fw-semibold small">{{name}}</span>
+                            <span class="ms-auto text-white-50 small">{{wins}}V · {{losses}}D</span>
+                        </a>
+                        {{/teams}}
+                        {{^teams}}
+                        <div class="team-slot-empty text-center py-2">
+                            <i class="bi bi-shield-plus me-1"></i>Sin equipos inscritos
+                        </div>
+                        {{/teams}}
+                    </div>
+                </div>
+
+                {{#admin}}
+                <div class="detail-card">
+                    <div class="card-header text-warning">
+                        <i class="bi bi-shield-plus me-2"></i>Gestionar Equipos (Admin)
+                    </div>
+                    <div class="p-3 d-flex flex-column gap-3">
+                        <form action="/tournaments/{{tournament.id}}/teams/add" method="POST" class="d-flex gap-2">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                            <select name="teamId"
+                                class="form-select form-select-sm bg-dark text-white border-secondary">
+                                <option value="" disabled selected>Añadir equipo...</option>
+                                {{#allTeams}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/allTeams}}
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-outline-success text-nowrap">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </form>
+
+                        {{#teams}}
+                        <form action="/tournaments/{{tournament.id}}/teams/remove" method="POST"
+                            class="d-flex align-items-center gap-2">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                            <input type="hidden" name="teamId" value="{{id}}" />
+                            <span class="text-white-50 small flex-grow-1">{{name}}</span>
+                            <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                onclick="return confirm('¿Eliminar {{name}} del torneo?')">
+                                <i class="bi bi-x-lg" style="font-size:.7rem;"></i>
+                            </button>
+                        </form>
+                        {{/teams}}
+                    </div>
+                </div>
+                {{/admin}}
 
             </div>
         </div>
     </div>
-{{> footer}}
+
+    {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
