@@ -99,7 +99,9 @@
                         <select name="recipientId" class="form-select bg-dark text-white border-secondary">
                             <option value="-1">📢 Todos los capitanes</option>
                             {{#captains}}
-                            <option value="{{id}}">{{nickname}} — {{team.name}}</option>
+                            <option value="{{id}}">
+                                {{nickname}} — {{#team}}{{name}}{{/team}}{{^team}}Sin equipo{{/team}}
+                            </option>
                             {{/captains}}
                             {{^captains}}
                             <option disabled>No hay capitanes registrados</option>
@@ -130,8 +132,10 @@
 
     <main class="container py-5 mt-2">
         {{#msgSent}}
-        <div class="alert alert-success bg-success bg-opacity-10 text-success border-success border-opacity-25 py-3 shadow-sm mb-4">
-            <i class="bi bi-check-circle-fill me-2"></i>El mensaje ha sido enviado a los destinatarios seleccionados correctamente.
+        <div
+            class="alert alert-success bg-success bg-opacity-10 text-success border-success border-opacity-25 py-3 shadow-sm mb-4">
+            <i class="bi bi-check-circle-fill me-2"></i>El mensaje ha sido enviado a los destinatarios seleccionados
+            correctamente.
         </div>
         {{/msgSent}}
 

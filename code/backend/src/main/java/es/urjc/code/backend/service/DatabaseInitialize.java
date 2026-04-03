@@ -37,7 +37,8 @@ public class DatabaseInitialize {
         // 1. Initialize Users if not present
         User adminUser = userRepository.findByEmail("admin@onetapeleague.com").orElse(null);
         if (adminUser == null) {
-            adminUser = new User("Administrador", "admin", "admin@onetapeleague.com", "", passwordEncoder.encode("pass123"),
+            adminUser = new User("Administrador", "admin", "admin@onetapeleague.com", "",
+                    passwordEncoder.encode("pass123"),
                     List.of("USER", "ADMIN"));
             userRepository.save(adminUser);
         } else {
@@ -49,13 +50,21 @@ public class DatabaseInitialize {
         }
 
         if (userRepository.findByEmail("juan@gmail.com").isEmpty()) {
-            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
+            User player1 = new User("Juan Pérez", "xSniper99", "juan@gmail.com", "URJC - Móstoles",
+                    passwordEncoder.encode("pass123"), List.of("USER"));
             userRepository.save(player1);
         }
 
         if (userRepository.findByEmail("ana@gmail.com").isEmpty()) {
-            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "URJC - Móstoles", passwordEncoder.encode("pass123"), List.of("USER"));
+            User player2 = new User("Ana Gómez", "AnaPro", "ana@gmail.com", "URJC - Móstoles",
+                    passwordEncoder.encode("pass123"), List.of("USER"));
             userRepository.save(player2);
+        }
+
+        if (userRepository.findByEmail("superadmin@onetapeleague.com").isEmpty()) {
+            User superAdmin = new User("Super Admin", "superadmin", "superadmin@onetapeleague.com", "",
+                    passwordEncoder.encode("pass123"), List.of("USER", "ADMIN"));
+            userRepository.save(superAdmin);
         }
 
         // 2. Initialize Teams and Tournaments if none exist
@@ -64,7 +73,8 @@ public class DatabaseInitialize {
             User player1 = userRepository.findByEmail("juan@gmail.com").orElse(null);
             User player2 = userRepository.findByEmail("ana@gmail.com").orElse(null);
 
-            if (admin == null || player1 == null || player2 == null) return;
+            if (admin == null || player1 == null || player2 == null)
+                return;
 
             Team team1 = new Team("Rivas eSports", "URJC", "Valorant", "El equipo oficial del campus de Rivas.");
             team1.setCaptain(player1);
