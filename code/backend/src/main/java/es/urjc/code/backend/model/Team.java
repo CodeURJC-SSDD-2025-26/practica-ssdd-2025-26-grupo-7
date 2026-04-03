@@ -27,7 +27,7 @@ public class Team {
     private int wins;
     private int losses;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> players = new ArrayList<>();
 
     @ManyToOne 

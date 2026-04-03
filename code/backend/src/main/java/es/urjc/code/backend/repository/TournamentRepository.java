@@ -17,4 +17,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             @Param("search") String search,
             @Param("game") String game,
             @Param("state") String state);
+
+    java.util.List<Tournament> findByTeamsContaining(es.urjc.code.backend.model.Team team);
 }

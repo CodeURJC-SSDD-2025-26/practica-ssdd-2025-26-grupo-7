@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByNickname(String nickname);
 
     java.util.List<User> findByTeamIsNull();
+
+    java.util.List<User> findByTeamIsNullAndEnabledTrue();
 }

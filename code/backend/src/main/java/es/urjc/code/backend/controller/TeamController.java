@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,7 +71,8 @@ public class TeamController {
     // CREATE
     @GetMapping("/teams/create")
     @PreAuthorize("isAuthenticated()")
-    public String createTeamForm() {
+    public String createTeamForm(Model model) {
+        model.addAttribute("availableUsers", userRepository.findByTeamIsNullAndEnabledTrue());
         return "create-team";
     }
 
@@ -81,24 +83,34 @@ public class TeamController {
             @RequestParam String university,
             @RequestParam String mainGame,
             @RequestParam String description,
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) Long captainId,
             @RequestParam(required = false) MultipartFile imageFile,
             @AuthenticationPrincipal UserDetails currentUser) throws IOException {
 
         Team team = new Team(name, university, mainGame, description);
+        if (tag != null) team.setTag(tag);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             team.setImageFile(
                     BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 
-        Optional<User> userOpt = userRepository.findByEmail(currentUser.getUsername());
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            team.setCaptain(user);
-            team.getPlayers().add(user);
+        User captain = null;
+        if (captainId != null) {
+            captain = userRepository.findById(captainId).orElse(null);
+        }
+        
+        if (captain == null && currentUser != null) {
+            captain = userRepository.findByEmail(currentUser.getUsername()).orElse(null);
+        }
+
+        if (captain != null) {
+            team.setCaptain(captain);
+            team.getPlayers().add(captain);
             teamRepository.save(team);
-            user.setTeam(team);
-            userRepository.save(user);
+            captain.setTeam(team);
+            userRepository.save(captain);
         } else {
             teamRepository.save(team);
         }
@@ -128,8 +140,7 @@ public class TeamController {
 
         model.addAttribute("team", team);
         model.addAttribute("teamId", id);
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("availableUsers", userRepository.findByTeamIsNull());
+        model.addAttribute("availableUsers", userRepository.findByTeamIsNullAndEnabledTrue());
         
         // Pre-calculate roster with isCaptain flag to avoid LazyLoading/Scoping issues in Mustache
         java.util.List<java.util.Map<String, Object>> playersList = new java.util.ArrayList<>();
@@ -197,6 +208,8 @@ public class TeamController {
                     team.getPlayers().add(newCaptain);
                 }
             });
+        } else {
+            team.setCaptain(null);
         }
 
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -208,6 +221,7 @@ public class TeamController {
         return "redirect:/teams/" + id;
     }
 
+    @Transactional
     @PostMapping("/teams/{id}/add-player")
     @PreAuthorize("isAuthenticated()")
     public String addPlayer(@PathVariable Long id, @RequestParam Long userId,
@@ -225,8 +239,9 @@ public class TeamController {
                 userRepository.findById(userId).ifPresent(user -> {
                     if (user.getTeam() == null) {
                         user.setTeam(team);
-                        userRepository.save(user);
                         team.getPlayers().add(user);
+                        
+                        userRepository.save(user);
                         teamRepository.save(team);
                     }
                 });
@@ -235,6 +250,7 @@ public class TeamController {
         return "redirect:/teams/" + id + "/edit";
     }
 
+    @Transactional
     @PostMapping("/teams/{id}/remove-player")
     @PreAuthorize("isAuthenticated()")
     public String removePlayer(@PathVariable Long id, @RequestParam Long userId,
@@ -250,23 +266,54 @@ public class TeamController {
 
             if (isAdmin || isCaptain) {
                 userRepository.findById(userId).ifPresent(user -> {
-                    if (team.getPlayers().contains(user)) {
-                        user.setTeam(null);
-                        userRepository.save(user);
-                        team.getPlayers().remove(user);
-                        // If the removed player was captain, unset captain
-                        if (team.getCaptain() != null && team.getCaptain().equals(user)) {
-                            team.setCaptain(null);
-                        }
-                        teamRepository.save(team);
+                    // Remove player from the list using ID comparison
+                    team.getPlayers().removeIf(p -> p.getId().equals(userId));
+                    
+                    // Unset captain if this player was the captain
+                    if (team.getCaptain() != null && team.getCaptain().getId().equals(userId)) {
+                        team.setCaptain(null);
                     }
+                    
+                    // Unlink user from team
+                    user.setTeam(null);
+                    
+                    userRepository.save(user);
+                    teamRepository.save(team);
                 });
             }
         }
         return "redirect:/teams/" + id + "/edit";
     }
 
+    @GetMapping("/admin/teams-list")
+    public String adminTeamsList(Model model) {
+        List<Team> teams = teamRepository.findAll();
+        
+        // Prepare teams with stats specifically for the template
+        List<java.util.Map<String, Object>> preparedTeams = teams.stream().map(t -> {
+            java.util.Map<String, Object> map = new java.util.HashMap<>();
+            map.put("id", t.getId());
+            map.put("name", t.getName());
+            map.put("university", t.getUniversity());
+            map.put("mainGame", t.getMainGame());
+            map.put("wins", t.getWins());
+            map.put("losses", t.getLosses());
+            map.put("points", t.getWins() * 3);
+            
+            int played = t.getMatchesPlayed();
+            int winRate = played > 0 ? (int) Math.round((t.getWins() * 100.0) / played) : 0;
+            map.put("winRate", winRate);
+            
+            return map;
+        }).toList();
+
+        model.addAttribute("teams", preparedTeams);
+        model.addAttribute("totalTeams", teams.size());
+        return "teams-list-admin";
+    }
+
     // DELETE
+    @Transactional
     @PostMapping("/teams/{id}/delete")
     @PreAuthorize("isAuthenticated()")
     public String deleteTeam(@PathVariable Long id,
@@ -280,7 +327,12 @@ public class TeamController {
                     && team.getCaptain().getEmail().equals(currentUser.getUsername());
 
             if (isAdmin || isCaptain) {
-                teamRepository.deleteById(id);
+                // IMPORTANT: Unlink players first to avoid DB integrity errors
+                for (User player : team.getPlayers()) {
+                    player.setTeam(null);
+                    userRepository.save(player);
+                }
+                teamRepository.delete(team);
             }
         }
         return "redirect:/teams";

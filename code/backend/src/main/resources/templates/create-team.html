@@ -35,7 +35,8 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/teams" method="POST" enctype="multipart/form-data">
+                    <form action="/teams/create" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-0">
                             <i class="bi bi-info-circle me-2 text-cyan"></i>Información del Equipo
@@ -44,18 +45,18 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Equipo</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input type="text" name="name" class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     placeholder="Ej: Team Alpha" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Tag / Abreviatura</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input type="text" name="tag" class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     placeholder="Ej: TPA" maxlength="5" required>
                                 <div class="form-text text-white-50 small">Máximo 5 caracteres.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Universidad</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="university" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="" disabled selected>Selecciona una universidad...</option>
                                     <option>URJC - Móstoles</option>
                                     <option>URJC - Fuenlabrada</option>
@@ -67,7 +68,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego Principal</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="mainGame" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="" disabled selected>Selecciona un juego...</option>
                                     <option>Valorant</option>
                                     <option>League of Legends</option>
@@ -80,25 +81,15 @@
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-image me-2"></i>Logo del Equipo
                                 </label>
-                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="imageFile" class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp" required>
                                 <div class="form-text text-white-50 small mt-1">
                                     Formato recomendado: imagen cuadrada.
                                 </div>
                             </div>
                             <div class="col-12">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">
-                                    <i class="bi bi-card-image me-2"></i>Banner del Equipo
-                                </label>
-                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                    type="file" accept="image/png, image/jpeg, image/webp">
-                                <div class="form-text text-white-50 small mt-1">
-                                    Opcional.
-                                </div>
-                            </div>
-                            <div class="col-12">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del Equipo</label>
-                                <textarea class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <textarea name="description" class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     rows="3" placeholder="Describe brevemente el equipo, su historia, estilo de juego..."></textarea>
                             </div>
                         </div>
@@ -111,59 +102,15 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Capitán</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="captainId" class="form-select bg-dark text-white border-secondary border-opacity-50">
                                     <option value="" disabled selected>Selecciona un usuario...</option>
-                                    <option>PlayerONE (j.perez@alumnos.urjc.es)</option>
-                                    <option>AquaKing (aquaking@urjc.es)</option>
-                                    
+                                    {{#availableUsers}}
+                                    <option value="{{id}}">{{nickname}} ({{email}})</option>
+                                    {{/availableUsers}}
                                 </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Tamaño máximo del equipo</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                    min="2" max="10" value="5" required>
-                            </div>
-                        </div>
-
-                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
-                            <i class="bi bi-people-fill me-2 text-cyan"></i>Miembros Iniciales
-                            <span class="text-white-50 fw-normal fs-6 ms-2">(opcional)</span>
-                        </h4>
-
-                        <div class="row g-3 mb-4" id="miembros-container">
-                            <div class="col-md-6">
-                                <div class="d-flex gap-2 align-items-center">
-                                    <select class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                        <option value="" selected>— Jugador 2 —</option>
-                                        <option>AquaKing</option>
-                                        <option>ShadowX</option>
-                                        
-                                    </select>
+                                <div class="form-text text-white-50 small mt-1">
+                                    Opcional. Si no seleccionas ninguno, tú serás el capitán.
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex gap-2 align-items-center">
-                                    <select class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                        <option value="" selected>— Jugador 3 —</option>
-                                        <option>AquaKing</option>
-                                        <option>ShadowX</option>
-                                        
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                    <option value="" selected>— Jugador 4 —</option>
-                                    <option>AquaKing</option>
-                                    <option>ShadowX</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                    <option value="" selected>— Jugador 5 —</option>
-                                    <option>AquaKing</option>
-                                    <option>ShadowX</option>
-                                </select>
                             </div>
                         </div>
 

@@ -22,6 +22,7 @@ public class User {
     private String password;
 
     private String university;
+    private boolean enabled = true;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
@@ -85,6 +86,14 @@ public class User {
 
     public void setUniversity(String university) {
         this.university = university;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getPassword() {
