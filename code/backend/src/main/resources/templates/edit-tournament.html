@@ -28,154 +28,286 @@
                     <h2 class="text-white text-uppercase">
                         <i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Torneo</span>
                     </h2>
+                    {{#tournament}}
+                    <p class="text-white-50">Modificando torneo: <span class="text-cyan">{{tournament.name}}</span></p>
+                    {{/tournament}}
+                    {{^tournament}}
                     <p class="text-white-50">Selecciona un torneo para modificar sus datos y gestionar sus partidos.</p>
+                    {{/tournament}}
                 </div>
 
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/tournaments" method="POST" enctype="multipart/form-data">
+                    {{^tournament}}
+                    <!-- ── Selección de Torneo ── -->
+                    <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                        Seleccionar Torneo
+                    </h4>
 
-                        <!-- ── Selección de Torneo ── -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-12">
+                            <label class="form-label small text-uppercase fw-bold text-cyan">Torneo a editar</label>
+                            <select id="sel-torneo"
+                                class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                onchange="if(this.value) window.location.href='/admin/tournaments/edit/' + this.value">
+                                <option value="" disabled selected>— Selecciona un torneo —</option>
+                                {{#allTournaments}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/allTournaments}}
+                            </select>
+                        </div>
+                    </div>
+                    {{/tournament}}
+
+                    {{#tournament}}
+                    <!-- ── Formulario de Edición ── -->
+                    <form action="/admin/tournaments/edit/{{tournament.id}}" method="POST"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
-                            Seleccionar Torneo
+                            Información Principal
                         </h4>
 
                         <div class="row g-4 mb-4">
-                            <div class="col-md-8">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Torneo a editar</label>
-                                <select id="sel-torneo"
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del
+                                    Torneo</label>
+                                <input type="text" name="name" value="{{tournament.name}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
+                                <select name="game"
                                     class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                    onchange="cargarTorneo(this.value)">
-                                    <option value="" disabled selected>— Selecciona un torneo —</option>
-                                    <option value="valorant">Valorant Winter Cup 2026</option>
-                                    <option value="lol">LoL University Series</option>
-                                    <option value="cs2">CS2 Spring Split</option>
+                                    id="f-game" required>
+                                    <option value="Valorant">Valorant</option>
+                                    <option value="League of Legends">League of Legends</option>
+                                    <option value="Counter-Strike 2">Counter-Strike 2</option>
+                                    <option value="Rocket League">Rocket League</option>
+                                    <option value="EA FC 24">EA FC 24</option>
                                 </select>
+                                <script>document.getElementById('f-game').value = "{{tournament.game}}";</script>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Juego</label>
-                                <input id="f-juego" type="text"
-                                    class="form-control bg-dark text-white border-secondary border-opacity-50" readonly
-                                    placeholder="Auto">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Plataforma</label>
+                                <select name="platform"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                    id="f-platform" required>
+                                    <option value="PC">PC</option>
+                                    <option value="PS5">PS5</option>
+                                    <option value="Xbox Series X">Xbox Series X</option>
+                                    <option value="Multiplataforma">Multiplataforma</option>
+                                </select>
+                                <script>document.getElementById('f-platform').value = "{{tournament.platform}}";</script>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Modo</label>
+                                <select name="mode"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                    id="f-mode" required>
+                                    <option value="5v5">5v5</option>
+                                    <option value="3v3">3v3</option>
+                                    <option value="2v2">2v2</option>
+                                    <option value="1v1">1v1</option>
+                                </select>
+                                <script>document.getElementById('f-mode').value = "{{tournament.mode}}";</script>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
+                                <select name="state"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50"
+                                    id="f-state" required>
+                                    <option value="Próximamente">Próximamente</option>
+                                    <option value="En Curso">En Curso</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                </select>
+                                <script>document.getElementById('f-state').value = "{{tournament.state}}";</script>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de Inicio</label>
+                                <input type="date" name="startDate" value="{{tournament.startDate}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
                         </div>
 
-                        <!-- ── Información Principal (oculto hasta seleccionar) ── -->
-                        <div id="campos-torneo" class="campos-ocultos">
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Detalles y Requisitos
+                        </h4>
 
-                            <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-3">
-                                Información Principal
-                            </h4>
-
-                            <div class="row g-4 mb-4">
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del
-                                        Torneo</label>
-                                    <input id="f-nombre" type="text"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Videojuego</label>
-                                    <select id="f-juego-select"
-                                        class="form-select bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                        <option value="valorant">Valorant</option>
-                                        <option value="lol">League of Legends</option>
-                                        <option value="cs2">Counter-Strike 2</option>
-                                        <option value="rocket">Rocket League</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de
-                                        Inicio</label>
-                                    <input id="f-inicio" type="date"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Fecha de
-                                        Finalización</label>
-                                    <input id="f-fin" type="date"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        required>
-                                </div>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Máx. Equipos</label>
+                                <input type="number" name="maxTeams" value="{{tournament.maxTeams}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" min="2"
+                                    max="128" required>
                             </div>
-
-                            <!-- ── Detalles y Requisitos ── -->
-                            <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
-                                Detalles y Requisitos
-                            </h4>
-
-                            <div class="row g-4 mb-4">
-                                <div class="col-md-4">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Máx.
-                                        Equipos</label>
-                                    <input id="f-equipos" type="number"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        min="4" max="64" required>
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Premio (Prize
-                                        Pool)</label>
-                                    <input id="f-premio" type="text"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">
-                                        <i class="bi bi-image me-2"></i>Banner / Imagen del Torneo
-                                    </label>
-                                    <input class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        type="file" accept="image/png, image/jpeg">
-                                    <div class="form-text text-white-50 small mt-1">Deja vacío para mantener el banner
-                                        actual.</div>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Reglas y
-                                        Descripción</label>
-                                    <textarea id="f-reglas"
-                                        class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                        rows="4"></textarea>
-                                </div>
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Banner / Imagen del
+                                    Torneo</label>
+                                <input name="imageFile"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    type="file" accept="image/*">
+                                <div class="form-text text-white-50 small mt-1">Deja vacío para mantener el banner
+                                    actual.</div>
                             </div>
-
-                            <!-- ── Partidos del Torneo ── -->
-                            <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
-                                Partidos
-                            </h4>
-                            <p class="text-white-50 small mb-4">Partidos creados y asignados a este torneo.</p>
-
-                            <div id="partidos-lista" class="mb-3"></div>
-
-                            <a href="/admin/create-matches" class="btn btn-outline-secondary btn-sm">
-                                <i class="bi bi-calendar-plus-fill me-2 text-green"></i>Añadir nuevo partido
-                            </a>
-
-                            <div class="alert alert-danger bg-transparent border-danger mt-4">
-                                <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona
-                                    de Peligro</h6>
-                                <p class="text-white-50 small mb-2">Eliminar el torneo borrará todos sus datos y no
-                                    podrá recuperarse.</p>
-                                <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="if(confirm('¿Seguro que quieres eliminar este torneo?')) window.location='/admin'">
-                                    <i class="bi bi-trash3-fill me-1"></i>Eliminar torneo
-                                </button>
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción</label>
+                                <textarea name="description"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    rows="3">{{tournament.description}}</textarea>
                             </div>
-                            <div class="d-flex justify-content-end gap-3 mt-5">
-                                <a href="/admin" class="btn btn-outline-danger px-4">Cancelar</a>
-                                <button type="submit" class="btn btn-primary px-5 fw-bold">
-                                    <i class="bi bi-floppy-fill me-2"></i>GUARDAR CAMBIOS
-                                </button>
+                            <div class="col-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Reglas</label>
+                                <textarea name="rules"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    rows="5">{{tournament.rules}}</textarea>
                             </div>
-
                         </div>
 
+                        <div class="d-flex justify-content-end gap-3 mt-5">
+                            <a href="/admin/tournaments/edit" class="btn btn-outline-secondary px-4">Volver atrás</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold">
+                                <i class="bi bi-floppy-fill me-2"></i>GUARDAR CAMBIOS
+                            </button>
+                        </div>
                     </form>
-                </div>
 
+                    <!-- ── Gestión de Equipos ── -->
+                    <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                        <i class="bi bi-people-fill me-2 text-cyan"></i>Equipos Inscritos
+                    </h4>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-8">
+                            <form action="/admin/tournaments/edit/{{tournament.id}}/teams/add" method="POST"
+                                class="d-flex gap-2">
+                                <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                                <select name="teamId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" disabled selected>Seleccionar equipo para añadir...</option>
+                                    {{#allTeams}}
+                                    <option value="{{id}}">{{name}}</option>
+                                    {{/allTeams}}
+                                </select>
+                                <button type="submit" class="btn btn-outline-info text-nowrap">Añadir</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-dark table-hover mb-0">
+                            <thead>
+                                <tr class="small text-uppercase text-white-50">
+                                    <th>Equipo</th>
+                                    <th>Universidad</th>
+                                    <th class="text-end">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#teams}}
+                                <tr>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img src="/images/teams/{{id}}" alt="{{name}}" class="rounded-circle"
+                                                width="30" height="30"
+                                                onerror="this.src='/assets/images/team_placeholder.png'">
+                                            <span class="fw-semibold text-white">{{name}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle small text-white-50">{{university}}</td>
+                                    <td class="text-end">
+                                        <form action="/admin/tournaments/edit/{{tournament.id}}/teams/remove"
+                                            method="POST" class="m-0">
+                                            <input type="hidden" name="{{_csrf.parameterName}}"
+                                                value="{{_csrf.token}}" />
+                                            <input type="hidden" name="teamId" value="{{id}}" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('¿Quitar a {{name}} del torneo?')">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {{/teams}}
+                                {{^teams}}
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-white-50 small">No hay equipos
+                                        inscritos.</td>
+                                </tr>
+                                {{/teams}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ── Partidos ── -->
+                    <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                        <i class="bi bi-calendar-event me-2 text-cyan"></i>Partidos del Torneo
+                    </h4>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-dark table-hover mb-0">
+                            <thead>
+                                <tr class="small text-uppercase text-white-50">
+                                    <th>Fecha</th>
+                                    <th>Fase</th>
+                                    <th>Partido</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-end">Ficha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#matches}}
+                                <tr>
+                                    <td class="align-middle small">{{matchDate}}</td>
+                                    <td class="align-middle small">{{phase}}</td>
+                                    <td class="align-middle">
+                                        {{#localTeam}}{{name}}{{/localTeam}} vs {{#awayTeam}}{{name}}{{/awayTeam}}
+                                    </td>
+                                    <td class="text-center">
+                                        <span
+                                            class="badge bg-dark border border-secondary text-white-50">{{state}}</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="/matches/{{id}}" class="btn btn-sm btn-outline-secondary"><i
+                                                class="bi bi-eye"></i></a>
+                                    </td>
+                                </tr>
+                                {{/matches}}
+                                {{^matches}}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-white-50 small">No hay partidos
+                                        creados.</td>
+                                </tr>
+                                {{/matches}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="/admin/matches/create" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-calendar-plus-fill me-2"></i>Añadir nuevo partido
+                    </a>
+
+                    <!-- ── Zona de Peligro ── -->
+                    <div class="alert alert-danger bg-transparent border-danger mt-5">
+                        <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de
+                            Peligro</h6>
+                        <p class="text-white-50 small mb-2">Eliminar el torneo borrará todos sus datos permanentemente.
+                        </p>
+                        <form action="/tournaments/{{tournament.id}}/delete" method="POST"
+                            onsubmit="return confirm('¿Seguro que quieres eliminar este torneo?')">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash3-fill me-1"></i>Eliminar torneo
+                            </button>
+                        </form>
+                    </div>
+                    {{/tournament}}
+
+                </div>
             </div>
         </div>
+    </main>
+    </div>
     </main>
 
     {{> footer}}

@@ -89,6 +89,7 @@ public class DatabaseInitialize {
             } catch (Exception e) {
                 System.out.println("Aviso: No se pudo cargar la imagen base del equipo.");
             }
+            teamRepository.save(team1);
 
             Team team2 = new Team("Fuego eSports", "URJC", "Valorant", "Rivales directos.");
             teamRepository.save(team2);

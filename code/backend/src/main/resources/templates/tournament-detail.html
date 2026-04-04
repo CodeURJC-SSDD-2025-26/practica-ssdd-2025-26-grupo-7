@@ -49,23 +49,6 @@
                 </span>
             </div>
 
-            {{#admin}}
-            <div class="admin-actions-bar d-inline-flex gap-2 mt-4">
-                <a href="/tournaments/{{tournament.id}}/edit" class="btn btn-sm btn-outline-warning">
-                    <i class="bi bi-pencil-square me-1"></i>Editar torneo
-                </a>
-                <a href="/admin/matches/create" class="btn btn-sm btn-outline-success">
-                    <i class="bi bi-calendar-plus me-1"></i>Crear partido
-                </a>
-                <form action="/tournaments/{{tournament.id}}/delete" method="POST" class="m-0"
-                    onsubmit="return confirm('¿Eliminar este torneo? Esta acción no se puede deshacer.')">
-                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash3 me-1"></i>Eliminar
-                    </button>
-                </form>
-            </div>
-            {{/admin}}
         </div>
     </header>
 
@@ -276,41 +259,6 @@
                     </div>
                 </div>
 
-                {{#admin}}
-                <div class="detail-card">
-                    <div class="card-header text-warning">
-                        <i class="bi bi-shield-plus me-2"></i>Gestionar Equipos (Admin)
-                    </div>
-                    <div class="p-3 d-flex flex-column gap-3">
-                        <form action="/tournaments/{{tournament.id}}/teams/add" method="POST" class="d-flex gap-2">
-                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                            <select name="teamId"
-                                class="form-select form-select-sm bg-dark text-white border-secondary">
-                                <option value="" disabled selected>Añadir equipo...</option>
-                                {{#allTeams}}
-                                <option value="{{id}}">{{name}}</option>
-                                {{/allTeams}}
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-outline-success text-nowrap">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                        </form>
-
-                        {{#teams}}
-                        <form action="/tournaments/{{tournament.id}}/teams/remove" method="POST"
-                            class="d-flex align-items-center gap-2">
-                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                            <input type="hidden" name="teamId" value="{{id}}" />
-                            <span class="text-white-50 small flex-grow-1">{{name}}</span>
-                            <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
-                                onclick="return confirm('¿Eliminar {{name}} del torneo?')">
-                                <i class="bi bi-x-lg" style="font-size:.7rem;"></i>
-                            </button>
-                        </form>
-                        {{/teams}}
-                    </div>
-                </div>
-                {{/admin}}
 
             </div>
         </div>

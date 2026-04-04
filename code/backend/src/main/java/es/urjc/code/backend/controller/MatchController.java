@@ -9,7 +9,6 @@ import es.urjc.code.backend.repository.MatchRepository;
 import es.urjc.code.backend.repository.PlayerMatchStatsRepository;
 import es.urjc.code.backend.repository.TeamRepository;
 import es.urjc.code.backend.repository.TournamentRepository;
-import es.urjc.code.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +28,6 @@ public class MatchController {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private PlayerMatchStatsRepository statsRepository;

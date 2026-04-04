@@ -50,6 +50,7 @@ public class TournamentController {
         m.put("maxTeams", t.getMaxTeams());
         m.put("startDate", t.getStartDate());
         m.put("description", t.getDescription());
+        m.put("rules", t.getRules());
         m.put("state", t.getState());
         m.put("stateActive", "En Curso".equals(t.getState()));
         m.put("stateUpcoming", "Próximamente".equals(t.getState()));
@@ -196,20 +197,42 @@ public class TournamentController {
             t.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         tournamentRepository.save(t);
-        return "redirect:/tournaments";
+        return "redirect:/admin/tournaments";
     }
 
-    @GetMapping("/tournaments/{id}/edit")
+    @GetMapping("/admin/tournaments")
     @PreAuthorize("hasRole('ADMIN')")
-    public String editTournamentForm(@PathVariable Long id, Model model) {
-        return tournamentRepository.findById(id).map(t -> {
-            model.addAttribute("tournament", t);
-            model.addAttribute("allTeams", teamRepository.findAll());
-            return "edit-tournament";
-        }).orElse("redirect:/tournaments");
+    public String adminTournaments(Model model) {
+        model.addAttribute("tournaments", tournamentRepository.findAll());
+        return "tournaments-list-admin";
     }
 
-    @PostMapping("/tournaments/{id}/edit")
+    @GetMapping("/admin/tournaments/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String editTournamentSelection(Model model) {
+        model.addAttribute("allTournaments", tournamentRepository.findAll());
+        return "edit-tournament";
+    }
+
+    @GetMapping("/admin/tournaments/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String editTournamentForm(@PathVariable Long id, Model model, Principal principal) {
+        return tournamentRepository.findById(id).map(t -> {
+            es.urjc.code.backend.model.User currentUser = resolveUser(principal);
+            model.addAttribute("tournament", enrichTournament(t, currentUser));
+            model.addAttribute("allTeams", teamRepository.findAll());
+            model.addAttribute("teams", t.getTeams());
+            
+            List<Map<String, Object>> enrichedMatches = t.getMatches().stream()
+                    .map(this::enrichMatch)
+                    .collect(Collectors.toList());
+            model.addAttribute("matches", enrichedMatches);
+            
+            return "edit-tournament";
+        }).orElse("redirect:/admin/tournaments/edit");
+    }
+
+    @PostMapping("/admin/tournaments/edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String editTournament(
             @PathVariable Long id,
@@ -226,7 +249,7 @@ public class TournamentController {
 
         Optional<Tournament> opt = tournamentRepository.findById(id);
         if (opt.isEmpty())
-            return "redirect:/tournaments";
+            return "redirect:/admin/tournaments/edit";
 
         Tournament t = opt.get();
         t.setName(name);
@@ -242,7 +265,7 @@ public class TournamentController {
             t.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         tournamentRepository.save(t);
-        return "redirect:/tournaments/" + id;
+        return "redirect:/admin/tournaments/edit/" + id;
     }
 
     @PostMapping("/tournaments/{id}/delete")
@@ -252,7 +275,7 @@ public class TournamentController {
         return "redirect:/tournaments";
     }
 
-    @PostMapping("/tournaments/{id}/teams/add")
+    @PostMapping("/admin/tournaments/edit/{id}/teams/add")
     @PreAuthorize("hasRole('ADMIN')")
     public String addTeam(@PathVariable Long id, @RequestParam Long teamId) {
         tournamentRepository.findById(id).ifPresent(t -> teamRepository.findById(teamId).ifPresent(team -> {
@@ -261,17 +284,17 @@ public class TournamentController {
                 tournamentRepository.save(t);
             }
         }));
-        return "redirect:/tournaments/" + id;
+        return "redirect:/admin/tournaments/edit/" + id;
     }
 
-    @PostMapping("/tournaments/{id}/teams/remove")
+    @PostMapping("/admin/tournaments/edit/{id}/teams/remove")
     @PreAuthorize("hasRole('ADMIN')")
     public String removeTeam(@PathVariable Long id, @RequestParam Long teamId) {
         tournamentRepository.findById(id).ifPresent(t -> teamRepository.findById(teamId).ifPresent(team -> {
             t.getTeams().remove(team);
             tournamentRepository.save(t);
         }));
-        return "redirect:/tournaments/" + id;
+        return "redirect:/admin/tournaments/edit/" + id;
     }
 
     @PostMapping("/tournaments/{id}/toggle-favorite")

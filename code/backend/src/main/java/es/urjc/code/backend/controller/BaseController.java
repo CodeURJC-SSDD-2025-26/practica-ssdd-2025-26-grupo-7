@@ -183,10 +183,6 @@ public class BaseController {
         return "admin";
     }
 
-    @GetMapping("/admin/edit-tournament")
-    public String editTournamentStatic() {
-        return "edit-tournament";
-    }
 
     // ERROR 403 no permision)
     @GetMapping("/error-403")
