@@ -1,8 +1,11 @@
 package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.model.Team;
+import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.model.User;
+import es.urjc.code.backend.repository.MatchRepository;
 import es.urjc.code.backend.repository.TeamRepository;
+import es.urjc.code.backend.repository.TournamentRepository;
 import es.urjc.code.backend.repository.UserRepository;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -28,6 +31,12 @@ public class TeamController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MatchRepository matchRepository;
+
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
     // LIST
     @GetMapping("/teams")
@@ -86,21 +95,28 @@ public class TeamController {
             @RequestParam(required = false) String tag,
             @RequestParam(required = false) Long captainId,
             @RequestParam(required = false) MultipartFile imageFile,
+            @RequestParam(required = false) MultipartFile bannerFile,
             @AuthenticationPrincipal UserDetails currentUser) throws IOException {
 
         Team team = new Team(name, university, mainGame, description);
-        if (tag != null) team.setTag(tag);
+        if (tag != null)
+            team.setTag(tag);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             team.setImageFile(
                     BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 
+        if (bannerFile != null && !bannerFile.isEmpty()) {
+            team.setBannerFile(
+                    BlobProxy.generateProxy(bannerFile.getInputStream(), bannerFile.getSize()));
+        }
+
         User captain = null;
         if (captainId != null) {
             captain = userRepository.findById(captainId).orElse(null);
         }
-        
+
         if (captain == null && currentUser != null) {
             captain = userRepository.findByEmail(currentUser.getUsername()).orElse(null);
         }
@@ -141,8 +157,9 @@ public class TeamController {
         model.addAttribute("team", team);
         model.addAttribute("teamId", id);
         model.addAttribute("availableUsers", userRepository.findByTeamIsNullAndEnabledTrue());
-        
-        // Pre-calculate roster with isCaptain flag to avoid LazyLoading/Scoping issues in Mustache
+
+        // Pre-calculate roster with isCaptain flag to avoid LazyLoading/Scoping issues
+        // in Mustache
         java.util.List<java.util.Map<String, Object>> playersList = new java.util.ArrayList<>();
         User captain = team.getCaptain();
         for (User player : team.getPlayers()) {
@@ -154,7 +171,7 @@ public class TeamController {
         }
         model.addAttribute("playersList", playersList);
         model.addAttribute("totalPlayers", playersList.size());
-        
+
         return "edit-team";
     }
 
@@ -169,6 +186,7 @@ public class TeamController {
             @RequestParam(required = false) String tag,
             @RequestParam(required = false) Long captainId,
             @RequestParam(required = false) MultipartFile imageFile,
+            @RequestParam(required = false) MultipartFile bannerFile,
             @AuthenticationPrincipal UserDetails currentUser) throws IOException {
 
         Optional<Team> opt = teamRepository.findById(id);
@@ -217,6 +235,11 @@ public class TeamController {
                     BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 
+        if (bannerFile != null && !bannerFile.isEmpty()) {
+            team.setBannerFile(
+                    BlobProxy.generateProxy(bannerFile.getInputStream(), bannerFile.getSize()));
+        }
+
         teamRepository.save(team);
         return "redirect:/teams/" + id;
     }
@@ -226,7 +249,7 @@ public class TeamController {
     @PreAuthorize("isAuthenticated()")
     public String addPlayer(@PathVariable Long id, @RequestParam Long userId,
             @AuthenticationPrincipal UserDetails currentUser) {
-        
+
         Optional<Team> opt = teamRepository.findById(id);
         if (opt.isPresent()) {
             Team team = opt.get();
@@ -240,7 +263,7 @@ public class TeamController {
                     if (user.getTeam() == null) {
                         user.setTeam(team);
                         team.getPlayers().add(user);
-                        
+
                         userRepository.save(user);
                         teamRepository.save(team);
                     }
@@ -255,7 +278,7 @@ public class TeamController {
     @PreAuthorize("isAuthenticated()")
     public String removePlayer(@PathVariable Long id, @RequestParam Long userId,
             @AuthenticationPrincipal UserDetails currentUser) {
-        
+
         Optional<Team> opt = teamRepository.findById(id);
         if (opt.isPresent()) {
             Team team = opt.get();
@@ -268,15 +291,15 @@ public class TeamController {
                 userRepository.findById(userId).ifPresent(user -> {
                     // Remove player from the list using ID comparison
                     team.getPlayers().removeIf(p -> p.getId().equals(userId));
-                    
+
                     // Unset captain if this player was the captain
                     if (team.getCaptain() != null && team.getCaptain().getId().equals(userId)) {
                         team.setCaptain(null);
                     }
-                    
+
                     // Unlink user from team
                     user.setTeam(null);
-                    
+
                     userRepository.save(user);
                     teamRepository.save(team);
                 });
@@ -288,7 +311,7 @@ public class TeamController {
     @GetMapping("/admin/teams-list")
     public String adminTeamsList(Model model) {
         List<Team> teams = teamRepository.findAll();
-        
+
         // Prepare teams with stats specifically for the template
         List<java.util.Map<String, Object>> preparedTeams = teams.stream().map(t -> {
             java.util.Map<String, Object> map = new java.util.HashMap<>();
@@ -299,11 +322,11 @@ public class TeamController {
             map.put("wins", t.getWins());
             map.put("losses", t.getLosses());
             map.put("points", t.getWins() * 3);
-            
+
             int played = t.getMatchesPlayed();
             int winRate = played > 0 ? (int) Math.round((t.getWins() * 100.0) / played) : 0;
             map.put("winRate", winRate);
-            
+
             return map;
         }).toList();
 
@@ -327,22 +350,19 @@ public class TeamController {
                     && team.getCaptain().getEmail().equals(currentUser.getUsername());
 
             if (isAdmin || isCaptain) {
-                // IMPORTANT: Unlink players first to avoid DB integrity errors
-                for (User player : team.getPlayers()) {
-                    player.setTeam(null);
-                    userRepository.save(player);
-                }
-                teamRepository.delete(team);
+                performFullTeamDeletion(team);
             }
         }
         return "redirect:/teams";
     }
 
+    @Transactional
     @PostMapping("/admin/teams/{id}/delete")
     public String adminDeleteTeam(@PathVariable Long id,
             @AuthenticationPrincipal UserDetails currentUser) {
-        
-        if (currentUser == null) return "redirect:/login";
+
+        if (currentUser == null)
+            return "redirect:/login";
 
         Optional<Team> opt = teamRepository.findById(id);
         if (opt.isPresent()) {
@@ -350,15 +370,41 @@ public class TeamController {
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
             if (isAdmin) {
-                // Unlink players first
-                Team team = opt.get();
-                for (User player : team.getPlayers()) {
-                    player.setTeam(null);
-                    userRepository.save(player);
-                }
-                teamRepository.deleteById(id);
+                performFullTeamDeletion(opt.get());
             }
         }
         return "redirect:/admin/teams-list";
+    }
+
+    private void performFullTeamDeletion(Team team) {
+        java.util.List<User> players = new java.util.ArrayList<>(team.getPlayers());
+        for (User player : players) {
+            player.setTeam(null);
+            userRepository.save(player);
+        }
+        team.getPlayers().clear();
+        teamRepository.saveAndFlush(team);
+
+        java.util.List<es.urjc.code.backend.model.Match> matches = matchRepository.findByLocalTeamOrAwayTeam(team,
+                team);
+        for (es.urjc.code.backend.model.Match match : matches) {
+            Tournament t = match.getTournament();
+            if (t != null) {
+                t.getMatches().remove(match);
+                tournamentRepository.save(t);
+            }
+        }
+        matchRepository.deleteAll(matches);
+        matchRepository.flush();
+
+        java.util.List<Tournament> tournaments = tournamentRepository.findByTeamsContaining(team);
+        for (Tournament tournament : tournaments) {
+            tournament.getTeams().remove(team);
+            tournamentRepository.save(tournament);
+        }
+        tournamentRepository.flush();
+
+        teamRepository.delete(team);
+        teamRepository.flush();
     }
 }

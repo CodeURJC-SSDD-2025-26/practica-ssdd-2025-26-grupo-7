@@ -50,6 +50,14 @@ public class ImageController {
         }
     }
 
+    @GetMapping("/images/teams/banner/{id}")
+    public ResponseEntity<byte[]> downloadTeamBanner(@PathVariable Long id) {
+        return teamRepository.findById(id)
+                .map(t -> t.getBannerFile() != null ? blobToResponse(t.getBannerFile())
+                        : redirectFallback("/assets/images/banner_rivas.png"))
+                .orElseGet(() -> redirectFallback("/assets/images/banner_rivas.png"));
+    }
+
     private ResponseEntity<byte[]> redirectFallback(String fallbackUrl) {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, fallbackUrl)

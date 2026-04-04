@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/create-edit-tournament.css">
-    </head>
+</head>
 
 <body>
     {{> header}}
@@ -34,20 +34,24 @@
                     <p class="text-white-50">Modifica los datos del equipo. Los cambios se aplicarán de inmediato.</p>
                 </div>
 
-                <div class="d-flex align-items-center gap-3 mb-4 p-3 bg-card rounded-3 border border-secondary border-opacity-25">
+                <div
+                    class="d-flex align-items-center gap-3 mb-4 p-3 bg-card rounded-3 border border-secondary border-opacity-25">
                     <img src="/images/teams/{{team.id}}" alt="Logo" width="56" height="56"
-                        class="rounded-circle border border-2" style="border-color: var(--primary-cyan) !important; object-fit:contain; background: #0f1216; padding:4px;">
+                        class="rounded-circle border border-2"
+                        style="border-color: var(--primary-cyan) !important; object-fit:contain; background: #0f1216; padding:4px;">
                     <div>
                         <div class="fw-bold text-white">{{team.name}}</div>
-                        <div class="text-white-50 small">{{team.mainGame}} · {{team.university}} · {{totalPlayers}} miembros</div>
+                        <div class="text-white-50 small">{{team.mainGame}} · {{team.university}} · {{totalPlayers}}
+                            miembros</div>
                     </div>
                     <span class="badge bg-success ms-auto">Activo</span>
                 </div>
-
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <form action="/teams/{{team.id}}/edit" method="POST" enctype="multipart/form-data">
+                    <!-- FORMULARIO 1: EDICIÓN DE DATOS BÁSICOS Y CAPITÁN -->
+                    <form action="/teams/{{team.id}}/edit" method="POST" enctype="multipart/form-data"
+                        id="mainEditForm">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-0">
@@ -56,18 +60,23 @@
 
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Equipo</label>
-                                <input type="text" name="name" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del
+                                    Equipo</label>
+                                <input type="text" name="name"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     value="{{team.name}}" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Tag / Abreviatura</label>
-                                <input type="text" name="tag" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Tag /
+                                    Abreviatura</label>
+                                <input type="text" name="tag"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     value="{{#team.tag}}{{team.tag}}{{/team.tag}}" maxlength="5" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Universidad</label>
-                                <select name="university" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="university"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="URJC - Móstoles">URJC - Móstoles</option>
                                     <option value="URJC - Fuenlabrada">URJC - Fuenlabrada</option>
                                     <option value="URJC - Alcorcón">URJC - Alcorcón</option>
@@ -79,7 +88,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego Principal</label>
-                                <select name="mainGame" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="mainGame"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="Valorant">Valorant</option>
                                     <option value="League of Legends">League of Legends</option>
                                     <option value="Counter-Strike 2">Counter-Strike 2</option>
@@ -95,27 +105,26 @@
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-image me-1"></i>Cambiar Logo
                                 </label>
-                                <input name="imageFile" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="imageFile"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp">
-                                <div class="form-text text-white-50 small mt-1">
-                                    Dejar vacío para mantener el logo actual.
-                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-card-image me-1"></i>Cambiar Banner
                                 </label>
-                                <input class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="bannerFile"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp">
-                                <div class="form-text text-white-50 small mt-1">
-                                    Dejar vacío para mantener el banner actual. (Próximamente)
-                                </div>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del Equipo</label>
-                                <textarea name="description" class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3">{{team.description}}</textarea>
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del
+                                    Equipo</label>
+                                <textarea name="description"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                    rows="3">{{team.description}}</textarea>
                             </div>
                         </div>
 
@@ -126,93 +135,117 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Capitán actual</label>
-                                <select name="captainId" class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                <select name="captainId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50">
                                     <option value="">— Sin Capitán —</option>
                                     {{#playersList}}
                                     <option value="{{id}}">{{nickname}}</option>
                                     {{/playersList}}
                                 </select>
+                                <div class="form-text text-white-50 small mt-1">Solo miembros del equipo.</div>
                                 <script>document.querySelector('select[name="captainId"]').value = "{{team.captain.id}}";</script>
                             </div>
                         </div>
 
-                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
-                            <i class="bi bi-people-fill me-2 text-cyan"></i>Miembros del Equipo
-                        </h4>
-
-                        <div class="row g-3 mb-4">
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <table class="table table-dark table-hover align-middle mb-0 rounded-3 overflow-hidden">
-                                        <thead class="text-white-50 small text-uppercase">
-                                            <tr>
-                                                <th class="ps-3">Jugador</th>
-                                                <th>Rol</th>
-                                                <th class="text-end pe-3">Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{#playersList}}
-                                            <tr>
-                                                <td class="ps-3 fw-bold">
-                                                    {{nickname}}
-                                                    {{#isCaptain}}
-                                                    <span class="badge bg-warning text-dark ms-1">Capitán</span>
-                                                    {{/isCaptain}}
-                                                </td>
-                                                <td><span class="text-white-50 small">Jugador</span></td>
-                                                <td class="text-end pe-3">
-                                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
-                                                        onclick="removePlayer('{{id}}')">
-                                                        <i class="bi bi-person-dash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            {{/playersList}}
-                                            {{^playersList}}
-                                            <tr><td colspan="3" class="text-center text-white-50 small py-3">No hay miembros en el equipo</td></tr>
-                                            {{/playersList}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Añadir miembro</label>
-                                <form action="/teams/{{teamId}}/add-player" method="POST" class="d-flex gap-2">
-                                    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                                    <select name="userId" class="form-select bg-dark text-white border-secondary border-opacity-50">
-                                        <option value="" selected>— Selecciona jugador —</option>
-                                        {{#availableUsers}}
-                                        <option value="{{id}}">{{nickname}}</option>
-                                        {{/availableUsers}}
-                                    </select>
-                                    <button type="submit" class="btn btn-outline-info text-nowrap">
-                                        <i class="bi bi-person-plus-fill me-1"></i>Añadir
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="alert alert-danger bg-transparent border-danger mt-4">
-                            <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
-                            <p class="text-white-50 small mb-2">Eliminar el equipo borrará todos sus datos y no podrá recuperarse.</p>
-                            <button type="button" class="btn btn-sm btn-danger"
-                                onclick="deleteTeam()">
-                                <i class="bi bi-trash3-fill me-1"></i>Eliminar equipo
-                            </button>
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3 mt-5">
-                            <a href="/teams" class="btn btn-outline-danger px-4">Cancelar</a>
-                            <button type="submit" class="btn btn-primary px-5 fw-bold">
-                                <i class="bi bi-check-circle-fill me-2"></i>GUARDAR CAMBIOS
-                            </button>
-                        </div>
 
                     </form>
+
+                    <!-- SECCIÓN DE MIEMBROS (VER Y ELIMINAR) -->
+                    <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
+                        <h4 class="text-white mb-4 fs-5">
+                            <i class="bi bi-people-fill me-2 text-cyan"></i>Miembros Actuales ({{totalPlayers}})
+                        </h4>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover align-middle mb-0 rounded-3 overflow-hidden">
+                                <thead class="text-white-50 small text-uppercase">
+                                    <tr>
+                                        <th class="ps-3">Jugador</th>
+                                        <th>Rol</th>
+                                        <th class="text-end pe-3">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#playersList}}
+                                    <tr>
+                                        <td class="ps-3 fw-bold">
+                                            {{nickname}}
+                                            {{#isCaptain}}
+                                            <span class="badge bg-warning text-dark ms-1">Capitán</span>
+                                            {{/isCaptain}}
+                                        </td>
+                                        <td><span class="text-white-50 small">Jugador</span></td>
+                                        <td class="text-end pe-3">
+                                            <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                                onclick="removePlayer('{{id}}')">
+                                                <i class="bi bi-person-dash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {{/playersList}}
+                                    {{^playersList}}
+                                    <tr>
+                                        <td colspan="3" class="text-center text-white-50 small py-3">No hay miembros en
+                                            el equipo</td>
+                                    </tr>
+                                    {{/playersList}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- FORMULARIO 2: AÑADIR NUEVO MIEMBRO -->
+                    <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
+                        <h4 class="text-white mb-4 fs-5">
+                            <i class="bi bi-person-plus-fill me-2 text-cyan"></i>Añadir Nuevo Miembro
+                        </h4>
+                        <form action="/teams/{{team.id}}/add-player" method="POST" class="row g-3 align-items-end">
+                            <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+                            <div class="col-md-8">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Jugadores
+                                    Disponibles</label>
+                                <select name="userId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                    <option value="" selected disabled>— Selecciona un jugador libre —</option>
+                                    {{#availableUsers}}
+                                    <option value="{{id}}">{{nickname}} ({{email}})</option>
+                                    {{/availableUsers}}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-info w-100 fw-bold">
+                                    <i class="bi bi-person-plus-fill me-1"></i>AÑADIR AL EQUIPO
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-3 mt-4">
+                        <a href="/teams/{{team.id}}" class="btn btn-outline-danger px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-primary px-5 fw-bold text-uppercase">
+                            <i class="bi bi-check-circle-fill me-2"></i>Guardar Cambios
+                        </button>
+                    </div>
+
+                    <!-- ZONA DE PELIGRO -->
+                    <div class="mt-5 pt-5 border-top border-danger border-opacity-25">
+                        <div
+                            class="alert alert-danger bg-transparent border-danger d-flex align-items-center justify-content-between p-4">
+                            <div>
+                                <h6 class="text-danger fw-bold mb-1"><i
+                                        class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
+                                <p class="text-white-50 small mb-0">Esta acción es irreversible. Se borrarán todos los
+                                    datos del equipo.</p>
+                            </div>
+                            <button type="button" class="btn btn-danger fw-bold" onclick="deleteTeam()">
+                                <i class="bi bi-trash3-fill me-1"></i>ELIMINAR EQUIPO
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
+
+        </div>
         </div>
     </main>
 
@@ -245,4 +278,5 @@
         }
     </script>
 </body>
+
 </html>

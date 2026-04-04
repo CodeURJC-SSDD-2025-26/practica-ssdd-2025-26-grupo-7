@@ -23,6 +23,9 @@ public class Team {
     @Lob
     private Blob imageFile;
 
+    @Lob
+    private Blob bannerFile;
+
     private int matchesPlayed;
     private int wins;
     private int losses;
@@ -67,6 +70,12 @@ public class Team {
     }
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+    public Blob getBannerFile() {
+        return bannerFile;
+    }
+    public void setBannerFile(Blob bannerFile) {
+        this.bannerFile = bannerFile;
     }
     public int getLosses() {
         return losses;
