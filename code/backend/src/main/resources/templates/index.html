@@ -35,8 +35,7 @@
                 {{#activeTournaments}}
                 <div class="col-md-4 mb-4">
                     <div class="card tournament-card">
-                        <img src="/images/tournaments/{{id}}" class="card-img-top tournament-img"
-                            alt="Torneo">
+                        <img src="/images/tournaments/{{id}}" class="card-img-top tournament-img" alt="Torneo">
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
                             <p class="card-text">{{description}}</p>
@@ -58,25 +57,25 @@
             <div class="row text-center">
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <h3 class="display-4">24</h3>
+                        <h3 class="display-4">{{totalTournaments}}</h3>
                         <p>Torneos Activos</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <h3 class="display-4">156</h3>
+                        <h3 class="display-4">{{totalTeams}}</h3>
                         <p>Equipos Registrados</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <h3 class="display-4">780</h3>
+                        <h3 class="display-4">{{totalUsers}}</h3>
                         <p>Jugadores Activos</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <h3 class="display-4">342</h3>
+                        <h3 class="display-4">{{totalMatches}}</h3>
                         <p>Enfrentamientos Jugados</p>
                     </div>
                 </div>
