@@ -40,21 +40,23 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Nickname</label>
-                    <input type="text" name="nickname" class="form-control bg-dark text-white border-secondary" value="{{user.nickname}}">
+                    <input type="text" name="nickname" class="form-control bg-dark text-white border-secondary"
+                        value="{{user.nickname}}">
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Nombre Real</label>
-                    <input type="text" class="form-control bg-dark text-white border-secondary"
-                        value="{{user.name}}" readonly>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" value="{{user.name}}"
+                        readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Universidad</label>
-                    <input type="text" name="university" class="form-control bg-dark text-white border-secondary" value="{{user.university}}">
+                    <input type="text" name="university" class="form-control bg-dark text-white border-secondary"
+                        value="{{user.university}}">
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-white-50 small text-uppercase">Contacto</label>
-                    <input type="email" class="form-control bg-dark text-white border-secondary"
-                        value="{{user.email}}" readonly>
+                    <input type="email" class="form-control bg-dark text-white border-secondary" value="{{user.email}}"
+                        readonly>
                 </div>
                 <div class="d-flex gap-2 mt-4">
                     <label for="toggle-modal" class="btn btn-outline-secondary w-50"
@@ -140,30 +142,30 @@
 
                         <div
                             class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-primary shadow-primary" style="height: 60%; width: 40px;"
-                                title="60% Ganadas"></div>
-                            <span class="text-white-50 d-block mt-2 smaller fw-bold">VICTORIAS</span>
+                            <div class="bar bg-primary shadow-primary" style="height: {{winRate}}%; width: 40px;"
+                                title="{{winRate}}% Ganadas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">{{winRate}}% VIC</span>
                         </div>
 
                         <div
                             class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-secondary" style="height: 40%; width: 40px; opacity: 0.7;"
-                                title="40% Perdidas"></div>
-                            <span class="text-white-50 d-block mt-2 smaller fw-bold">DERROTAS</span>
+                            <div class="bar bg-secondary" style="height: {{lossRate}}%; width: 40px; opacity: 0.7;"
+                                title="{{lossRate}}% Perdidas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">{{lossRate}}% DER</span>
                         </div>
 
                         <div
                             class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-info shadow-info" style="height: 75%; width: 40px;" title="KDA 4.2">
-                            </div>
-                            <span class="text-white-50 d-block mt-2 smaller fw-bold">KDA RATIO</span>
+                            <div class="bar bg-info shadow-info" style="height: {{kdaHeight}}%; width: 40px;"
+                                title="KDA {{kda}}"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">KDA {{kda}}</span>
                         </div>
 
                         <div
                             class="text-center w-100 h-100 d-flex flex-column justify-content-end align-items-center group-hover">
-                            <div class="bar bg-success shadow-success" style="height: 50%; width: 40px;"
-                                title="50 Partidas"></div>
-                            <span class="text-white-50 d-block mt-2 smaller fw-bold">PARTIDAS</span>
+                            <div class="bar bg-success shadow-success" style="height: {{matchesHeight}}%; width: 40px;"
+                                title="{{totalMatches}} Partidas"></div>
+                            <span class="text-white-50 d-block mt-2 smaller fw-bold">{{totalMatches}} PARTIDAS</span>
                         </div>
 
                     </div>
@@ -183,36 +185,43 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{#userTournaments}}
                                 <tr class="position-relative">
                                     <td class="py-3 ps-3">
                                         <div class="d-flex align-items-center">
-                                            <i class="bi bi-controller text-primary me-2"></i>
-                                            <span class="fw-bold">Valorant</span>
+                                            <i class="bi {{gameIcon}} text-primary me-2"></i>
+                                            <span class="fw-bold">{{game}}</span>
                                         </div>
                                     </td>
-                                    <td>Fuego</td>
-                                    <td class="text-center"><span class="fw-bold text-warning">3º</span></td>
+                                    <td>{{teamName}}</td>
+                                    <td class="text-center"><span class="text-white-50">-</span></td>
                                     <td class="text-end pe-3">
+                                        {{#isEnCurso}}
                                         <span
-                                            class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
-                                            EN CURSO
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 ps-3">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-pc-display text-info me-2"></i>
-                                            <span class="fw-bold">League of Legends</span>
-                                        </div>
-                                    </td>
-                                    <td>Rivas</td>
-                                    <td class="text-center"><span class="text-white-50">12º</span></td>
-                                    <td class="text-end pe-3">
+                                            class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">EN
+                                            CURSO</span>
+                                        {{/isEnCurso}}
+
+                                        {{#isFinalizado}}
                                         <span
                                             class="badge bg-secondary bg-opacity-25 text-white-50 px-3 py-2">FINALIZADO</span>
+                                        {{/isFinalizado}}
+
+                                        {{#isProximamente}}
+                                        <span
+                                            class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-3 py-2">PRÓXIMAMENTE</span>
+                                        {{/isProximamente}}
                                     </td>
                                 </tr>
+                                {{/userTournaments}}
+
+                                {{^hasTournaments}}
+                                <tr>
+                                    <td colspan="4" class="text-center text-white-50 py-4">
+                                        No participas en ninguna competición activa actualmente.
+                                    </td>
+                                </tr>
+                                {{/hasTournaments}}
                             </tbody>
                         </table>
                     </div>
@@ -225,7 +234,8 @@
                             <i class="bi bi-envelope-fill me-2"></i>Bandeja de Entrada
                         </h4>
                         {{#hasMessages}}
-                        <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
+                        <span
+                            class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
                             {{messages.size}} mensaje(s)
                         </span>
                         {{/hasMessages}}
@@ -241,7 +251,7 @@
                     {{#messages}}
                     <div class="border border-secondary border-opacity-25 rounded-3 p-3 mb-3 position-relative"
                         style="background: {{#isRead}}rgba(255,255,255,0.02){{/isRead}}{{^isRead}}rgba(61, 153, 245, 0.05){{/isRead}};">
-                        
+
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="d-flex align-items-center gap-2">
                                 {{^isRead}}
@@ -251,26 +261,28 @@
                             </div>
                             <span class="small text-white-50 text-nowrap ms-3">{{formattedDate}}</span>
                         </div>
-                        
+
                         <p class="text-white-50 small mb-2">
                             <i class="bi bi-person-fill me-1"></i> De: {{sender.nickname}}
                         </p>
-                        
+
                         <p class="text-white mb-3" style="font-size: 0.95rem;">{{content}}</p>
-                        
+
                         <div class="d-flex gap-2">
                             {{^isRead}}
                             <form action="/messages/mark-read/{{id}}" method="POST" class="m-0">
                                 <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                                <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-2" style="font-size: 0.75rem;">
+                                <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-2"
+                                    style="font-size: 0.75rem;">
                                     <i class="bi bi-check2-all me-1"></i>Marcar como leído
                                 </button>
                             </form>
                             {{/isRead}}
                             <form action="/messages/delete/{{id}}" method="POST" class="m-0">
                                 <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 0.75rem;" 
-                                        onclick="return confirm('¿Estás seguro de eliminar este mensaje?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                    style="font-size: 0.75rem;"
+                                    onclick="return confirm('¿Estás seguro de eliminar este mensaje?')">
                                     <i class="bi bi-trash3-fill me-1"></i>Eliminar
                                 </button>
                             </form>
@@ -285,7 +297,7 @@
     {{> footer}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/porfile-picture.js"></script>
+    <script src="/js/porfile-picture.js"></script>
 
 </body>
 
