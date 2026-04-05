@@ -152,6 +152,9 @@ public class MatchController {
             }
 
             matchRepository.save(match);
+            
+            updateTeamStats(match.getLocalTeam());
+            updateTeamStats(match.getAwayTeam());
         }
         return "redirect:/admin";
     }
@@ -225,6 +228,10 @@ public class MatchController {
         }
 
         matchRepository.save(match);
+        
+        updateTeamStats(match.getLocalTeam());
+        updateTeamStats(match.getAwayTeam());
+        
         return "redirect:/matches/" + id;
     }
 
@@ -237,5 +244,34 @@ public class MatchController {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    private void updateTeamStats(Team team) {
+        if (team == null) return;
+        
+        List<Match> matches = matchRepository.findByLocalTeamOrAwayTeam(team, team);
+        int wins = 0;
+        int losses = 0;
+        int played = 0;
+
+        for (Match m : matches) {
+            if ("Finalizado".equals(m.getState())) {
+                played++;
+                boolean isLocal = m.getLocalTeam().getId().equals(team.getId());
+                int myScore = isLocal ? m.getScoreLocal() : m.getScoreAway();
+                int oppScore = isLocal ? m.getScoreAway() : m.getScoreLocal();
+                
+                if (myScore > oppScore) {
+                    wins++;
+                } else if (myScore < oppScore) {
+                    losses++;
+                }
+            }
+        }
+        
+        team.setWins(wins);
+        team.setLosses(losses);
+        team.setMatchesPlayed(played);
+        teamRepository.saveAndFlush(team);
     }
 }

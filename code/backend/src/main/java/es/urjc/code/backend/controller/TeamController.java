@@ -1,5 +1,6 @@
 package es.urjc.code.backend.controller;
 
+import es.urjc.code.backend.model.Match;
 import es.urjc.code.backend.model.Team;
 import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.model.User;
@@ -47,6 +48,7 @@ public class TeamController {
     }
 
     // DETAIL
+    @Transactional
     @GetMapping("/teams/{id}")
     public String teamDetail(@PathVariable Long id, Model model,
             @AuthenticationPrincipal UserDetails currentUser) {
@@ -55,11 +57,32 @@ public class TeamController {
             return "redirect:/teams";
         }
         Team team = opt.get();
+        List<Match> teamMatches = matchRepository.findByLocalTeamOrAwayTeam(team, team);
+        int wins = 0;
+        int losses = 0;
+        int played = 0;
+
+        for (Match m : teamMatches) {
+            if ("Finalizado".equals(m.getState())) {
+                played++;
+                boolean isLocal = m.getLocalTeam().getId().equals(id);
+                int scoreM = isLocal ? m.getScoreLocal() : m.getScoreAway();
+                int scoreO = isLocal ? m.getScoreAway() : m.getScoreLocal();
+                if (scoreM > scoreO) wins++;
+                else if (scoreM < scoreO) losses++;
+            }
+        }
+        
+        team.setWins(wins);
+        team.setLosses(losses);
+        team.setMatchesPlayed(played);
+        teamRepository.saveAndFlush(team);
+
         model.addAttribute("team", team);
         model.addAttribute("players", team.getPlayers());
+        model.addAttribute("matches", teamMatches);
 
-        int played = team.getMatchesPlayed();
-        int winRate = played > 0 ? (int) Math.round((team.getWins() * 100.0) / played) : 0;
+        int winRate = played > 0 ? (int) Math.round((wins * 100.0) / played) : 0;
         model.addAttribute("winRate", winRate);
 
         if (currentUser != null) {
