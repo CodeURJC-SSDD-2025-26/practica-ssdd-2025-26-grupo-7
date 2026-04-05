@@ -12,6 +12,7 @@ import es.urjc.code.backend.repository.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -118,6 +119,7 @@ public class MatchController {
         return "edit-matches";
     }
 
+    @Transactional
     @PostMapping("/admin/matches/edit/{id}")
     public String updateMatch(
             @PathVariable Long id,
@@ -154,6 +156,7 @@ public class MatchController {
         return "redirect:/admin";
     }
 
+    @Transactional
     @PostMapping("/admin/matches/delete/{id}")
     public String deleteMatch(@PathVariable Long id) {
         matchRepository.deleteById(id);
@@ -171,6 +174,7 @@ public class MatchController {
         return "report-stats";
     }
 
+    @Transactional
     @PostMapping("/admin/matches/{id}/report")
     public String saveReport(
             @PathVariable Long id,
@@ -190,18 +194,18 @@ public class MatchController {
             match.setResult(scoreLocal + " - " + scoreAway);
         }
 
-        statsRepository.deleteByMatch(match);
+        match.getPlayerStats().clear();
 
         if (match.getLocalTeam() != null) {
             for (User player : match.getLocalTeam().getPlayers()) {
                 String pId = player.getId().toString();
                 if (allParams.containsKey("kills_" + pId)) {
                     PlayerMatchStats s = new PlayerMatchStats(match, player,
-                            Integer.parseInt(allParams.getOrDefault("kills_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("deaths_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("assists_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("acs_" + pId, "0")));
-                    statsRepository.save(s);
+                            parseSafely(allParams.get("kills_" + pId), 0),
+                            parseSafely(allParams.get("deaths_" + pId), 0),
+                            parseSafely(allParams.get("assists_" + pId), 0),
+                            parseSafely(allParams.get("acs_" + pId), 0));
+                    match.getPlayerStats().add(s);
                 }
             }
         }
@@ -211,16 +215,27 @@ public class MatchController {
                 String pId = player.getId().toString();
                 if (allParams.containsKey("kills_" + pId)) {
                     PlayerMatchStats s = new PlayerMatchStats(match, player,
-                            Integer.parseInt(allParams.getOrDefault("kills_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("deaths_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("assists_" + pId, "0")),
-                            Integer.parseInt(allParams.getOrDefault("acs_" + pId, "0")));
-                    statsRepository.save(s);
+                            parseSafely(allParams.get("kills_" + pId), 0),
+                            parseSafely(allParams.get("deaths_" + pId), 0),
+                            parseSafely(allParams.get("assists_" + pId), 0),
+                            parseSafely(allParams.get("acs_" + pId), 0));
+                    match.getPlayerStats().add(s);
                 }
             }
         }
 
         matchRepository.save(match);
         return "redirect:/matches/" + id;
+    }
+
+    private int parseSafely(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }
