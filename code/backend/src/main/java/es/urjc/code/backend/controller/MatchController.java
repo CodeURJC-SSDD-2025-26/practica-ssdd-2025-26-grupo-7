@@ -166,7 +166,7 @@ public class MatchController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/matches/{id}/report")
+    @GetMapping("/admin/matches/report/{id}")
     public String reportStatsForm(@PathVariable Long id, Model model) {
         Match match = matchRepository.findById(id).orElseThrow();
         model.addAttribute("match", match);
@@ -178,7 +178,7 @@ public class MatchController {
     }
 
     @Transactional
-    @PostMapping("/admin/matches/{id}/report")
+    @PostMapping("/admin/matches/report/{id}")
     public String saveReport(
             @PathVariable Long id,
             @RequestParam Integer scoreLocal,

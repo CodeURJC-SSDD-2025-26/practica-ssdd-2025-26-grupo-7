@@ -33,7 +33,7 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-green"></div>
 
-                    <form action="/admin/matches/{{match.id}}/report" method="POST">
+                    <form action="/admin/matches/report/{{match.id}}" method="POST">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
                         <!-- ── Marcador ── -->

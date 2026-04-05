@@ -80,8 +80,7 @@
                             class="profile-avatar rounded-circle border border-primary border-3 shadow-sm w-100 h-100">
                     </div>
 
-                    <h3 class="text-white mb-1">{{user.nickname}}</h3>
-                    <p class="text-primary fw-bold small text-uppercase mb-3">Diamante IV</p>
+                    <h3 class="text-white mb-3">{{user.nickname}}</h3>
 
                     <div class="d-flex justify-content-center gap-2 mb-4">
                         <span class="badge bg-dark border border-secondary text-white-50">Nivel 42</span>
@@ -179,8 +178,7 @@
                             <thead class="text-white-50 border-bottom border-secondary border-opacity-25">
                                 <tr>
                                     <th class="border-0 small text-uppercase py-3 ps-3">Videojuego</th>
-                                    <th class="border-0 small text-uppercase py-3">Equipo</th>
-                                    <th class="border-0 small text-uppercase py-3 text-center">Rango</th>
+                                    <th class="border-0 small text-uppercase py-3 text-end pe-3">Equipo</th>
                                     <th class="border-0 small text-uppercase py-3 text-end pe-3">Estado</th>
                                 </tr>
                             </thead>
@@ -193,8 +191,7 @@
                                             <span class="fw-bold">{{game}}</span>
                                         </div>
                                     </td>
-                                    <td>{{teamName}}</td>
-                                    <td class="text-center"><span class="text-white-50">-</span></td>
+                                    <td class="text-end pe-3">{{teamName}}</td>
                                     <td class="text-end pe-3">
                                         {{#isEnCurso}}
                                         <span
@@ -227,6 +224,7 @@
                     </div>
                 </div>
 
+                {{#userIsCaptain}}
                 <!-- INBOX: Messages from Admin -->
                 <div class="card bg-card border-0 shadow-lg p-4 mt-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -290,6 +288,7 @@
                     </div>
                     {{/messages}}
                 </div>
+                {{/userIsCaptain}}
 
             </div>
         </div>

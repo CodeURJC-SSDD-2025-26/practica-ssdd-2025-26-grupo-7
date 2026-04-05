@@ -86,6 +86,7 @@ public class BaseController {
                         .findByRecipientOrderBySentAtDesc(user);
                 model.addAttribute("messages", messages);
                 model.addAttribute("hasMessages", !messages.isEmpty());
+                model.addAttribute("userIsCaptain", user.getIsCaptain());
                 populateProfileStats(user, model);
             }
             return "profile";
@@ -101,6 +102,7 @@ public class BaseController {
             model.addAttribute("user", user);
             model.addAttribute("viewingOther", true);
             populateProfileStats(user, model);
+            model.addAttribute("userIsCaptain", user.getIsCaptain());
             return "profile";
         } else {
             return "redirect:/";
