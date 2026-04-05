@@ -16,6 +16,7 @@ public class Match {
     private String phase;
     private String state;
     private String format;
+    @Column(columnDefinition = "TEXT")
     private String notes;
     private Integer scoreLocal;
     private Integer scoreAway;

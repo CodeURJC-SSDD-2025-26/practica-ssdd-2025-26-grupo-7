@@ -29,7 +29,10 @@
                         <i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Partido</span>
                     </h2>
                     {{#match}}
-                    <p class="text-white-50">Modificando enfrentamiento: <span class="text-cyan">{{match.localTeam.name}} vs {{match.awayTeam.name}}</span></p>
+                    <p class="text-white-50">Modificando enfrentamiento: <span class="text-cyan">
+                        {{#localTeam}}{{name}}{{/localTeam}}{{^localTeam}}TBD{{/localTeam}} vs 
+                        {{#awayTeam}}{{name}}{{/awayTeam}}{{^awayTeam}}TBD{{/awayTeam}}
+                    </span></p>
                     {{/match}}
                     {{^match}}
                     <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el resultado.</p>
@@ -81,7 +84,7 @@
 
                     {{#match}}
                     <!-- ACTUAL EDIT FORM -->
-                    <form action="/admin/matches/edit/{{match.id}}" method="POST">
+                    <form action="/admin/matches/edit/{{id}}" method="POST">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-3">
@@ -91,21 +94,19 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Local</label>
-                                <select name="localTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="localTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required data-selected="{{#localTeam}}{{id}}{{/localTeam}}">
                                     {{#teams}}
                                     <option value="{{id}}">{{name}}</option>
                                     {{/teams}}
                                 </select>
-                                <script>document.getElementsByName('localTeamId')[0].value = "{{match.localTeam.id}}";</script>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Visitante</label>
-                                <select name="awayTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="awayTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required data-selected="{{#awayTeam}}{{id}}{{/awayTeam}}">
                                     {{#teams}}
                                     <option value="{{id}}">{{name}}</option>
                                     {{/teams}}
                                 </select>
-                                <script>document.getElementsByName('awayTeamId')[0].value = "{{match.awayTeam.id}}";</script>
                             </div>
                         </div>
 
@@ -116,32 +117,29 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
-                                <select name="phase" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="phase" class="form-select bg-dark text-white border-secondary border-opacity-50" required data-selected="{{phase}}">
                                     <option value="Fase de Grupos">Fase de Grupos</option>
                                     <option value="Cuartos de Final">Cuartos de Final</option>
                                     <option value="Semifinal">Semifinal</option>
                                     <option value="Final">Final</option>
                                 </select>
-                                <script>document.getElementsByName('phase')[0].value = "{{match.phase}}";</script>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
-                                <select name="format" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="format" class="form-select bg-dark text-white border-secondary border-opacity-50" required data-selected="{{format}}">
                                     <option value="BO1">BO1</option>
                                     <option value="BO3">BO3</option>
                                     <option value="BO5">BO5</option>
                                 </select>
-                                <script>document.getElementsByName('format')[0].value = "{{match.format}}";</script>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
-                                <select name="state" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="state" class="form-select bg-dark text-white border-secondary border-opacity-50" required data-selected="{{state}}">
                                     <option value="Programado">Programado</option>
                                     <option value="En Vivo">En Vivo</option>
                                     <option value="Finalizado">Finalizado</option>
                                     <option value="Cancelado">Cancelado</option>
                                 </select>
-                                <script>document.getElementsByName('state')[0].value = "{{match.state}}";</script>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
@@ -151,9 +149,9 @@
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
                                 <input type="time" name="time" value="{{matchTime}}" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales</label>
-                                <input type="text" name="notes" value="{{match.notes}}" class="form-control bg-dark text-white border-secondary border-opacity-50">
+                            <div class="col-md-12">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales (Soporta HTML)</label>
+                                <textarea name="notes" class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3">{{safeNotes}}</textarea>
                             </div>
                         </div>
 
@@ -164,19 +162,80 @@
 
                         <div class="row g-4 mb-4">
                             <div class="col-md-5">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.localTeam.name}}</label>
-                                <input type="number" name="scoreLocal" min="0" value="{{match.scoreLocal}}"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{#localTeam}}{{name}}{{/localTeam}}{{^localTeam}}Local{{/localTeam}}</label>
+                                <input type="number" name="scoreLocal" min="0" value="{{scoreLocal}}"
                                     class="form-control bg-dark text-white border-secondary border-opacity-50">
                             </div>
                             <div class="col-md-2 d-flex align-items-end justify-content-center pb-2">
                                 <span class="text-white-50 fs-3 fw-bold">:</span>
                             </div>
                             <div class="col-md-5">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.awayTeam.name}}</label>
-                                <input type="number" name="scoreAway" min="0" value="{{match.scoreAway}}"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{#awayTeam}}{{name}}{{/awayTeam}}{{^awayTeam}}Visitante{{/awayTeam}}</label>
+                                <input type="number" name="scoreAway" min="0" value="{{scoreAway}}"
                                     class="form-control bg-dark text-white border-secondary border-opacity-50">
                             </div>
                         </div>
+
+                        <!-- Player Stats Section -->
+                        {{#localTeam}}
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Estadísticas: <span class="text-cyan">{{name}}</span>
+                        </h4>
+                        <div class="table-responsive mb-5">
+                            <table class="table table-dark table-hover align-middle">
+                                <thead>
+                                    <tr class="text-white-50 small text-uppercase">
+                                        <th>Jugador</th>
+                                        <th style="width: 100px;">Kills</th>
+                                        <th style="width: 100px;">Deaths</th>
+                                        <th style="width: 100px;">Assists</th>
+                                        <th style="width: 100px;">ACS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#localPlayersStats}}
+                                    <tr>
+                                        <td class="fw-bold">{{nickname}}</td>
+                                        <td><input type="number" name="kills_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{kills}}" min="0"></td>
+                                        <td><input type="number" name="deaths_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{deaths}}" min="0"></td>
+                                        <td><input type="number" name="assists_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{assists}}" min="0"></td>
+                                        <td><input type="number" name="acs_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{acs}}" min="0"></td>
+                                    </tr>
+                                    {{/localPlayersStats}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{/localTeam}}
+
+                        {{#awayTeam}}
+                        <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                            Estadísticas: <span class="text-danger">{{name}}</span>
+                        </h4>
+                        <div class="table-responsive mb-5">
+                            <table class="table table-dark table-hover align-middle">
+                                <thead>
+                                    <tr class="text-white-50 small text-uppercase">
+                                        <th>Jugador</th>
+                                        <th style="width: 100px;">Kills</th>
+                                        <th style="width: 100px;">Deaths</th>
+                                        <th style="width: 100px;">Assists</th>
+                                        <th style="width: 100px;">ACS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#awayPlayersStats}}
+                                    <tr>
+                                        <td class="fw-bold">{{nickname}}</td>
+                                        <td><input type="number" name="kills_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{kills}}" min="0"></td>
+                                        <td><input type="number" name="deaths_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{deaths}}" min="0"></td>
+                                        <td><input type="number" name="assists_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{assists}}" min="0"></td>
+                                        <td><input type="number" name="acs_{{id}}" class="form-control bg-dark text-white border-secondary" value="{{acs}}" min="0"></td>
+                                    </tr>
+                                    {{/awayPlayersStats}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{/awayTeam}}
 
                         <div class="d-flex justify-content-end gap-3 mt-5">
                             <a href="/admin/matches/edit" class="btn btn-outline-secondary px-4">Volver atrás</a>
@@ -189,7 +248,7 @@
                     <div class="alert alert-danger bg-transparent border-danger mt-4">
                         <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
                         <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no podrá recuperarse.</p>
-                        <form action="/admin/matches/delete/{{match.id}}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este partido?')">
+                        <form action="/admin/matches/delete/{{id}}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este partido?')">
                             <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash3-fill me-1"></i>Eliminar partido
@@ -213,8 +272,8 @@
         /* {{#allMatches}} */
         ALL_MATCHES.push({ 
             id: "{{id}}", 
-            tournamentId: "{{tournament.id}}", 
-            label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})" 
+            tournamentId: "{{#tournament}}{{id}}{{/tournament}}", 
+            label: "{{#localTeam}}{{name}}{{/localTeam}}{{^localTeam}}TBD{{/localTeam}} vs {{#awayTeam}}{{name}}{{/awayTeam}}{{^awayTeam}}TBD{{/awayTeam}} — {{phase}} ({{matchDate}})" 
         });
         /* {{/allMatches}} */
 
@@ -240,6 +299,16 @@
             }
             wrap.classList.add('visible');
         }
+
+        // Initialize selects based on data-selected attribute
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('select[data-selected]').forEach(sel => {
+                const val = sel.getAttribute('data-selected');
+                if (val) {
+                    sel.value = val;
+                }
+            });
+        });
     </script>
     {{/match}}
 
