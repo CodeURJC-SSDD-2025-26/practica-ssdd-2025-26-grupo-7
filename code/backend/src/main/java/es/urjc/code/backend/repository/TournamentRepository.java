@@ -4,6 +4,8 @@ import es.urjc.code.backend.model.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.util.Optional;
+
 
 import java.util.List;
 
@@ -19,4 +21,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             @Param("state") String state);
 
     java.util.List<Tournament> findByTeamsContaining(es.urjc.code.backend.model.Team team);
-}
+
+    Optional<Tournament> findByName(String name);
+}
