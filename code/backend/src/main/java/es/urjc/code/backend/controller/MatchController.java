@@ -112,6 +112,11 @@ public class MatchController {
         } else {
             model.addAttribute("teams", java.util.Collections.emptyList());
         }
+        if (match.getTournament() != null) {
+            model.addAttribute("teams", match.getTournament().getTeams());
+        } else {
+            model.addAttribute("teams", java.util.Collections.emptyList());
+        }
 
         if (match.getMatchDate() != null && match.getMatchDate().contains(" ")) {
             String[] parts = match.getMatchDate().split(" ");
@@ -201,7 +206,7 @@ public class MatchController {
             // Update teams
             match.setLocalTeam(teamRepository.findById(localTeamId).orElseThrow());
             match.setAwayTeam(teamRepository.findById(awayTeamId).orElseThrow());
-
+            
             match.setPhase(phase);
             match.setFormat(format);
             match.setState(state);
@@ -214,6 +219,8 @@ public class MatchController {
                 match.setResult(match.getScoreLocal() + " - " + match.getScoreAway());
             } else {
                 match.setResult(null);
+            } else {
+                match.setResult(null);
             }
 
             // Update player stats
@@ -222,9 +229,16 @@ public class MatchController {
             processTeamStats(match, match.getAwayTeam(), allParams);
 
             matchRepository.save(match);
-
-            updateTeamStats(match.getLocalTeam());
-            updateTeamStats(match.getAwayTeam());
+            
+            // Update stats for all involved teams (old and new)
+            if (oldLocal != null) updateTeamStats(oldLocal);
+            if (oldAway != null) updateTeamStats(oldAway);
+            if (match.getLocalTeam() != null && (oldLocal == null || !match.getLocalTeam().getId().equals(oldLocal.getId()))) {
+                updateTeamStats(match.getLocalTeam());
+            }
+            if (match.getAwayTeam() != null && (oldAway == null || !match.getAwayTeam().getId().equals(oldAway.getId()))) {
+                updateTeamStats(match.getAwayTeam());
+            }
         }
         return "redirect:/admin";
     }

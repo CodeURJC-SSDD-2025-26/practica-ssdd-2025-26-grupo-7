@@ -14,94 +14,94 @@
 <body>
     {{> header}}
 
-    <header class="page-header text-center">
-        <div class="container">
-            <p class="text-white-50 small text-uppercase mb-2">
-                <a href="/tournaments" class="text-white-50 text-decoration-none">
-                    <i class="bi bi-arrow-left me-1"></i>Torneos
-                </a>
-            </p>
+    <main class="container py-4">
+        <!-- Breadcrumb / Back Link -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="/tournaments" class="text-cyan text-decoration-none small text-uppercase">
+                <i class="bi bi-arrow-left me-1"></i> Volver a Torneos
+            </a>
+        </div>
 
-            <h1 class="display-5 fw-bold text-white mb-2">{{tournament.name}}</h1>
-
-            <p class="lead text-white-50 mb-3">
-                {{tournament.maxTeams}} equipos · {{tournament.mode}} · {{tournament.platform}}
-            </p>
-
-            <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <!-- Main Tournament Header Card -->
+        <div class="detail-card p-4 p-md-5 mb-5 border border-secondary border-opacity-25 shadow-lg text-center">
+            <div class="mb-3">
                 {{#tournament.state}}
-                <span class="badge px-3 py-2
-                    {{#stateActive}}state-active{{/stateActive}}
-                    {{#stateUpcoming}}state-upcoming{{/stateUpcoming}}
-                    {{#stateFinished}}state-finished{{/stateFinished}}
-                    ">
-                    {{#stateActive}}<i class="bi bi-play-circle-fill me-1"></i>En Curso{{/stateActive}}
+                <span
+                    class="badge {{#stateActive}}state-active{{/stateActive}} {{#stateUpcoming}}state-upcoming{{/stateUpcoming}} {{#stateFinished}}state-finished{{/stateFinished}} px-3 py-2 text-uppercase fw-bold">
+                    {{#stateActive}}<i class="bi bi-broadcast me-1 pulse-live"></i>En Curso{{/stateActive}}
                     {{#stateUpcoming}}<i class="bi bi-clock-fill me-1"></i>Próximamente{{/stateUpcoming}}
                     {{#stateFinished}}<i class="bi bi-check-circle-fill me-1"></i>Finalizado{{/stateFinished}}
                 </span>
                 {{/tournament.state}}
-                <span class="badge bg-secondary px-3 py-2">
-                    <i class="bi bi-people-fill me-1"></i>{{teamsCount}} / {{tournament.maxTeams}} equipos
-                </span>
-                <span class="badge bg-dark border border-secondary px-3 py-2">
-                    <i class="bi bi-controller me-1"></i>{{tournament.game}}
-                </span>
             </div>
 
+            <h1 class="display-5 fw-bold text-white mb-3 text-uppercase font-sans">{{tournament.name}}</h1>
+
+            <p class="lead text-white-50 mb-4 small fw-bold text-uppercase tracking-wider">
+                {{tournament.maxTeams}} equipos — {{tournament.mode}} — {{tournament.platform}}
+            </p>
+
+            <div
+                class="d-flex justify-content-center gap-3 flex-wrap pt-3 border-top border-secondary border-opacity-10">
+                <span class="text-white-50 small"><i class="bi bi-controller text-cyan me-1"></i>
+                    {{tournament.game}}</span>
+                <span class="text-white-50 small"><i class="bi bi-people-fill text-cyan me-1"></i> {{teamsCount}} /
+                    {{tournament.maxTeams}} inscritos</span>
+                <span class="text-white-50 small"><i class="bi bi-calendar-event text-cyan me-1"></i>
+                    {{tournament.startDate}}</span>
+            </div>
         </div>
 
         <div class="row g-4">
-
+            <!-- Left Column: Standings and Matches -->
             <div class="col-lg-8">
 
-                <div class="detail-card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-trophy me-2" style="color: #ecc94b;"></i>Clasificación
-                    </div>
+                <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                    <i class="bi bi-trophy-fill text-cyan me-2"></i>Clasificación del Torneo
+                </h4>
+
+                <div class="detail-card mb-5">
                     <div class="table-responsive">
-                        <table class="table table-dark standings-table mb-0">
+                        <table class="table table-dark table-hover align-middle standings-table">
                             <thead>
-                                <tr>
-                                    <th style="width:48px;">#</th>
+                                <tr class="text-white">
+                                    <th style="width:70px;" class="ps-4">#</th>
                                     <th>Equipo</th>
                                     <th class="text-center">J</th>
                                     <th class="text-center">V</th>
                                     <th class="text-center">D</th>
-                                    <th class="text-center">Pts</th>
+                                    <th class="pe-4 text-end">Pts</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#teams}}
                                 <tr>
-                                    <td class="fw-bold text-center">
+                                    <td class="ps-4 fw-bold">
                                         {{#rank}}
                                         <span class="rank-medal">
-                                            {{#rankIs1}}🥇{{/rankIs1}}
-                                            {{#rankIs2}}🥈{{/rankIs2}}
-                                            {{#rankIs3}}🥉{{/rankIs3}}
-                                            {{#rankGt3}}{{rank}}{{/rankGt3}}
+                                            {{rank}}
                                         </span>
                                         {{/rank}}
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center gap-2">
+                                        <div class="d-flex align-items-center gap-3">
                                             <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-mini"
                                                 onerror="this.src='/assets/images/team_placeholder.png'">
                                             <a href="/teams/{{id}}"
-                                                class="text-white text-decoration-none fw-semibold">{{name}}</a>
+                                                class="text-white text-decoration-none fw-bold">{{name}}</a>
                                         </div>
                                     </td>
                                     <td class="text-center text-white-50">{{matchesPlayed}}</td>
                                     <td class="text-center text-success fw-bold">{{wins}}</td>
                                     <td class="text-center text-danger">{{losses}}</td>
-                                    <td class="text-center fw-bold text-white">{{points}}</td>
+                                    <td class="pe-4 text-end"><span class="points-badge">{{points}}</span></td>
                                 </tr>
                                 {{/teams}}
                                 {{^teams}}
                                 <tr>
                                     <td colspan="6" class="text-center py-5 text-white-50">
-                                        <i class="bi bi-shield-x d-block fs-2 mb-2 opacity-25"></i>
-                                        Aún no hay equipos inscritos en este torneo.
+                                        <i class="bi bi-shield-lock d-block fs-2 mb-2 opacity-25"></i>
+                                        No hay equipos inscritos todavía.
                                     </td>
                                 </tr>
                                 {{/teams}}
@@ -110,160 +110,137 @@
                     </div>
                 </div>
 
-                <div class="detail-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-gamepad me-2" style="color: var(--primary-cyan, #00e5ff);"></i>Partidos
-                            del Torneo</span>
-                        <a href="/matches" class="btn btn-sm btn-outline-info">Ver todos</a>
-                    </div>
-                    <div class="p-3 d-flex flex-column gap-3">
-                        {{#matches}}
-                        <div class="match-mini position-relative {{#matchLive}}border-live{{/matchLive}}">
-                            <a href="/matches/{{id}}" class="stretched-link"></a>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge
-                                    {{#matchLive}}badge-live{{/matchLive}}
-                                    {{#matchFinished}}bg-secondary{{/matchFinished}}
-                                    {{#matchScheduled}}bg-dark border border-secondary text-white-50{{/matchScheduled}}
-                                    {{#matchCancelled}}bg-danger bg-opacity-25 text-danger{{/matchCancelled}}
-                                    ">
-                                    {{#matchLive}}<i class="bi bi-broadcast me-1"></i>EN VIVO{{/matchLive}}
-                                    {{#matchFinished}}Finalizado{{/matchFinished}}
-                                    {{#matchScheduled}}{{state}}{{/matchScheduled}}
-                                    {{#matchCancelled}}Cancelado{{/matchCancelled}}
+                <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
+                    <i class="bi bi-controller text-cyan me-2"></i>Enfrentamientos
+                </h4>
+
+                <div class="d-flex flex-column gap-3 mb-5">
+                    {{#matches}}
+                    <div class="match-mini position-relative {{#matchLive}}border-live{{/matchLive}}">
+                        <a href="/matches/{{id}}" class="stretched-link"></a>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span
+                                class="badge small {{#matchLive}}badge-live{{/matchLive}} {{#matchFinished}}bg-secondary{{/matchFinished}} {{#matchScheduled}}bg-dark border border-secondary text-white-50{{/matchScheduled}}">
+                                {{#matchLive}}<i class="bi bi-broadcast me-1 pulse-live"></i>EN VIVO{{/matchLive}}
+                                {{#matchFinished}}Finalizado{{/matchFinished}}
+                                {{#matchScheduled}}{{state}}{{/matchScheduled}}
+                            </span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span
+                                    class="badge bg-dark border border-secondary text-white-50 x-small text-uppercase">{{phase}}</span>
+                                <small class="text-white-50 fw-bold">{{matchDate}}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2 flex-1 overflow-hidden">
+                                {{#localTeam}}
+                                <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
+                                    onerror="this.src='/assets/images/team_placeholder.png'">
+                                <span class="fw-bold text-white text-truncate">{{name}}</span>
+                                {{/localTeam}}
+                                {{^localTeam}}<span class="text-white-50 small">TBD</span>{{/localTeam}}
+                            </div>
+
+                            <div class="text-center px-4">
+                                <span
+                                    class="fs-5 fw-bold {{#matchLive}}text-warning{{/matchLive}} {{^matchLive}}text-white{{/matchLive}}">
+                                    {{scoreLocal}} — {{scoreAway}}
                                 </span>
-                                <div class="d-flex align-items-center gap-2">
-                                    <span
-                                        class="badge bg-dark border border-secondary text-white-50 small">{{phase}}</span>
-                                    <small class="text-white-50">{{matchDate}}</small>
-                                </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between gap-2">
-                                <div class="d-flex align-items-center gap-2 flex-grow-1">
-                                    {{#localTeam}}
-                                    <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
-                                        onerror="this.src='/assets/images/team_placeholder.png'">
-                                    <span class="fw-bold text-white">{{name}}</span>
-                                    {{/localTeam}}
-                                    {{^localTeam}}<span class="text-white-50 small">POR DEFINIR</span>{{/localTeam}}
-                                </div>
 
-                                <div class="text-center px-3">
-                                    <span class="fs-5 fw-bold
-                                        {{#matchLive}}text-warning{{/matchLive}}
-                                        {{^matchLive}}text-white{{/matchLive}}
-                                        ">{{scoreLocal}} – {{scoreAway}}</span>
-                                </div>
-
-                                <div class="d-flex align-items-center gap-2 flex-grow-1 justify-content-end">
-                                    {{#awayTeam}}
-                                    <span class="fw-bold text-white">{{name}}</span>
-                                    <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
-                                        onerror="this.src='/assets/images/team_placeholder.png'">
-                                    {{/awayTeam}}
-                                    {{^awayTeam}}<span class="text-white-50 small">POR DEFINIR</span>{{/awayTeam}}
-                                </div>
+                            <div class="d-flex align-items-center gap-2 flex-1 justify-content-end overflow-hidden">
+                                {{#awayTeam}}
+                                <span class="fw-bold text-white text-truncate">{{name}}</span>
+                                <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
+                                    onerror="this.src='/assets/images/team_placeholder.png'">
+                                {{/awayTeam}}
+                                {{^awayTeam}}<span class="text-white-50 small">TBD</span>{{/awayTeam}}
                             </div>
                         </div>
-                        {{/matches}}
-                        {{^matches}}
-                        <div class="text-center py-5 text-white-50">
-                            <i class="bi bi-calendar-x d-block fs-2 mb-2 opacity-25"></i>
-                            No hay partidos programados todavía para este torneo.
-                        </div>
-                        {{/matches}}
                     </div>
+                    {{/matches}}
+                    {{^matches}}
+                    <div class="detail-card p-5 text-center text-white-50">
+                        <i class="bi bi-calendar2-x d-block fs-1 mb-3 opacity-10"></i>
+                        No hay partidos programados.
+                    </div>
+                    {{/matches}}
                 </div>
 
             </div>
 
             <!-- Right Column: Info, Desc, Rules, Teams -->
+            <!-- Right Column: Info, Desc, Rules, Teams -->
             <div class="col-lg-4">
+
                 <div class="detail-card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-info-circle me-2"></i>Información General
-                    </div>
-                    <div class="p-3">
+                    <div class="card-header"><i class="bi bi-info-circle-fill"></i> Información</div>
+                    <div class="p-4 pt-1">
                         <div class="info-row">
-                            <span class="info-label"><i class="bi bi-controller me-1"></i>Juego</span>
-                            <span class="info-value">{{tournament.game}}</span>
+                            <span class="info-label">Juego</span>
+                            <span class="info-val">{{tournament.game}}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="bi bi-diagram-3 me-1"></i>Modo</span>
-                            <span class="info-value">{{tournament.mode}}</span>
+                            <span class="info-label">Modo</span>
+                            <span class="info-val">{{tournament.mode}}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="bi bi-display me-1"></i>Plataforma</span>
-                            <span class="info-value">{{tournament.platform}}</span>
+                            <span class="info-label">Plataforma</span>
+                            <span class="info-val">{{tournament.platform}}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="bi bi-calendar-event me-1"></i>Inicio</span>
-                            <span class="info-value">{{tournament.startDate}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="bi bi-people me-1"></i>Equipos</span>
-                            <span class="info-value">{{teamsCount}} / {{tournament.maxTeams}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="bi bi-flag me-1"></i>Estado</span>
-                            <span class="info-value">{{tournament.state}}</span>
+                            <span class="info-label">Estado</span>
+                            <span class="info-val">{{tournament.state}}</span>
                         </div>
                     </div>
                 </div>
 
-                {{#tournament.description}}
                 <div class="detail-card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-align-left me-2"></i>Descripción
-                    </div>
-                    <div class="p-3">
-                        <p class="text-white-50 mb-0 tournament-text">
-                            {{tournament.description}}</p>
+                    <div class="card-header"><i class="bi bi-text-left"></i> Descripción</div>
+                    <div class="p-4">
+                        <p class="tournament-text mb-0">{{tournament.description}}</p>
                     </div>
                 </div>
 
                 {{#tournament.rules}}
                 <div class="detail-card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-scroll me-2"></i>Reglas / Prize Pool
-                    </div>
-                    <div class="p-3">
-                        <p class="text-white-50 mb-0 tournament-text">{{tournament.rules}}</p>
+                    <div class="card-header"><i class="bi bi-list-check"></i> Reglas</div>
+                    <div class="p-4">
+                        <p class="tournament-text mb-0">{{tournament.rules}}</p>
                     </div>
                 </div>
                 {{/tournament.rules}}
 
                 <div class="detail-card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-shield-fill me-2" style="color: var(--primary-cyan,#00e5ff);"></i>Equipos
-                            Inscritos</span>
-                        <span class="badge bg-dark border border-secondary">{{teamsCount}}</span>
+                    <div class="card-header d-flex justify-content-between">
+                        <span><i class="bi bi-shield-fill"></i> Participantes</span>
+                        <span class="text-white-50 small">{{teamsCount}} / {{tournament.maxTeams}}</span>
                     </div>
-                    <div class="p-3 d-flex flex-column gap-2">
+                    <div class="p-4 d-flex flex-column gap-3">
                         {{#teams}}
-                        <a href="/teams/{{id}}" class="d-flex align-items-center gap-2 text-decoration-none">
-                            <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-small"
+                        <a href="/teams/{{id}}" class="d-flex align-items-center gap-3 text-decoration-none group">
+                            <img src="/images/teams/{{id}}" alt="{{name}}" class="team-img-micro"
                                 onerror="this.src='/assets/images/team_placeholder.png'">
-                            <span class="text-white fw-semibold small">{{name}}</span>
-                            <span class="ms-auto text-white-50 small">{{wins}}V · {{losses}}D</span>
+                            <span class="text-white fw-bold small transition-all group-hover:text-cyan">{{name}}</span>
+                            <span class="ms-auto text-white-50 x-small">{{wins}}V - {{losses}}D</span>
                         </a>
                         {{/teams}}
                         {{^teams}}
-                        <div class="team-slot-empty text-center py-2">
-                            <i class="bi bi-shield-plus me-1"></i>Sin equipos inscritos
+                        <div class="team-slot-empty text-center py-3">
+                            <i class="bi bi-shield-slash-fill d-block opacity-20 mb-1"></i>
+                            Sin participantes
                         </div>
                         {{/teams}}
                     </div>
                 </div>
 
-
             </div>
         </div>
-        </main>
+    </main>
 
-        {{> footer}}
+    {{> footer}}
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
