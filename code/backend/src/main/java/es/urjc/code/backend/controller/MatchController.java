@@ -108,7 +108,11 @@ public class MatchController {
         Match match = matchOpt.get();
         model.addAttribute("match", match);
         model.addAttribute("tournaments", tournamentRepository.findAll());
-        model.addAttribute("teams", teamRepository.findAll());
+        if (match.getTournament() != null) {
+            model.addAttribute("teams", match.getTournament().getTeams());
+        } else {
+            model.addAttribute("teams", java.util.Collections.emptyList());
+        }
 
         if (match.getMatchDate() != null && match.getMatchDate().contains(" ")) {
             String[] parts = match.getMatchDate().split(" ");
@@ -137,8 +141,15 @@ public class MatchController {
         Optional<Match> matchOpt = matchRepository.findById(id);
         if (matchOpt.isPresent()) {
             Match match = matchOpt.get();
+
+            // Store old teams to update their stats later
+            Team oldLocal = match.getLocalTeam();
+            Team oldAway = match.getAwayTeam();
+
+            // Update teams
             match.setLocalTeam(teamRepository.findById(localTeamId).orElseThrow());
             match.setAwayTeam(teamRepository.findById(awayTeamId).orElseThrow());
+
             match.setPhase(phase);
             match.setFormat(format);
             match.setState(state);
@@ -148,13 +159,26 @@ public class MatchController {
             match.setNotes(notes);
 
             if ("Finalizado".equals(state)) {
-                match.setResult(scoreLocal + " - " + scoreAway);
+                match.setResult(match.getScoreLocal() + " - " + match.getScoreAway());
+            } else {
+                match.setResult(null);
             }
 
             matchRepository.save(match);
-            
-            updateTeamStats(match.getLocalTeam());
-            updateTeamStats(match.getAwayTeam());
+
+            // Update stats for all involved teams (old and new)
+            if (oldLocal != null)
+                updateTeamStats(oldLocal);
+            if (oldAway != null)
+                updateTeamStats(oldAway);
+            if (match.getLocalTeam() != null
+                    && (oldLocal == null || !match.getLocalTeam().getId().equals(oldLocal.getId()))) {
+                updateTeamStats(match.getLocalTeam());
+            }
+            if (match.getAwayTeam() != null
+                    && (oldAway == null || !match.getAwayTeam().getId().equals(oldAway.getId()))) {
+                updateTeamStats(match.getAwayTeam());
+            }
         }
         return "redirect:/admin";
     }
@@ -228,10 +252,10 @@ public class MatchController {
         }
 
         matchRepository.save(match);
-        
+
         updateTeamStats(match.getLocalTeam());
         updateTeamStats(match.getAwayTeam());
-        
+
         return "redirect:/matches/" + id;
     }
 
@@ -247,8 +271,9 @@ public class MatchController {
     }
 
     private void updateTeamStats(Team team) {
-        if (team == null) return;
-        
+        if (team == null)
+            return;
+
         List<Match> matches = matchRepository.findByLocalTeamOrAwayTeam(team, team);
         int wins = 0;
         int losses = 0;
@@ -260,7 +285,7 @@ public class MatchController {
                 boolean isLocal = m.getLocalTeam().getId().equals(team.getId());
                 int myScore = isLocal ? m.getScoreLocal() : m.getScoreAway();
                 int oppScore = isLocal ? m.getScoreAway() : m.getScoreLocal();
-                
+
                 if (myScore > oppScore) {
                     wins++;
                 } else if (myScore < oppScore) {
@@ -268,7 +293,7 @@ public class MatchController {
                 }
             }
         }
-        
+
         team.setWins(wins);
         team.setLosses(losses);
         team.setMatchesPlayed(played);
