@@ -40,7 +40,7 @@ public class BaseController {
         // Show up to 3 active tournaments on the home page
         var allTournaments = tournamentRepository.findAll();
         var activeTournaments = allTournaments.stream()
-                .filter(t -> !"Finalizado".equals(t.getState()))
+                .filter(t -> "En Curso".equals(t.getState()))
                 .limit(3)
                 .toList();
 
