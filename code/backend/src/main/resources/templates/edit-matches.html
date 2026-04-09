@@ -178,6 +178,82 @@
                             </div>
                         </div>
 
+                        <!-- ESTADISTICAS DE JUGADORES -->
+                        <div id="player-stats-section">
+                            <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
+                                Estadísticas de Jugadores
+                            </h4>
+                            <p class="text-white-50 small mb-4">Registra el rendimiento individual de cada jugador.</p>
+
+                            <div class="row g-4">
+                                <!-- LOCAL -->
+                                <div class="col-lg-6">
+                                    <h6 class="text-cyan text-uppercase fw-bold mb-3 border-start border-3 border-cyan ps-2">Equipo Local</h6>
+                                    <div id="local-players-stats-container">
+                                        {{#localPlayersStats}}
+                                        <div class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
+                                            <div class="fw-bold text-white mb-2">{{nickname}}</div>
+                                            <div class="row g-2">
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Kills</label>
+                                                    <input type="number" name="kills_{{id}}" value="{{kills}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Deaths</label>
+                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Assists</label>
+                                                    <input type="number" name="assists_{{id}}" value="{{assists}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">ACS</label>
+                                                    <input type="number" name="acs_{{id}}" value="{{acs}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/localPlayersStats}}
+                                        {{^localPlayersStats}}
+                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para cargar jugadores...</div>
+                                        {{/localPlayersStats}}
+                                    </div>
+                                </div>
+
+                                <!-- AWAY -->
+                                <div class="col-lg-6">
+                                    <h6 class="text-danger text-uppercase fw-bold mb-3 border-start border-3 border-danger ps-2">Equipo Visitante</h6>
+                                    <div id="away-players-stats-container">
+                                        {{#awayPlayersStats}}
+                                        <div class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
+                                            <div class="fw-bold text-white mb-2">{{nickname}}</div>
+                                            <div class="row g-2">
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Kills</label>
+                                                    <input type="number" name="kills_{{id}}" value="{{kills}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Deaths</label>
+                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">Assists</label>
+                                                    <input type="number" name="assists_{{id}}" value="{{assists}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="x-small text-white-50 text-uppercase">ACS</label>
+                                                    <input type="number" name="acs_{{id}}" value="{{acs}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/awayPlayersStats}}
+                                        {{^awayPlayersStats}}
+                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para cargar jugadores...</div>
+                                        {{/awayPlayersStats}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-end gap-3 mt-5">
                             <a href="/admin/matches/edit" class="btn btn-outline-secondary px-4">Volver atrás</a>
                             <button type="submit" class="btn btn-primary px-5 fw-bold">
@@ -255,6 +331,72 @@
     </script>
     {{/match}}
 
+
+    <script>
+        // Update player stats when teams change
+        document.addEventListener('DOMContentLoaded', function() {
+            const localSelect = document.querySelector('select[name="localTeamId"]');
+            const awaySelect = document.querySelector('select[name="awayTeamId"]');
+
+            if (localSelect) {
+                localSelect.addEventListener('change', function() {
+                    updatePlayersForTeam(this.value, 'local');
+                });
+            }
+
+            if (awaySelect) {
+                awaySelect.addEventListener('change', function() {
+                    updatePlayersForTeam(this.value, 'away');
+                });
+            }
+        });
+
+        async function updatePlayersForTeam(teamId, type) {
+            const container = document.getElementById(`${type}-players-stats-container`);
+            container.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-cyan" role="status"></div></div>';
+
+            try {
+                const response = await fetch(`/api/teams/${teamId}/players`);
+                const players = await response.json();
+
+                if (players.length === 0) {
+                    container.innerHTML = '<div class="text-white-50 small opacity-50 fst-italic">Este equipo no tiene jugadores asignados.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                players.forEach(p => {
+                    const row = document.createElement('div');
+                    row.className = 'player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25';
+                    row.innerHTML = `
+                        <div class="fw-bold text-white mb-2">${p.nickname}</div>
+                        <div class="row g-2">
+                            <div class="col-3">
+                                <label class="x-small text-white-50 text-uppercase">Kills</label>
+                                <input type="number" name="kills_${p.id}" value="0" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                            </div>
+                            <div class="col-3">
+                                <label class="x-small text-white-50 text-uppercase">Deaths</label>
+                                <input type="number" name="deaths_${p.id}" value="0" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                            </div>
+                            <div class="col-3">
+                                <label class="x-small text-white-50 text-uppercase">Assists</label>
+                                <input type="number" name="assists_${p.id}" value="0" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                            </div>
+                            <div class="col-3">
+                                <label class="x-small text-white-50 text-uppercase">ACS</label>
+                                <input type="number" name="acs_${p.id}" value="0" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching players:', error);
+                container.innerHTML = '<div class="text-danger small">Error al cargar jugadores.</div>';
+            }
+        }
+    </script>
 
 </body>
 

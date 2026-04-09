@@ -112,11 +112,6 @@ public class MatchController {
         } else {
             model.addAttribute("teams", java.util.Collections.emptyList());
         }
-        if (match.getTournament() != null) {
-            model.addAttribute("teams", match.getTournament().getTeams());
-        } else {
-            model.addAttribute("teams", java.util.Collections.emptyList());
-        }
 
         if (match.getMatchDate() != null && match.getMatchDate().contains(" ")) {
             String[] parts = match.getMatchDate().split(" ");
@@ -217,8 +212,6 @@ public class MatchController {
 
             if ("Finalizado".equals(state)) {
                 match.setResult(match.getScoreLocal() + " - " + match.getScoreAway());
-            } else {
-                match.setResult(null);
             } else {
                 match.setResult(null);
             }

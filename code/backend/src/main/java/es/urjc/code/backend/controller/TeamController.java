@@ -399,6 +399,21 @@ public class TeamController {
         return "redirect:/admin/teams-list";
     }
 
+    @GetMapping("/api/teams/{id}/players")
+    @ResponseBody
+    public List<java.util.Map<String, Object>> getTeamPlayers(@PathVariable Long id) {
+        Optional<Team> opt = teamRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get().getPlayers().stream().map(p -> {
+                java.util.Map<String, Object> map = new java.util.HashMap<>();
+                map.put("id", p.getId());
+                map.put("nickname", p.getNickname());
+                return map;
+            }).toList();
+        }
+        return java.util.Collections.emptyList();
+    }
+
     private void performFullTeamDeletion(Team team) {
         java.util.List<User> players = new java.util.ArrayList<>(team.getPlayers());
         for (User player : players) {
