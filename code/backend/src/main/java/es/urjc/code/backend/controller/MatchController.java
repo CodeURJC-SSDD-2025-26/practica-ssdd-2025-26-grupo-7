@@ -15,8 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class MatchController {
@@ -108,11 +107,7 @@ public class MatchController {
         Match match = matchOpt.get();
         model.addAttribute("match", match);
         model.addAttribute("tournaments", tournamentRepository.findAll());
-        if (match.getTournament() != null) {
-            model.addAttribute("teams", match.getTournament().getTeams());
-        } else {
-            model.addAttribute("teams", java.util.Collections.emptyList());
-        }
+        model.addAttribute("teams", teamRepository.findAll());
 
         if (match.getMatchDate() != null && match.getMatchDate().contains(" ")) {
             String[] parts = match.getMatchDate().split(" ");
@@ -120,7 +115,59 @@ public class MatchController {
             model.addAttribute("matchTime", parts[1]);
         }
 
+        String notes = match.getNotes();
+        if (notes != null) {
+            if (notes.length() > 5000)
+                notes = notes.substring(0, 5000);
+            if (notes.contains("<!DOCTYPE"))
+                notes = "Content cleaned: HTML boilerplate detected";
+            model.addAttribute("safeNotes", notes);
+        } else {
+            model.addAttribute("safeNotes", "");
+        }
+
+        model.addAttribute("localPlayersStats", preparePlayersWithStats(match, match.getLocalTeam()));
+        model.addAttribute("awayPlayersStats", preparePlayersWithStats(match, match.getAwayTeam()));
+
         return "edit-matches";
+    }
+
+    private List<Map<String, Object>> preparePlayersWithStats(Match match, Team team) {
+        if (team == null || team.getPlayers() == null)
+            return Collections.emptyList();
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<PlayerMatchStats> allStats = match.getPlayerStats();
+
+        for (User p : team.getPlayers()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", p.getId());
+            map.put("nickname", p.getNickname());
+
+            PlayerMatchStats s = null;
+            if (allStats != null) {
+                for (PlayerMatchStats st : allStats) {
+                    if (st.getPlayer() != null && st.getPlayer().getId().equals(p.getId())) {
+                        s = st;
+                        break;
+                    }
+                }
+            }
+
+            if (s != null) {
+                map.put("kills", s.getKills());
+                map.put("deaths", s.getDeaths());
+                map.put("assists", s.getAssists());
+                map.put("acs", s.getAcs());
+            } else {
+                map.put("kills", 0);
+                map.put("deaths", 0);
+                map.put("assists", 0);
+                map.put("acs", 0);
+            }
+            result.add(map);
+        }
+        return result;
     }
 
     @Transactional
@@ -136,51 +183,53 @@ public class MatchController {
             @RequestParam String time,
             @RequestParam(required = false) Integer scoreLocal,
             @RequestParam(required = false) Integer scoreAway,
-            @RequestParam(required = false) String notes) {
+            @RequestParam(required = false) String notes,
+            @RequestParam Map<String, String> allParams) {
 
         Optional<Match> matchOpt = matchRepository.findById(id);
         if (matchOpt.isPresent()) {
             Match match = matchOpt.get();
-
-            // Store old teams to update their stats later
-            Team oldLocal = match.getLocalTeam();
-            Team oldAway = match.getAwayTeam();
-
-            // Update teams
             match.setLocalTeam(teamRepository.findById(localTeamId).orElseThrow());
             match.setAwayTeam(teamRepository.findById(awayTeamId).orElseThrow());
-
             match.setPhase(phase);
             match.setFormat(format);
             match.setState(state);
             match.setMatchDate(date + " " + time);
-            match.setScoreLocal(scoreLocal);
-            match.setScoreAway(scoreAway);
+            match.setScoreLocal(scoreLocal != null ? scoreLocal : 0);
+            match.setScoreAway(scoreAway != null ? scoreAway : 0);
             match.setNotes(notes);
 
             if ("Finalizado".equals(state)) {
                 match.setResult(match.getScoreLocal() + " - " + match.getScoreAway());
-            } else {
-                match.setResult(null);
             }
+
+            // Update player stats
+            match.getPlayerStats().clear();
+            processTeamStats(match, match.getLocalTeam(), allParams);
+            processTeamStats(match, match.getAwayTeam(), allParams);
 
             matchRepository.save(match);
 
-            // Update stats for all involved teams (old and new)
-            if (oldLocal != null)
-                updateTeamStats(oldLocal);
-            if (oldAway != null)
-                updateTeamStats(oldAway);
-            if (match.getLocalTeam() != null
-                    && (oldLocal == null || !match.getLocalTeam().getId().equals(oldLocal.getId()))) {
-                updateTeamStats(match.getLocalTeam());
-            }
-            if (match.getAwayTeam() != null
-                    && (oldAway == null || !match.getAwayTeam().getId().equals(oldAway.getId()))) {
-                updateTeamStats(match.getAwayTeam());
-            }
+            updateTeamStats(match.getLocalTeam());
+            updateTeamStats(match.getAwayTeam());
         }
         return "redirect:/admin";
+    }
+
+    private void processTeamStats(Match match, Team team, Map<String, String> allParams) {
+        if (team == null)
+            return;
+        for (User player : team.getPlayers()) {
+            String pId = player.getId().toString();
+            if (allParams.containsKey("kills_" + pId)) {
+                PlayerMatchStats s = new PlayerMatchStats(match, player,
+                        parseSafely(allParams.get("kills_" + pId), 0),
+                        parseSafely(allParams.get("deaths_" + pId), 0),
+                        parseSafely(allParams.get("assists_" + pId), 0),
+                        parseSafely(allParams.get("acs_" + pId), 0));
+                match.getPlayerStats().add(s);
+            }
+        }
     }
 
     @Transactional
@@ -190,7 +239,7 @@ public class MatchController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/matches/report/{id}")
+    @GetMapping("/admin/matches/{id}/report")
     public String reportStatsForm(@PathVariable Long id, Model model) {
         Match match = matchRepository.findById(id).orElseThrow();
         model.addAttribute("match", match);
@@ -202,7 +251,7 @@ public class MatchController {
     }
 
     @Transactional
-    @PostMapping("/admin/matches/report/{id}")
+    @PostMapping("/admin/matches/{id}/report")
     public String saveReport(
             @PathVariable Long id,
             @RequestParam Integer scoreLocal,
