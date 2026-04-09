@@ -126,19 +126,39 @@
             {{/noResults}}
         </div>
 
+        {{#hasPages}}
         <nav aria-label="Navegación de torneos" class="mt-5">
             <ul class="pagination justify-content-center">
+                {{^hasPrevious}}
                 <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
                 </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                {{/hasPrevious}}
+                {{#hasPrevious}}
                 <li class="page-item">
-                    <a class="page-link" href="#">Siguiente</a>
+                    <a class="page-link" href="/tournaments?page={{previousPage}}{{currentQuery}}">Anterior</a>
                 </li>
+                {{/hasPrevious}}
+
+                {{#pages}}
+                <li class="page-item {{#isCurrent}}active{{/isCurrent}}">
+                    <a class="page-link" href="/tournaments?page={{number}}{{query}}">{{displayNumber}}</a>
+                </li>
+                {{/pages}}
+
+                {{#hasNext}}
+                <li class="page-item">
+                    <a class="page-link" href="/tournaments?page={{nextPage}}{{currentQuery}}">Siguiente</a>
+                </li>
+                {{/hasNext}}
+                {{^hasNext}}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Siguiente</a>
+                </li>
+                {{/hasNext}}
             </ul>
         </nav>
+        {{/hasPages}}
     </div>
     {{> footer}}
 

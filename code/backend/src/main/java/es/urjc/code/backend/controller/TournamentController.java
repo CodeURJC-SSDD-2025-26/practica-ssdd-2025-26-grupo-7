@@ -102,17 +102,19 @@ public class TournamentController {
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String game,
             @RequestParam(required = false) String state,
+            @RequestParam(defaultValue = "0") int page,
             Principal principal) {
 
         String searchParam = (search != null && !search.isBlank()) ? search.trim() : null;
         String gameParam = (game != null && !game.isBlank()) ? game : null;
         String stateParam = (state != null && !state.isBlank()) ? state : null;
 
-        List<Tournament> tournaments = tournamentRepository.findWithFilters(searchParam, gameParam, stateParam);
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, 3);
+        org.springframework.data.domain.Page<Tournament> tournamentPage = tournamentRepository.findWithFilters(searchParam, gameParam, stateParam, pageable);
 
         es.urjc.code.backend.model.User currentUser = resolveUser(principal);
 
-        List<Map<String, Object>> tournamentViews = tournaments.stream()
+        List<Map<String, Object>> tournamentViews = tournamentPage.getContent().stream()
                 .map(t -> enrichTournament(t, currentUser))
                 .collect(Collectors.toList());
 
@@ -122,6 +124,40 @@ public class TournamentController {
         model.addAttribute("filterSearch", search != null ? search : "");
         model.addAttribute("filterGame", game != null ? game : "");
         model.addAttribute("filterState", state != null ? state : "");
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", tournamentPage.getTotalPages());
+        model.addAttribute("hasPages", tournamentPage.getTotalPages() > 0);
+        model.addAttribute("hasPrevious", tournamentPage.hasPrevious());
+        model.addAttribute("hasNext", tournamentPage.hasNext());
+        model.addAttribute("previousPage", page - 1);
+        model.addAttribute("nextPage", page + 1);
+
+        List<Map<String, Object>> pages = new ArrayList<>();
+        for (int i = 0; i < tournamentPage.getTotalPages(); i++) {
+            Map<String, Object> pageData = new HashMap<>();
+            pageData.put("number", i);
+            pageData.put("displayNumber", i + 1);
+            pageData.put("isCurrent", i == page);
+            
+            // Build query params string to maintain filters when paginating
+            StringBuilder query = new StringBuilder();
+            if (search != null && !search.isBlank()) query.append("&search=").append(search);
+            if (game != null && !game.isBlank()) query.append("&game=").append(game);
+            if (state != null && !state.isBlank()) query.append("&state=").append(state);
+            pageData.put("query", query.toString());
+            
+            pages.add(pageData);
+        }
+        model.addAttribute("pages", pages);
+
+        // Save current query for Prev/Next buttons
+        StringBuilder currentQuery = new StringBuilder();
+        if (search != null && !search.isBlank()) currentQuery.append("&search=").append(search);
+        if (game != null && !game.isBlank()) currentQuery.append("&game=").append(game);
+        if (state != null && !state.isBlank()) currentQuery.append("&state=").append(state);
+        model.addAttribute("currentQuery", currentQuery.toString());
+
         return "tournaments";
     }
 

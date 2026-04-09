@@ -15,10 +15,11 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             "(:search IS NULL OR LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
             "(:game   IS NULL OR t.game  = :game)  AND " +
             "(:state  IS NULL OR t.state = :state)")
-    List<Tournament> findWithFilters(
+    org.springframework.data.domain.Page<Tournament> findWithFilters(
             @Param("search") String search,
             @Param("game") String game,
-            @Param("state") String state);
+            @Param("state") String state,
+            org.springframework.data.domain.Pageable pageable);
 
     java.util.List<Tournament> findByTeamsContaining(es.urjc.code.backend.model.Team team);
 
