@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
+
 		http.authorizeHttpRequests(authorize -> authorize
 				// PUBLIC PAGES
 				.requestMatchers("/").permitAll()
@@ -37,20 +37,16 @@ public class SecurityConfiguration {
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/profile").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/favourite").hasAnyRole("USER", "ADMIN")
-				// Any other endpoints
-				.anyRequest().permitAll()
-		)
-		.formLogin(formLogin -> formLogin
-				.loginPage("/login")
-				.failureUrl("/login?error=true")
-				.defaultSuccessUrl("/")
-				.permitAll()
-		)
-		.logout(logout -> logout
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/")
-				.permitAll()
-		);
+				.anyRequest().permitAll())
+				.formLogin(formLogin -> formLogin
+						.loginPage("/login")
+						.failureUrl("/login?error=true")
+						.defaultSuccessUrl("/")
+						.permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll());
 
 		return http.build();
 	}

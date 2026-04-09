@@ -32,16 +32,16 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 		for (String role : user.getRoles()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
-        
-        // Failsafe to guarantee ADMIN role for the admin user regardless of database state
-        if (user.getNickname().equals("admin") || user.getName().equals("Administrador") || user.getEmail().equals("admin@onetapeleague.com")) {
-            boolean hasAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-            if (!hasAdmin) {
-                roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            }
-        }
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), 
+		if (user.getNickname().equals("admin") || user.getName().equals("Administrador")
+				|| user.getEmail().equals("admin@onetapeleague.com")) {
+			boolean hasAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+			if (!hasAdmin) {
+				roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+			}
+		}
+
+		return new org.springframework.security.core.userdetails.User(user.getEmail(),
 				user.getPassword(), roles);
 
 	}

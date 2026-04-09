@@ -16,7 +16,6 @@ import es.urjc.code.backend.repository.*;
 @Service
 public class DatabaseInitialize implements CommandLineRunner {
 
-
     @Autowired
     private UserRepository userRepository;
 
@@ -47,7 +46,6 @@ public class DatabaseInitialize implements CommandLineRunner {
                     List.of("USER", "ADMIN"));
             userRepository.save(adminUser);
         } else {
-            // Fix para cuando la base de datos se creó antes de usar PasswordEncoder
             if (!adminUser.getPassword().startsWith("$2a$")) {
                 adminUser.setPassword(passwordEncoder.encode("pass123"));
                 userRepository.save(adminUser);
@@ -102,7 +100,7 @@ public class DatabaseInitialize implements CommandLineRunner {
             userRepository.save(player7);
         }
 
-        // --- NEW PLAYERS ---
+        // NEW PLAYERS
         // Team 1 (Rivas): Pablo, Elena, David
         createPlayerIfNotExist("Pablo Ruiz", "Pablow", "pablo@gmail.com", "URJC - Rivas");
         createPlayerIfNotExist("Elena Sanz", "EleSanz", "elena@gmail.com", "URJC - Rivas");
@@ -112,7 +110,6 @@ public class DatabaseInitialize implements CommandLineRunner {
         createPlayerIfNotExist("Iván Moreno", "IvanM", "ivan@gmail.com", "URJC - Móstoles");
         createPlayerIfNotExist("Sofía Rico", "SofiR", "sofia@gmail.com", "URJC - Móstoles");
         createPlayerIfNotExist("Raúl Cano", "RaulC", "raul@gmail.com", "URJC - Móstoles");
-
 
         // Team 3 (Fuenla): Daniel, Carla, Mario, Sara
         createPlayerIfNotExist("Daniel Ortiz", "DaniO", "daniel@gmail.com", "URJC - Fuenlabrada");
@@ -132,7 +129,6 @@ public class DatabaseInitialize implements CommandLineRunner {
         createPlayerIfNotExist("Oscar Reon", "OscarR", "oscar@gmail.com", "URJC - Aranjuez");
         createPlayerIfNotExist("Irene Vela", "IreneV", "irene@gmail.com", "URJC - Aranjuez");
 
-
         // 2. Initialize Teams and Tournaments
         User admin = userRepository.findByEmail("admin@onetapeleague.com").orElse(null);
         User player1 = userRepository.findByEmail("juan@gmail.com").orElse(null);
@@ -143,7 +139,6 @@ public class DatabaseInitialize implements CommandLineRunner {
         User player6 = userRepository.findByEmail("lucia@gmail.com").orElse(null);
         User player7 = userRepository.findByEmail("sergio@gmail.com").orElse(null);
 
-        // Fetching new players
         User pablo = userRepository.findByEmail("pablo@gmail.com").orElse(null);
         User elena = userRepository.findByEmail("elena@gmail.com").orElse(null);
         User david = userRepository.findByEmail("david@gmail.com").orElse(null);
@@ -164,11 +159,10 @@ public class DatabaseInitialize implements CommandLineRunner {
         User oscar = userRepository.findByEmail("oscar@gmail.com").orElse(null);
         User irene = userRepository.findByEmail("irene@gmail.com").orElse(null);
 
-
         if (admin == null || player1 == null || player2 == null)
             return;
 
-        // --- EQUIPOS ---
+        // EQUIPOS
         Team team1 = teamRepository.findByName("Rivas eSports").orElse(null);
         if (team1 == null) {
             team1 = new Team("Rivas eSports", "URJC", "Valorant", "El equipo oficial del campus de Rivas.");
@@ -180,14 +174,18 @@ public class DatabaseInitialize implements CommandLineRunner {
             team1.getPlayers().add(david);
             player1.setTeam(team1);
             player2.setTeam(team1);
-            if (pablo != null) pablo.setTeam(team1);
-            if (elena != null) elena.setTeam(team1);
-            if (david != null) david.setTeam(team1);
+            if (pablo != null)
+                pablo.setTeam(team1);
+            if (elena != null)
+                elena.setTeam(team1);
+            if (david != null)
+                david.setTeam(team1);
 
             try {
                 Resource image = new ClassPathResource("static/assets/images/team-logo.png");
                 team1.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             teamRepository.save(team1);
         }
 
@@ -201,17 +199,22 @@ public class DatabaseInitialize implements CommandLineRunner {
             team2.getPlayers().add(sofia);
             team2.getPlayers().add(raul);
             player6.setTeam(team2);
-            if (player7 != null) player7.setTeam(team2);
-            if (ivan != null) ivan.setTeam(team2);
-            if (sofia != null) sofia.setTeam(team2);
-            if (raul != null) raul.setTeam(team2);
+            if (player7 != null)
+                player7.setTeam(team2);
+            if (ivan != null)
+                ivan.setTeam(team2);
+            if (sofia != null)
+                sofia.setTeam(team2);
+            if (raul != null)
+                raul.setTeam(team2);
             teamRepository.save(team2);
 
         }
 
         Team team3 = teamRepository.findByName("Fuenla Dragons").orElse(null);
         if (team3 == null) {
-            team3 = new Team("Fuenla Dragons", "URJC", "League of Legends", "Dragones de Fuenlabrada controlando la grieta.");
+            team3 = new Team("Fuenla Dragons", "URJC", "League of Legends",
+                    "Dragones de Fuenlabrada controlando la grieta.");
             team3.setCaptain(player3);
             team3.getPlayers().add(player3);
             team3.getPlayers().add(daniel);
@@ -219,17 +222,22 @@ public class DatabaseInitialize implements CommandLineRunner {
             team3.getPlayers().add(mario);
             team3.getPlayers().add(sara);
             player3.setTeam(team3);
-            if (daniel != null) daniel.setTeam(team3);
-            if (carla != null) carla.setTeam(team3);
-            if (mario != null) mario.setTeam(team3);
-            if (sara != null) sara.setTeam(team3);
+            if (daniel != null)
+                daniel.setTeam(team3);
+            if (carla != null)
+                carla.setTeam(team3);
+            if (mario != null)
+                mario.setTeam(team3);
+            if (sara != null)
+                sara.setTeam(team3);
             teamRepository.save(team3);
 
         }
 
         Team team4 = teamRepository.findByName("Vicálvaro Vipers").orElse(null);
         if (team4 == null) {
-            team4 = new Team("Vicálvaro Vipers", "URJC", "League of Legends", "Víboras letales del campus de Vicálvaro.");
+            team4 = new Team("Vicálvaro Vipers", "URJC", "League of Legends",
+                    "Víboras letales del campus de Vicálvaro.");
             team4.setCaptain(player4);
             team4.getPlayers().add(player4);
             team4.getPlayers().add(javi);
@@ -237,17 +245,22 @@ public class DatabaseInitialize implements CommandLineRunner {
             team4.getPlayers().add(hugo);
             team4.getPlayers().add(nora);
             player4.setTeam(team4);
-            if (javi != null) javi.setTeam(team4);
-            if (paula != null) paula.setTeam(team4);
-            if (hugo != null) hugo.setTeam(team4);
-            if (nora != null) nora.setTeam(team4);
+            if (javi != null)
+                javi.setTeam(team4);
+            if (paula != null)
+                paula.setTeam(team4);
+            if (hugo != null)
+                hugo.setTeam(team4);
+            if (nora != null)
+                nora.setTeam(team4);
             teamRepository.save(team4);
 
         }
 
         Team team5 = teamRepository.findByName("Aranjuez Knights").orElse(null);
         if (team5 == null) {
-            team5 = new Team("Aranjuez Knights", "URJC", "CS2", "Caballeros de Aranjuez defendiendo el sitio de bomba.");
+            team5 = new Team("Aranjuez Knights", "URJC", "CS2",
+                    "Caballeros de Aranjuez defendiendo el sitio de bomba.");
             team5.setCaptain(player5);
             team5.getPlayers().add(player5);
             team5.getPlayers().add(alex);
@@ -255,10 +268,14 @@ public class DatabaseInitialize implements CommandLineRunner {
             team5.getPlayers().add(oscar);
             team5.getPlayers().add(irene);
             player5.setTeam(team5);
-            if (alex != null) alex.setTeam(team5);
-            if (julia != null) julia.setTeam(team5);
-            if (oscar != null) oscar.setTeam(team5);
-            if (irene != null) irene.setTeam(team5);
+            if (alex != null)
+                alex.setTeam(team5);
+            if (julia != null)
+                julia.setTeam(team5);
+            if (oscar != null)
+                oscar.setTeam(team5);
+            if (irene != null)
+                irene.setTeam(team5);
             teamRepository.save(team5);
 
         }
@@ -271,11 +288,13 @@ public class DatabaseInitialize implements CommandLineRunner {
                     "2026-11-01", "El gran torneo de invierno de la universidad.", "Reglas estándar de Riot Games.");
             tournament1.setCreator(admin);
             tournament1.getTeams().add(team1);
-            if (team2 != null) tournament1.getTeams().add(team2);
+            if (team2 != null)
+                tournament1.getTeams().add(team2);
             try {
                 Resource image = new ClassPathResource("static/assets/images/tournament-banner.png");
                 tournament1.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             tournamentRepository.save(tournament1);
 
             // Partida terminada de Valorant
@@ -289,15 +308,23 @@ public class DatabaseInitialize implements CommandLineRunner {
             // Estadísticas Match 1
             statsRepository.save(new PlayerMatchStats(match1, player1, 24, 12, 8, 285));
             statsRepository.save(new PlayerMatchStats(match1, player2, 18, 14, 12, 210));
-            if (pablo != null) statsRepository.save(new PlayerMatchStats(match1, pablo, 15, 15, 10, 180));
-            if (elena != null) statsRepository.save(new PlayerMatchStats(match1, elena, 20, 10, 15, 240));
-            if (david != null) statsRepository.save(new PlayerMatchStats(match1, david, 12, 18, 5, 150));
-            
-            if (player6 != null) statsRepository.save(new PlayerMatchStats(match1, player6, 22, 15, 6, 250));
-            if (player7 != null) statsRepository.save(new PlayerMatchStats(match1, player7, 18, 16, 8, 220));
-            if (ivan != null) statsRepository.save(new PlayerMatchStats(match1, ivan, 14, 19, 4, 160));
-            if (sofia != null) statsRepository.save(new PlayerMatchStats(match1, sofia, 16, 17, 12, 195));
-            if (raul != null) statsRepository.save(new PlayerMatchStats(match1, raul, 10, 20, 2, 130));
+            if (pablo != null)
+                statsRepository.save(new PlayerMatchStats(match1, pablo, 15, 15, 10, 180));
+            if (elena != null)
+                statsRepository.save(new PlayerMatchStats(match1, elena, 20, 10, 15, 240));
+            if (david != null)
+                statsRepository.save(new PlayerMatchStats(match1, david, 12, 18, 5, 150));
+
+            if (player6 != null)
+                statsRepository.save(new PlayerMatchStats(match1, player6, 22, 15, 6, 250));
+            if (player7 != null)
+                statsRepository.save(new PlayerMatchStats(match1, player7, 18, 16, 8, 220));
+            if (ivan != null)
+                statsRepository.save(new PlayerMatchStats(match1, ivan, 14, 19, 4, 160));
+            if (sofia != null)
+                statsRepository.save(new PlayerMatchStats(match1, sofia, 16, 17, 12, 195));
+            if (raul != null)
+                statsRepository.save(new PlayerMatchStats(match1, raul, 10, 20, 2, 130));
 
         }
 
@@ -308,8 +335,10 @@ public class DatabaseInitialize implements CommandLineRunner {
                     "2026-03-15", "La liga de primavera de League of Legends.", "Mapa: Grieta del Invocador.");
             tournament2.setCreator(admin);
             tournament2.setState("En curso");
-            if (team3 != null) tournament2.getTeams().add(team3);
-            if (team4 != null) tournament2.getTeams().add(team4);
+            if (team3 != null)
+                tournament2.getTeams().add(team3);
+            if (team4 != null)
+                tournament2.getTeams().add(team4);
             tournamentRepository.save(tournament2);
 
             // Partida en curso de LoL
@@ -324,7 +353,8 @@ public class DatabaseInitialize implements CommandLineRunner {
                     "CS2 Campus Battle", "CS2", "PC", "5v5", 10,
                     "2026-05-20", "Enfrentamiento táctico entre campus.", "Map Pool Competitivo.");
             tournament3.setCreator(admin);
-            if (team5 != null) tournament3.getTeams().add(team5);
+            if (team5 != null)
+                tournament3.getTeams().add(team5);
             tournamentRepository.save(tournament3);
 
             // Partida programada de CS2
@@ -341,4 +371,3 @@ public class DatabaseInitialize implements CommandLineRunner {
         }
     }
 }
-
