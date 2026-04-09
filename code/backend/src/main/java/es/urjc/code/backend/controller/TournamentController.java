@@ -174,24 +174,64 @@ public class TournamentController {
         model.addAttribute("stateUpcoming", "Próximamente".equals(tState));
         model.addAttribute("stateFinished", "Finalizado".equals(tState));
 
-        // ── Ranked teams ──
+        List<Match> tournamentMatches = tournament.getMatches();
+
+        class TeamStats {
+            int wins = 0;
+            int losses = 0;
+            int played = 0;
+        }
+
+        Map<Long, TeamStats> statsMap = new HashMap<>();
+        for (Team t : tournament.getTeams()) {
+            statsMap.put(t.getId(), new TeamStats());
+        }
+
+        for (Match m : tournamentMatches) {
+            if ("Finalizado".equals(m.getState())) {
+                Team local = m.getLocalTeam();
+                Team away = m.getAwayTeam();
+
+                if (local != null && statsMap.containsKey(local.getId())) {
+                    TeamStats s = statsMap.get(local.getId());
+                    s.played++;
+                    if (m.getScoreLocal() > m.getScoreAway())
+                        s.wins++;
+                    else if (m.getScoreLocal() < m.getScoreAway())
+                        s.losses++;
+                }
+                if (away != null && statsMap.containsKey(away.getId())) {
+                    TeamStats s = statsMap.get(away.getId());
+                    s.played++;
+                    if (m.getScoreAway() > m.getScoreLocal())
+                        s.wins++;
+                    else if (m.getScoreAway() < m.getScoreLocal())
+                        s.losses++;
+                }
+            }
+        }
+
         AtomicInteger rank = new AtomicInteger(1);
         List<Map<String, Object>> rankedTeams = tournament.getTeams().stream()
-                .sorted(Comparator.comparingInt(Team::getWins).reversed())
                 .map(t -> {
-                    int r = rank.getAndIncrement();
+                    TeamStats s = statsMap.get(t.getId());
                     Map<String, Object> m = new LinkedHashMap<>();
+                    m.put("id", t.getId());
+                    m.put("name", t.getName());
+                    m.put("wins", s.wins);
+                    m.put("losses", s.losses);
+                    m.put("matchesPlayed", s.played);
+                    m.put("points", s.wins * 3);
+                    return m;
+                })
+                .sorted((a, b) -> Integer.compare((int) b.get("points"), (int) a.get("points")))
+                .map(m -> {
+                    int r = rank.getAndIncrement();
                     m.put("rank", r);
                     m.put("rankIs1", r == 1);
                     m.put("rankIs2", r == 2);
                     m.put("rankIs3", r == 3);
                     m.put("rankGt3", r > 3);
-                    m.put("id", t.getId());
-                    m.put("name", t.getName());
-                    m.put("matchesPlayed", t.getMatchesPlayed());
-                    m.put("wins", t.getWins());
-                    m.put("losses", t.getLosses());
-                    m.put("points", t.getWins() * 3);
                     return m;
                 })
                 .toList();
@@ -258,12 +298,12 @@ public class TournamentController {
             model.addAttribute("tournament", enrichTournament(t, currentUser));
             model.addAttribute("allTeams", teamRepository.findAll());
             model.addAttribute("teams", t.getTeams());
-            
+
             List<Map<String, Object>> enrichedMatches = t.getMatches().stream()
                     .map(this::enrichMatch)
                     .collect(Collectors.toList());
             model.addAttribute("matches", enrichedMatches);
-            
+
             return "edit-tournament";
         }).orElse("redirect:/admin/tournaments/edit");
     }

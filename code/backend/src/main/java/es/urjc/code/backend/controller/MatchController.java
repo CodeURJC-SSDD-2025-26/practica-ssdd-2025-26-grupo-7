@@ -107,7 +107,11 @@ public class MatchController {
         Match match = matchOpt.get();
         model.addAttribute("match", match);
         model.addAttribute("tournaments", tournamentRepository.findAll());
-        model.addAttribute("teams", teamRepository.findAll());
+        if (match.getTournament() != null) {
+            model.addAttribute("teams", match.getTournament().getTeams());
+        } else {
+            model.addAttribute("teams", java.util.Collections.emptyList());
+        }
 
         if (match.getMatchDate() != null && match.getMatchDate().contains(" ")) {
             String[] parts = match.getMatchDate().split(" ");
@@ -189,8 +193,15 @@ public class MatchController {
         Optional<Match> matchOpt = matchRepository.findById(id);
         if (matchOpt.isPresent()) {
             Match match = matchOpt.get();
+
+            // Store old teams to update their stats later
+            Team oldLocal = match.getLocalTeam();
+            Team oldAway = match.getAwayTeam();
+
+            // Update teams
             match.setLocalTeam(teamRepository.findById(localTeamId).orElseThrow());
             match.setAwayTeam(teamRepository.findById(awayTeamId).orElseThrow());
+
             match.setPhase(phase);
             match.setFormat(format);
             match.setState(state);
@@ -201,6 +212,8 @@ public class MatchController {
 
             if ("Finalizado".equals(state)) {
                 match.setResult(match.getScoreLocal() + " - " + match.getScoreAway());
+            } else {
+                match.setResult(null);
             }
 
             // Update player stats
