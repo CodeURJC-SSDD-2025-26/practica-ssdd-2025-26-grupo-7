@@ -32,7 +32,8 @@ public class SecurityConfiguration {
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
 				.requestMatchers("/login", "/loginerror", "/register").permitAll()
-				.requestMatchers("/tournaments", "/teams").permitAll()
+				.requestMatchers("/teams").permitAll()
+				.requestMatchers("/tournaments").permitAll()
 				// PRIVATE PAGES
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/profile").hasAnyRole("USER", "ADMIN")
