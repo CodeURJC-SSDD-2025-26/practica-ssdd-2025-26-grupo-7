@@ -44,8 +44,12 @@ public class BaseController {
                 .limit(3)
                 .toList();
 
+        long activeCount = allTournaments.stream()
+                .filter(t -> "En Curso".equals(t.getState()))
+                .count();
+
         model.addAttribute("activeTournaments", activeTournaments);
-        model.addAttribute("totalTournaments", allTournaments.size());
+        model.addAttribute("totalTournaments", activeCount);
         model.addAttribute("totalTeams", teamRepository.count());
         model.addAttribute("totalUsers", userRepository.count());
         model.addAttribute("totalMatches", matchRepository.count());
