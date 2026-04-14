@@ -232,7 +232,7 @@ public class TournamentController {
 
     @GetMapping("/tournaments/{id}/pdf")
     public org.springframework.http.ResponseEntity<byte[]> downloadTournamentPdf(@PathVariable Long id) {
-        Optional<Tournament> opt = tournamentRepository.findById(id);
+        Optional<Tournament> opt = tournamentService.findById(id);
         if (opt.isEmpty()) return org.springframework.http.ResponseEntity.notFound().build();
         
         Tournament t = opt.get();
