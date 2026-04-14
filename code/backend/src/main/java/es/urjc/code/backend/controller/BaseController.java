@@ -1,66 +1,66 @@
 package es.urjc.code.backend.controller;
 
-import es.urjc.code.backend.repository.MatchRepository;
-import es.urjc.code.backend.repository.MessageRepository;
-import es.urjc.code.backend.repository.TeamRepository;
-import es.urjc.code.backend.repository.TournamentRepository;
-import es.urjc.code.backend.repository.UserRepository;
+import es.urjc.code.backend.model.Message;
+import es.urjc.code.backend.model.PlayerMatchStats;
+import es.urjc.code.backend.model.Tournament;
+import es.urjc.code.backend.model.User;
+import es.urjc.code.backend.service.MatchService;
+import es.urjc.code.backend.service.TeamService;
+import es.urjc.code.backend.service.TournamentService;
+import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import es.urjc.code.backend.repository.PlayerMatchStatsRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.Principal;
+import java.util.*;
 
 @Controller
 public class BaseController {
-    @Autowired
-    private PlayerMatchStatsRepository playerStatsRepository;
 
     @Autowired
-    private TournamentRepository tournamentRepository;
+    private UserService userService;
 
     @Autowired
-    private TeamRepository teamRepository;
+    private TeamService teamService;
 
     @Autowired
-    private UserRepository userRepository;
+    private TournamentService tournamentService;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
     @Autowired
-    private MessageRepository messageRepository;
+    private es.urjc.code.backend.repository.MessageRepository messageRepository;
 
     // HOME
     @GetMapping("/")
     public String index(Model model) {
         // Show up to 3 active tournaments on the home page
-        var allTournaments = tournamentRepository.findAll();
-        var activeTournaments = allTournaments.stream()
-                .filter(t -> "En Curso".equals(t.getState()))
-                .limit(3)
-                .toList();
-
-        long activeCount = allTournaments.stream()
-                .filter(t -> "En Curso".equals(t.getState()))
-                .count();
+        List<Tournament> activeTournaments = tournamentService.findActiveTournaments(3);
 
         model.addAttribute("activeTournaments", activeTournaments);
-        model.addAttribute("totalTournaments", activeCount);
-        model.addAttribute("totalTeams", teamRepository.count());
-        model.addAttribute("totalUsers", userRepository.count());
-        model.addAttribute("totalMatches", matchRepository.count());
+        model.addAttribute("totalTournaments", tournamentService.countActiveTournaments());
+        model.addAttribute("totalTeams", teamService.count());
+        model.addAttribute("totalUsers", userService.count());
+        model.addAttribute("totalMatches", matchService.count());
         return "index";
     }
 
     @GetMapping("/login")
     public String login(
-            org.springframework.ui.Model model,
-            @org.springframework.web.bind.annotation.RequestParam(value = "error", required = false) String error,
-            @org.springframework.web.bind.annotation.RequestParam(value = "registered", required = false) String registered) {
+            Model model,
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "registered", required = false) String registered) {
         if (error != null) {
             model.addAttribute("error", true);
         }
@@ -77,17 +77,13 @@ public class BaseController {
 
     // PROFILE
     @GetMapping("/profile")
-    public String profile(Model model, java.security.Principal principal) {
+    public String profile(Model model, Principal principal) {
         if (principal != null) {
-            String identifier = principal.getName();
-            es.urjc.code.backend.model.User user = userRepository.findByEmail(identifier)
-                    .orElseGet(() -> userRepository.findByName(identifier).orElse(null));
+            User user = userService.resolveUser(principal);
 
             if (user != null) {
                 model.addAttribute("user", user);
-                // Load messages for this user (inbox)
-                java.util.List<es.urjc.code.backend.model.Message> messages = messageRepository
-                        .findByRecipientOrderBySentAtDesc(user);
+                List<Message> messages = messageRepository.findByRecipientOrderBySentAtDesc(user);
                 model.addAttribute("messages", messages);
                 model.addAttribute("hasMessages", !messages.isEmpty());
                 model.addAttribute("userIsCaptain", user.getIsCaptain());
@@ -100,8 +96,8 @@ public class BaseController {
     }
 
     @GetMapping("/profile/{id}")
-    public String viewProfile(@org.springframework.web.bind.annotation.PathVariable Long id, Model model) {
-        es.urjc.code.backend.model.User user = userRepository.findById(id).orElse(null);
+    public String viewProfile(@PathVariable Long id, Model model) {
+        User user = userService.findById(id).orElse(null);
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("viewingOther", true);
@@ -113,31 +109,21 @@ public class BaseController {
         }
     }
 
-    @org.springframework.web.bind.annotation.PostMapping("/profile/edit")
+    @PostMapping("/profile/edit")
     public String editProfile(
-            @org.springframework.web.bind.annotation.RequestParam("nickname") String nickname,
-            @org.springframework.web.bind.annotation.RequestParam(value = "university", required = false) String university,
-            @org.springframework.web.bind.annotation.RequestParam(value = "imageFile", required = false) org.springframework.web.multipart.MultipartFile imageFile,
-            @AuthenticationPrincipal UserDetails currentUser) throws java.io.IOException {
+            @RequestParam("nickname") String nickname,
+            @RequestParam(value = "university", required = false) String university,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @AuthenticationPrincipal UserDetails currentUser) throws IOException {
 
         if (currentUser == null) {
             return "redirect:/login";
         }
 
-        es.urjc.code.backend.model.User user = userRepository.findByEmail(currentUser.getUsername())
-                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
+        User user = userService.resolveUser(currentUser.getUsername());
 
         if (user != null) {
-            user.setNickname(nickname);
-            if (university != null) {
-                user.setUniversity(university);
-            }
-            if (imageFile != null && !imageFile.isEmpty()) {
-                user.setImageFile(
-                        org.hibernate.engine.jdbc.BlobProxy.generateProxy(
-                                imageFile.getInputStream(), imageFile.getSize()));
-            }
-            userRepository.save(user);
+            userService.editProfile(user, nickname, university, imageFile);
         }
         return "redirect:/profile";
     }
@@ -149,13 +135,12 @@ public class BaseController {
         if (currentUser == null) {
             return "redirect:/login";
         }
-        es.urjc.code.backend.model.User user = userRepository.findByEmail(currentUser.getUsername())
-                .orElseGet(() -> userRepository.findByName(currentUser.getUsername()).orElse(null));
+        User user = userService.resolveUser(currentUser.getUsername());
 
         if (user != null) {
-            java.util.List<java.util.Map<String, Object>> enriched = user.getFavoriteTournaments().stream()
+            List<Map<String, Object>> enriched = user.getFavoriteTournaments().stream()
                     .map(t -> {
-                        java.util.Map<String, Object> m = new java.util.LinkedHashMap<>();
+                        Map<String, Object> m = new LinkedHashMap<>();
                         m.put("id", t.getId());
                         m.put("name", t.getName());
                         m.put("game", t.getGame());
@@ -168,7 +153,7 @@ public class BaseController {
                         m.put("stateActive", "En Curso".equals(t.getState()));
                         m.put("stateUpcoming", "Próximamente".equals(t.getState()));
                         m.put("stateFinished", "Finalizado".equals(t.getState()));
-                        m.put("isFavourite", true); // They are all favourites on this page
+                        m.put("isFavourite", true);
                         return m;
                     }).toList();
             model.addAttribute("tournaments", enriched);
@@ -179,22 +164,18 @@ public class BaseController {
     // ADMIN PANEL
     @GetMapping("/admin")
     public String admin(Model model,
-            @org.springframework.web.bind.annotation.RequestParam(value = "msgSent", required = false) Boolean msgSent) {
-        java.util.List<es.urjc.code.backend.model.User> allUsers = userRepository.findAll();
-        java.util.List<es.urjc.code.backend.model.User> captains = allUsers.stream()
-                .filter(es.urjc.code.backend.model.User::getIsCaptain)
-                .collect(java.util.stream.Collectors.toList());
-        model.addAttribute("users", allUsers);
-        model.addAttribute("captains", captains);
-        model.addAttribute("tournaments", tournamentRepository.findAll());
-        model.addAttribute("teams", teamRepository.findAll());
+            @RequestParam(value = "msgSent", required = false) Boolean msgSent) {
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("captains", userService.findCaptains());
+        model.addAttribute("tournaments", tournamentService.findAll());
+        model.addAttribute("teams", teamService.findAll());
         if (Boolean.TRUE.equals(msgSent)) {
             model.addAttribute("msgSent", true);
         }
         return "admin";
     }
 
-    // ERROR 403 no permision)
+    // ERROR 403
     @GetMapping("/error-403")
     public String error403(Model model) {
         model.addAttribute("errorCode", 403);
@@ -202,13 +183,13 @@ public class BaseController {
         return "error";
     }
 
-    private void populateProfileStats(es.urjc.code.backend.model.User user, Model model) {
-        java.util.List<es.urjc.code.backend.model.PlayerMatchStats> stats = playerStatsRepository.findByPlayer(user);
+    private void populateProfileStats(User user, Model model) {
+        List<PlayerMatchStats> stats = matchService.findStatsByPlayer(user);
         int totalMatches = stats.size();
         int totalKills = 0;
         int totalDeaths = 0;
 
-        for (es.urjc.code.backend.model.PlayerMatchStats s : stats) {
+        for (PlayerMatchStats s : stats) {
             totalKills += s.getKills();
             totalDeaths += s.getDeaths();
         }
@@ -229,12 +210,12 @@ public class BaseController {
 
         model.addAttribute("kdaHeight", Math.min(100, (int) (kda * 15) + 10));
         model.addAttribute("matchesHeight", Math.min(100, (totalMatches * 5) + 10));
-        java.util.List<java.util.Map<String, Object>> userTournaments = new java.util.ArrayList<>();
+        List<Map<String, Object>> userTournaments = new ArrayList<>();
         if (user.getTeam() != null) {
-            java.util.List<es.urjc.code.backend.model.Tournament> allTournaments = tournamentRepository.findAll();
-            for (es.urjc.code.backend.model.Tournament t : allTournaments) {
+            List<Tournament> allTournaments = tournamentService.findAll();
+            for (Tournament t : allTournaments) {
                 if (t.getTeams().contains(user.getTeam())) {
-                    java.util.Map<String, Object> tMap = new java.util.HashMap<>();
+                    Map<String, Object> tMap = new HashMap<>();
                     tMap.put("game", t.getGame());
                     tMap.put("teamName", user.getTeam().getName());
                     tMap.put("isEnCurso", "En Curso".equalsIgnoreCase(t.getState()));

@@ -1,8 +1,8 @@
 package es.urjc.code.backend.controller;
 
-import es.urjc.code.backend.repository.TeamRepository;
-import es.urjc.code.backend.repository.TournamentRepository;
-import es.urjc.code.backend.repository.UserRepository;
+import es.urjc.code.backend.service.TeamService;
+import es.urjc.code.backend.service.TournamentService;
+import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,30 +18,29 @@ import java.sql.SQLException;
 public class ImageController {
 
     @Autowired
-    private TournamentRepository tournamentRepository;
+    private TournamentService tournamentService;
 
     @Autowired
-    private TeamRepository teamRepository;
+    private TeamService teamService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    // Download image genérico
     @GetMapping("/images/{entity}/{id}")
     public ResponseEntity<byte[]> downloadImage(@PathVariable String entity, @PathVariable Long id) {
         switch (entity.toLowerCase()) {
             case "tournaments":
-                return tournamentRepository.findById(id)
+                return tournamentService.findById(id)
                         .map(t -> t.getImageFile() != null ? blobToResponse(t.getImageFile())
                                 : redirectFallback("/assets/images/valorant-tournament.png"))
                         .orElseGet(() -> redirectFallback("/assets/images/valorant-tournament.png"));
             case "teams":
-                return teamRepository.findById(id)
+                return teamService.findById(id)
                         .map(t -> t.getImageFile() != null ? blobToResponse(t.getImageFile())
                                 : redirectFallback("/assets/images/team_fire.png"))
                         .orElseGet(() -> redirectFallback("/assets/images/team_fire.png"));
             case "users":
-                return userRepository.findById(id)
+                return userService.findById(id)
                         .map(u -> u.getImageFile() != null ? blobToResponse(u.getImageFile())
                                 : redirectFallback("/assets/images/avatar-player.png"))
                         .orElseGet(() -> redirectFallback("/assets/images/avatar-player.png"));
@@ -52,7 +51,7 @@ public class ImageController {
 
     @GetMapping("/images/teams/banner/{id}")
     public ResponseEntity<byte[]> downloadTeamBanner(@PathVariable Long id) {
-        return teamRepository.findById(id)
+        return teamService.findById(id)
                 .map(t -> t.getBannerFile() != null ? blobToResponse(t.getBannerFile())
                         : redirectFallback("/assets/images/banner_rivas.png"))
                 .orElseGet(() -> redirectFallback("/assets/images/banner_rivas.png"));
