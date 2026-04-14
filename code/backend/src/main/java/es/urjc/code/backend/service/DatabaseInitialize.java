@@ -162,7 +162,7 @@ public class DatabaseInitialize implements CommandLineRunner {
         if (admin == null || player1 == null || player2 == null)
             return;
 
-        // EQUIPOS
+        // TEAMS
         Team team1 = teamRepository.findByName("Rivas eSports").orElse(null);
         if (team1 == null) {
             team1 = new Team("Rivas eSports", "URJC", "Valorant", "El equipo oficial del campus de Rivas.");
@@ -280,7 +280,7 @@ public class DatabaseInitialize implements CommandLineRunner {
 
         }
 
-        // --- TORNEOS ---
+        // --- TOURNAMENTS ---
         Tournament tournament1 = tournamentRepository.findByName("Valorant Winter Cup").orElse(null);
         if (tournament1 == null) {
             tournament1 = new Tournament(
@@ -297,7 +297,7 @@ public class DatabaseInitialize implements CommandLineRunner {
             }
             tournamentRepository.save(tournament1);
 
-            // Partida terminada de Valorant
+            // Finished Valorant match
             Match match1 = new Match("2026-11-05 18:00", "Fase de Grupos", tournament1, team1, team2, "BO3");
             match1.setState("Terminado");
             match1.setScoreLocal(13);
@@ -305,7 +305,7 @@ public class DatabaseInitialize implements CommandLineRunner {
             match1.setResult("13 - 10");
             matchRepository.save(match1);
 
-            // Estadísticas Match 1
+            // Match 1 player stats
             statsRepository.save(new PlayerMatchStats(match1, player1, 24, 12, 8, 285));
             statsRepository.save(new PlayerMatchStats(match1, player2, 18, 14, 12, 210));
             if (pablo != null)
@@ -341,7 +341,7 @@ public class DatabaseInitialize implements CommandLineRunner {
                 tournament2.getTeams().add(team4);
             tournamentRepository.save(tournament2);
 
-            // Partida en curso de LoL
+            // Ongoing LoL match
             Match match2 = new Match("2026-03-20 19:30", "Semifinales", tournament2, team3, team4, "BO1");
             match2.setState("En curso");
             matchRepository.save(match2);
@@ -357,7 +357,7 @@ public class DatabaseInitialize implements CommandLineRunner {
                 tournament3.getTeams().add(team5);
             tournamentRepository.save(tournament3);
 
-            // Partida programada de CS2
+            // Scheduled CS2 match
             Match match3 = new Match("2026-05-25 17:00", "Ronda 1", tournament3, team5, team2, "BO3");
             matchRepository.save(match3);
         }
