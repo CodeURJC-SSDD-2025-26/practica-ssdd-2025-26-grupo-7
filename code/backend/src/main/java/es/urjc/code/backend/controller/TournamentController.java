@@ -373,6 +373,25 @@ public class TournamentController {
         return "redirect:/admin/tournaments/edit/" + id;
     }
 
+    @Autowired
+    private es.urjc.code.backend.service.PdfService pdfService;
+
+    @GetMapping("/tournaments/{id}/pdf")
+    public org.springframework.http.ResponseEntity<byte[]> downloadTournamentPdf(@PathVariable Long id) {
+        Optional<Tournament> opt = tournamentRepository.findById(id);
+        if (opt.isEmpty()) return org.springframework.http.ResponseEntity.notFound().build();
+        
+        Tournament t = opt.get();
+        byte[] pdf = pdfService.generateTournamentPdf(t);
+        
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "Tournament_" + id + ".pdf");
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        
+        return new org.springframework.http.ResponseEntity<>(pdf, headers, org.springframework.http.HttpStatus.OK);
+    }
+
     @PostMapping("/tournaments/{id}/toggle-favorite")
     @ResponseBody
     public org.springframework.http.ResponseEntity<?> toggleFavorite(@PathVariable Long id, Principal principal) {
