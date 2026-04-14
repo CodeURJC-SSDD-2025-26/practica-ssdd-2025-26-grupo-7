@@ -46,7 +46,7 @@ public class UserRegistrationController {
     }
 
     // ADMIN - User Management
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String listUsers(Model model) {
         List<User> users = userService.findAll();
         long totalUsers = users.size();
@@ -64,21 +64,21 @@ public class UserRegistrationController {
         return "user-management";
     }
 
-    @PostMapping("/users/{id}/delete")
+    @PostMapping("/admin/users/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @PostMapping("/users/{id}/role")
+    @PostMapping("/admin/users/{id}/role")
     public String updateRole(@PathVariable Long id, @RequestParam("role") String role) {
         userService.updateRole(id, role);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @PostMapping("/users/{id}/team")
+    @PostMapping("/admin/users/{id}/team")
     public String updateTeam(@PathVariable Long id, @RequestParam(value = "teamId", required = false) Long teamId) {
         userService.updateTeam(id, teamId);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

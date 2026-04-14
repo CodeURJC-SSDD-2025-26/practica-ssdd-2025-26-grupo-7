@@ -103,7 +103,7 @@
                                         class="bi bi-shield-plus"></i></button>
                                 <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                                     data-bs-target="#modalRol-{{id}}" title="Rol"><i class="bi bi-person-gear"></i></button>
-                                <form action="/users/{{id}}/delete" method="POST" class="d-inline m-0 p-0">
+                                <form action="/admin/users/{{id}}/delete" method="POST" class="d-inline m-0 p-0">
                                     <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar"><i
                                         class="bi bi-trash"></i></button>
@@ -125,7 +125,7 @@
     <div class="modal fade" id="modalEquipo-{{id}}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-card text-white">
-                <form action="/users/{{id}}/team" method="POST">
+                <form action="/admin/users/{{id}}/team" method="POST">
                     <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                     <div class="modal-header border-secondary">
                         <h5 class="modal-title text-cyan"><i class="bi bi-shield-shaded me-2"></i>Gestionar Equipo</h5>
@@ -155,7 +155,7 @@
     <div class="modal fade" id="modalRol-{{id}}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-card text-white">
-                <form action="/users/{{id}}/role" method="POST">
+                <form action="/admin/users/{{id}}/role" method="POST">
                     <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                     <div class="modal-header border-secondary">
                         <h5 class="modal-title text-cyan"><i class="bi bi-person-gear me-2"></i>Gestionar Rol</h5>
