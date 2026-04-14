@@ -3,7 +3,8 @@ package es.urjc.code.backend.controller;
 import es.urjc.code.backend.model.Message;
 import es.urjc.code.backend.model.User;
 import es.urjc.code.backend.repository.MessageRepository;
-import es.urjc.code.backend.repository.UserRepository;
+import es.urjc.code.backend.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MessageController {
@@ -21,7 +21,7 @@ public class MessageController {
     private MessageRepository messageRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping("/admin/messages/send")
     public String sendMessage(
@@ -34,26 +34,21 @@ public class MessageController {
             return "redirect:/login";
         }
 
-        User sender = userRepository.findByEmail(principal.getName())
-                .orElseGet(() -> userRepository.findByName(principal.getName()).orElse(null));
+        User sender = userService.resolveUser(principal);
 
         if (sender == null || !sender.getIsAdmin()) {
-            return "redirect:/"; // Only admins can send via this endpoint
+            return "redirect:/";
         }
 
         if (recipientId == -1) {
-            // Broadcast to all captains
-            List<User> captains = userRepository.findAll().stream()
-                    .filter(User::getIsCaptain)
-                    .collect(Collectors.toList());
+            List<User> captains = userService.findCaptains();
 
             for (User captain : captains) {
                 Message msg = new Message(sender, captain, subject, content);
                 messageRepository.save(msg);
             }
         } else {
-            // Send to specific user
-            userRepository.findById(recipientId).ifPresent(recipient -> {
+            userService.findById(recipientId).ifPresent(recipient -> {
                 Message msg = new Message(sender, recipient, subject, content);
                 messageRepository.save(msg);
             });
@@ -64,7 +59,8 @@ public class MessageController {
 
     @PostMapping("/messages/mark-read/{id}")
     public String markAsRead(@PathVariable Long id, Principal principal) {
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         messageRepository.findById(id).ifPresent(msg -> {
             if (msg.getRecipient().getEmail().equals(principal.getName())) {
                 msg.setRead(true);
@@ -76,7 +72,8 @@ public class MessageController {
 
     @PostMapping("/messages/delete/{id}")
     public String deleteMessage(@PathVariable Long id, Principal principal) {
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         messageRepository.findById(id).ifPresent(msg -> {
             if (msg.getRecipient().getEmail().equals(principal.getName())) {
                 messageRepository.delete(msg);

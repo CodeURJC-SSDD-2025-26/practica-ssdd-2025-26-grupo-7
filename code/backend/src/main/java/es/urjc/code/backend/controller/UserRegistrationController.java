@@ -1,11 +1,10 @@
 package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.model.User;
-import es.urjc.code.backend.repository.UserRepository;
+import es.urjc.code.backend.service.TeamService;
+import es.urjc.code.backend.service.UserService;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +17,10 @@ import java.util.List;
 public class UserRegistrationController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private TeamService teamService;
 
     // REGISTER
     @PostMapping("/register")
@@ -35,116 +34,51 @@ public class UserRegistrationController {
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             Model model) throws IOException {
 
-        // Basic validations
-        if (!password.equals(confirmPassword)) {
-            model.addAttribute("error", "Passwords do not match.");
+        String error = userService.registerUser(name, nickname, email, university,
+                password, confirmPassword, imageFile);
+
+        if (error != null) {
+            model.addAttribute("error", error);
             return "register";
         }
-        if (userRepository.findByEmail(email).isPresent()) {
-            model.addAttribute("error", "Email is already in use.");
-            return "register";
-        }
 
-        User user = new User(name, nickname, email, university,
-                passwordEncoder.encode(password), new java.util.ArrayList<>(List.of("USER")));
-
-        if (imageFile != null && !imageFile.isEmpty()) {
-            user.setImageFile(
-                    BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-        }
-
-        userRepository.save(user);
         return "redirect:/login?registered=true";
     }
 
-    @Autowired
-    private es.urjc.code.backend.repository.TeamRepository teamRepository;
-
-    // ADMIN 
+    // ADMIN - User Management
     @GetMapping("/users")
     public String listUsers(Model model) {
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.findAll();
         long totalUsers = users.size();
-        long activeUsers = totalUsers; // No boolean ban field yet
+        long activeUsers = totalUsers;
         long captains = users.stream().filter(User::getIsCaptain).count();
         long freeAgents = users.stream().filter(u -> !u.getHasTeam()).count();
 
         model.addAttribute("users", users);
-        model.addAttribute("teams", teamRepository.findAll());
+        model.addAttribute("teams", teamService.findAll());
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("activeUsers", activeUsers);
         model.addAttribute("captains", captains);
         model.addAttribute("freeAgents", freeAgents);
-        
+
         return "user-management";
     }
 
-    @Autowired
-    private es.urjc.code.backend.repository.TournamentRepository tournamentRepository;
-
     @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
-        userRepository.findById(id).ifPresent(user -> {
-            // Unlink from Teams
-            for (es.urjc.code.backend.model.Team team : teamRepository.findAll()) {
-                boolean modified = false;
-                if (team.getCaptain() != null && team.getCaptain().getId().equals(user.getId())) {
-                    team.setCaptain(null);
-                    modified = true;
-                }
-                if (team.getPlayers().removeIf(u -> u.getId().equals(user.getId()))) {
-                    modified = true;
-                }
-                if (modified) {
-                    teamRepository.save(team);
-                }
-            }
-            // Unlink from Tournaments
-            for (es.urjc.code.backend.model.Tournament t : tournamentRepository.findAll()) {
-                if (t.getCreator() != null && t.getCreator().getId().equals(user.getId())) {
-                    t.setCreator(null);
-                    tournamentRepository.save(t);
-                }
-            }
-            userRepository.deleteById(id);
-        });
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 
     @PostMapping("/users/{id}/role")
     public String updateRole(@PathVariable Long id, @RequestParam("role") String role) {
-        userRepository.findById(id).ifPresent(user -> {
-            List<String> roles = new java.util.ArrayList<>();
-            roles.add("USER");
-            if ("ADMIN".equals(role)) {
-                roles.add("ADMIN");
-            } else if ("CAPTAIN".equals(role)) {
-                roles.add("CAPTAIN");
-                // Also set as captain of their team if they have one
-                if (user.getTeam() != null) {
-                    es.urjc.code.backend.model.Team team = user.getTeam();
-                    team.setCaptain(user);
-                    teamRepository.save(team);
-                }
-            }
-            user.setRoles(roles);
-            userRepository.save(user);
-        });
+        userService.updateRole(id, role);
         return "redirect:/users";
     }
 
     @PostMapping("/users/{id}/team")
     public String updateTeam(@PathVariable Long id, @RequestParam(value = "teamId", required = false) Long teamId) {
-        userRepository.findById(id).ifPresent(user -> {
-            if (teamId == null || teamId == 0) {
-                user.setTeam(null);
-            } else {
-                teamRepository.findById(teamId).ifPresent(team -> {
-                    user.setTeam(team);
-                });
-            }
-            userRepository.save(user);
-        });
+        userService.updateTeam(id, teamId);
         return "redirect:/users";
     }
 }
