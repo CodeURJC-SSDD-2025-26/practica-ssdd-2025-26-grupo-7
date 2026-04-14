@@ -89,6 +89,15 @@ public class UserService {
             String university, String password, String confirmPassword,
             MultipartFile imageFile) throws IOException {
 
+        if (name == null || name.trim().isEmpty()) {
+            return "Name is required.";
+        }
+        if (nickname == null || nickname.trim().isEmpty()) {
+            return "Nickname is required.";
+        }
+        if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            return "Please enter a valid email address.";
+        }
         if (!password.equals(confirmPassword)) {
             return "Passwords do not match.";
         }
