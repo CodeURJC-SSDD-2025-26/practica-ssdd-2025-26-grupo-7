@@ -29,10 +29,12 @@
                         <i class="bi bi-pencil-square text-cyan me-2"></i>Editar <span class="text-cyan">Partido</span>
                     </h2>
                     {{#match}}
-                    <p class="text-white-50">Modificando enfrentamiento: <span class="text-cyan">{{match.localTeam.name}} vs {{match.awayTeam.name}}</span></p>
+                    <p class="text-white-50">Modificando enfrentamiento: <span
+                            class="text-cyan">{{match.localTeam.name}} vs {{match.awayTeam.name}}</span></p>
                     {{/match}}
                     {{^match}}
-                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el resultado.</p>
+                    <p class="text-white-50">Selecciona un torneo y un partido para modificar sus datos o registrar el
+                        resultado.</p>
                     {{/match}}
                 </div>
 
@@ -67,7 +69,8 @@
 
                             <div class="row g-4 mb-4">
                                 <div class="col-12">
-                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a editar</label>
+                                    <label class="form-label small text-uppercase fw-bold text-cyan">Partido a
+                                        editar</label>
                                     <select id="sel-partido-edit"
                                         class="form-select bg-dark text-white border-secondary border-opacity-50"
                                         onchange="window.location.href='/admin/matches/edit/' + this.value">
@@ -91,7 +94,8 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Local</label>
-                                <select name="localTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="localTeamId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     {{#teams}}
                                     <option value="{{id}}">{{name}}</option>
                                     {{/teams}}
@@ -99,8 +103,10 @@
                                 <script>document.getElementsByName('localTeamId')[0].value = "{{match.localTeam.id}}";</script>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo Visitante</label>
-                                <select name="awayTeamId" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Equipo
+                                    Visitante</label>
+                                <select name="awayTeamId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     {{#teams}}
                                     <option value="{{id}}">{{name}}</option>
                                     {{/teams}}
@@ -116,7 +122,8 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fase</label>
-                                <select name="phase" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="phase"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="Fase de Grupos">Fase de Grupos</option>
                                     <option value="Cuartos de Final">Cuartos de Final</option>
                                     <option value="Semifinal">Semifinal</option>
@@ -126,7 +133,8 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Formato</label>
-                                <select name="format" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="format"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="BO1">BO1</option>
                                     <option value="BO3">BO3</option>
                                     <option value="BO5">BO5</option>
@@ -135,7 +143,8 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Estado</label>
-                                <select name="state" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="state"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="Programado">Programado</option>
                                     <option value="En Vivo">En Vivo</option>
                                     <option value="Finalizado">Finalizado</option>
@@ -145,26 +154,32 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Fecha</label>
-                                <input type="date" name="date" value="{{matchDay}}" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                <input type="date" name="date" value="{{matchDay}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Hora</label>
-                                <input type="time" name="time" value="{{matchTime}}" class="form-control bg-dark text-white border-secondary border-opacity-50" required>
+                                <input type="time" name="time" value="{{matchTime}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas adicionales</label>
-                                <input type="text" name="notes" value="{{match.notes}}" class="form-control bg-dark text-white border-secondary border-opacity-50">
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Notas
+                                    adicionales</label>
+                                <input type="text" name="notes" value="{{match.notes}}"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50">
                             </div>
                         </div>
 
                         <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                             Resultado
                         </h4>
-                        <p class="text-white-50 small mb-4">Rellena solo si el partido ya ha finalizado o está en curso.</p>
+                        <p class="text-white-50 small mb-4">Rellena solo si el partido ya ha finalizado o está en curso.
+                        </p>
 
                         <div class="row g-4 mb-4">
                             <div class="col-md-5">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.localTeam.name}}</label>
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
+                                    {{match.localTeam.name}}</label>
                                 <input type="number" name="scoreLocal" min="0" value="{{match.scoreLocal}}"
                                     class="form-control bg-dark text-white border-secondary border-opacity-50">
                             </div>
@@ -172,13 +187,14 @@
                                 <span class="text-white-50 fs-3 fw-bold">:</span>
                             </div>
                             <div class="col-md-5">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion {{match.awayTeam.name}}</label>
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Puntuacion
+                                    {{match.awayTeam.name}}</label>
                                 <input type="number" name="scoreAway" min="0" value="{{match.scoreAway}}"
                                     class="form-control bg-dark text-white border-secondary border-opacity-50">
                             </div>
                         </div>
 
-                        <!-- ESTADISTICAS DE JUGADORES -->
+                        <!-- PLAYER STATS -->
                         <div id="player-stats-section">
                             <h4 class="text-white mb-1 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                                 Estadísticas de Jugadores
@@ -188,66 +204,82 @@
                             <div class="row g-4">
                                 <!-- LOCAL -->
                                 <div class="col-lg-6">
-                                    <h6 class="text-cyan text-uppercase fw-bold mb-3 border-start border-3 border-cyan ps-2">Equipo Local</h6>
+                                    <h6
+                                        class="text-cyan text-uppercase fw-bold mb-3 border-start border-3 border-cyan ps-2">
+                                        Equipo Local</h6>
                                     <div id="local-players-stats-container">
                                         {{#localPlayersStats}}
-                                        <div class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div
+                                            class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
                                             <div class="fw-bold text-white mb-2">{{nickname}}</div>
                                             <div class="row g-2">
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Kills</label>
-                                                    <input type="number" name="kills_{{id}}" value="{{kills}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="kills_{{id}}" value="{{kills}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Deaths</label>
-                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Assists</label>
-                                                    <input type="number" name="assists_{{id}}" value="{{assists}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="assists_{{id}}" value="{{assists}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">ACS</label>
-                                                    <input type="number" name="acs_{{id}}" value="{{acs}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="acs_{{id}}" value="{{acs}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                             </div>
                                         </div>
                                         {{/localPlayersStats}}
                                         {{^localPlayersStats}}
-                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para cargar jugadores...</div>
+                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para
+                                            cargar jugadores...</div>
                                         {{/localPlayersStats}}
                                     </div>
                                 </div>
 
                                 <!-- AWAY -->
                                 <div class="col-lg-6">
-                                    <h6 class="text-danger text-uppercase fw-bold mb-3 border-start border-3 border-danger ps-2">Equipo Visitante</h6>
+                                    <h6
+                                        class="text-danger text-uppercase fw-bold mb-3 border-start border-3 border-danger ps-2">
+                                        Equipo Visitante</h6>
                                     <div id="away-players-stats-container">
                                         {{#awayPlayersStats}}
-                                        <div class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div
+                                            class="player-stat-row mb-3 p-3 rounded bg-dark border border-secondary border-opacity-25">
                                             <div class="fw-bold text-white mb-2">{{nickname}}</div>
                                             <div class="row g-2">
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Kills</label>
-                                                    <input type="number" name="kills_{{id}}" value="{{kills}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="kills_{{id}}" value="{{kills}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Deaths</label>
-                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="deaths_{{id}}" value="{{deaths}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">Assists</label>
-                                                    <input type="number" name="assists_{{id}}" value="{{assists}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="assists_{{id}}" value="{{assists}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="x-small text-white-50 text-uppercase">ACS</label>
-                                                    <input type="number" name="acs_{{id}}" value="{{acs}}" class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
+                                                    <input type="number" name="acs_{{id}}" value="{{acs}}"
+                                                        class="form-control form-control-sm bg-secondary bg-opacity-10 text-white border-0">
                                                 </div>
                                             </div>
                                         </div>
                                         {{/awayPlayersStats}}
                                         {{^awayPlayersStats}}
-                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para cargar jugadores...</div>
+                                        <div class="text-white-50 small opacity-50 fst-italic">Selecciona un equipo para
+                                            cargar jugadores...</div>
                                         {{/awayPlayersStats}}
                                     </div>
                                 </div>
@@ -263,9 +295,12 @@
                     </form>
 
                     <div class="alert alert-danger bg-transparent border-danger mt-4">
-                        <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h6>
-                        <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no podrá recuperarse.</p>
-                        <form action="/admin/matches/delete/{{match.id}}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este partido?')">
+                        <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de
+                            Peligro</h6>
+                        <p class="text-white-50 small mb-2">Eliminar el partido borrara todos sus datos y no podrá
+                            recuperarse.</p>
+                        <form action="/admin/matches/delete/{{match.id}}" method="POST"
+                            onsubmit="return confirm('¿Seguro que quieres eliminar este partido?')">
                             <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash3-fill me-1"></i>Eliminar partido
@@ -284,7 +319,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Initialize selects based on data-selected attribute
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('select[data-selected]').forEach(sel => {
                 const val = sel.getAttribute('data-selected');
                 if (val) {
@@ -299,10 +334,10 @@
         // Pre-load matches data for filtering in JS
         const ALL_MATCHES = [];
         /* {{#allMatches}} */
-        ALL_MATCHES.push({ 
-            id: "{{id}}", 
-            tournamentId: "{{tournament.id}}", 
-            label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})" 
+        ALL_MATCHES.push({
+            id: "{{id}}",
+            tournamentId: "{{tournament.id}}",
+            label: "{{localTeam.name}} vs {{awayTeam.name}} — {{phase}} ({{matchDate}})"
         });
         /* {{/allMatches}} */
 
@@ -334,18 +369,18 @@
 
     <script>
         // Update player stats when teams change
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const localSelect = document.querySelector('select[name="localTeamId"]');
             const awaySelect = document.querySelector('select[name="awayTeamId"]');
 
             if (localSelect) {
-                localSelect.addEventListener('change', function() {
+                localSelect.addEventListener('change', function () {
                     updatePlayersForTeam(this.value, 'local');
                 });
             }
 
             if (awaySelect) {
-                awaySelect.addEventListener('change', function() {
+                awaySelect.addEventListener('change', function () {
                     updatePlayersForTeam(this.value, 'away');
                 });
             }

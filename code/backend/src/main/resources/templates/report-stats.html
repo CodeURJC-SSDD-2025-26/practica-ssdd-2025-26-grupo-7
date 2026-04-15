@@ -36,7 +36,7 @@
                     <form action="/admin/matches/report/{{match.id}}" method="POST">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 
-                        <!-- ── Marcador ── -->
+                        <!-- ── Scoreboard ── -->
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
                             Marcador Final
                         </h4>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <!-- ── Estadísticas Local ── -->
+                        <!-- ── Local Team Stats ── -->
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                             Estadísticas: <span class="text-cyan">{{match.localTeam.name}}</span>
                         </h4>
@@ -91,7 +91,7 @@
                             </table>
                         </div>
 
-                        <!-- ── Estadísticas Visitante ── -->
+                        <!-- ── Away Team Stats ── -->
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                             Estadísticas: <span class="text-danger">{{match.awayTeam.name}}</span>
                         </h4>

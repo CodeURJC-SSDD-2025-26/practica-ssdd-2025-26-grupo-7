@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/create-edit-tournament.css">
-    </head>
+</head>
 
 <body>
     {{> header}}
@@ -27,7 +27,8 @@
 
                 <div class="text-center mb-5">
                     <h2 class="text-white text-uppercase">
-                        <i class="bi bi-shield-plus text-cyan me-2"></i>Crear Nuevo <span class="text-cyan">Equipo</span>
+                        <i class="bi bi-shield-plus text-cyan me-2"></i>Crear Nuevo <span
+                            class="text-cyan">Equipo</span>
                     </h2>
                     <p class="text-white-50">Registra un nuevo equipo en la liga y asigna sus miembros.</p>
                 </div>
@@ -44,19 +45,24 @@
 
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del Equipo</label>
-                                <input type="text" name="name" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Nombre del
+                                    Equipo</label>
+                                <input type="text" name="name"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     placeholder="Ej: Team Alpha" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Tag / Abreviatura</label>
-                                <input type="text" name="tag" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Tag /
+                                    Abreviatura</label>
+                                <input type="text" name="tag"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     placeholder="Ej: TPA" maxlength="5" required>
                                 <div class="form-text text-white-50 small">Máximo 5 caracteres.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Universidad</label>
-                                <select name="university" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="university"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="" disabled selected>Selecciona una universidad...</option>
                                     <option>URJC - Móstoles</option>
                                     <option>URJC - Fuenlabrada</option>
@@ -68,20 +74,22 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Juego Principal</label>
-                                <select name="mainGame" class="form-select bg-dark text-white border-secondary border-opacity-50" required>
+                                <select name="mainGame"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50" required>
                                     <option value="" disabled selected>Selecciona un juego...</option>
                                     <option>Valorant</option>
                                     <option>League of Legends</option>
                                     <option>Counter-Strike 2</option>
                                     <option>Rocket League</option>
-                                    
+
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-image me-2"></i>Logo del Equipo
                                 </label>
-                                <input name="imageFile" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="imageFile"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp" required>
                                 <div class="form-text text-white-50 small mt-1">
                                     Formato recomendado: imagen cuadrada.
@@ -91,20 +99,23 @@
                                 <label class="form-label small text-uppercase fw-bold text-cyan">
                                     <i class="bi bi-card-image me-2"></i>Banner del Equipo
                                 </label>
-                                <input name="bannerFile" class="form-control bg-dark text-white border-secondary border-opacity-50"
+                                <input name="bannerFile"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50"
                                     type="file" accept="image/png, image/jpeg, image/webp">
                                 <div class="form-text text-white-50 small mt-1">
                                     Se mostrará en la cabecera de la página del equipo.
                                 </div>
                             </div>
                             <div class="col-12">
-                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del Equipo</label>
-                                <textarea name="description" class="form-control bg-dark text-white border-secondary border-opacity-50"
-                                    rows="3" placeholder="Describe brevemente el equipo, su historia, estilo de juego..."></textarea>
+                                <label class="form-label small text-uppercase fw-bold text-cyan">Descripción del
+                                    Equipo</label>
+                                <textarea name="description"
+                                    class="form-control bg-dark text-white border-secondary border-opacity-50" rows="3"
+                                    placeholder="Describe brevemente el equipo, su historia, estilo de juego..."></textarea>
                             </div>
                         </div>
 
-                        <!-- ── Capitán del equipo ── -->
+                        <!-- ── Team Captain ── -->
                         <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
                             <i class="bi bi-person-badge me-2 text-cyan"></i>Capitán del Equipo
                         </h4>
@@ -112,7 +123,8 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small text-uppercase fw-bold text-cyan">Capitán</label>
-                                <select name="captainId" class="form-select bg-dark text-white border-secondary border-opacity-50">
+                                <select name="captainId"
+                                    class="form-select bg-dark text-white border-secondary border-opacity-50">
                                     <option value="" disabled selected>Selecciona un usuario...</option>
                                     {{#availableUsers}}
                                     <option value="{{id}}">{{nickname}} ({{email}})</option>
@@ -142,4 +154,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

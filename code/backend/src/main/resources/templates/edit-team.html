@@ -50,7 +50,7 @@
                 <div class="card bg-card border-0 shadow-lg p-4 p-md-5 position-relative overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
-                    <!-- FORMULARIO 1: EDICIÓN DE DATOS BÁSICOS Y CAPITÁN -->
+                    <!-- FORM 1: EDIT BASIC DATA AND CAPTAIN -->
                     <form action="/teams/{{team.id}}/edit" method="POST" enctype="multipart/form-data"
                         id="mainEditForm">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
@@ -151,7 +151,7 @@
 
                     </form>
 
-                    <!-- SECCIÓN DE MIEMBROS (VER Y ELIMINAR) -->
+                    <!-- MEMBERS SECTION (VIEW AND REMOVE) -->
                     <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
                         <h4 class="text-white mb-4 fs-5">
                             <i class="bi bi-people-fill me-2 text-cyan"></i>Miembros Actuales ({{totalPlayers}})
@@ -194,7 +194,7 @@
                         </div>
                     </div>
 
-                    <!-- FORMULARIO 2: AÑADIR NUEVO MIEMBRO -->
+                    <!-- FORM 2: ADD NEW MEMBER -->
                     <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
                         <h4 class="text-white mb-4 fs-5">
                             <i class="bi bi-person-plus-fill me-2 text-cyan"></i>Añadir Nuevo Miembro
@@ -228,7 +228,7 @@
 
                     </div>
 
-                    <!-- ZONA DE PELIGRO -->
+                    <!-- DANGER ZONE -->
                     <div class="mt-5 pt-5 border-top border-danger border-opacity-25">
                         <div
                             class="alert alert-danger bg-transparent border-danger d-flex align-items-center justify-content-between p-4">
@@ -253,13 +253,13 @@
 
     {{> footer}}
 
-    <!-- Formulario oculto para eliminar jugadores -->
+    <!-- Hidden form to remove players -->
     <form id="removePlayerForm" action="/teams/{{teamId}}/remove-player" method="POST" style="display:none;">
         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
         <input type="hidden" name="userId" id="removeUserId" />
     </form>
 
-    <!-- Formulario oculto para eliminar el equipo -->
+    <!-- Hidden form to delete team -->
     <form id="deleteTeamForm" action="/teams/{{teamId}}/delete" method="POST" style="display:none;">
         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
     </form>

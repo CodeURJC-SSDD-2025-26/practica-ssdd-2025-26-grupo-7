@@ -40,7 +40,7 @@
                     <div class="position-absolute top-0 start-0 w-100 neon-line"></div>
 
                     {{^tournament}}
-                    <!-- ── Selección de Torneo ── -->
+                    <!-- ── Tournament Selection ── -->
                     <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2">
                         Seleccionar Torneo
                     </h4>
@@ -61,7 +61,7 @@
                     {{/tournament}}
 
                     {{#tournament}}
-                    <!-- ── Formulario de Edición ── -->
+                    <!-- ── Edit Form ── -->
                     <form action="/admin/tournaments/edit/{{tournament.id}}" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
@@ -174,7 +174,7 @@
                         </div>
                     </form>
 
-                    <!-- ── Gestión de Equipos ── -->
+                    <!-- ── Team Management ── -->
                     <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                         <i class="bi bi-people-fill me-2 text-cyan"></i>Equipos Inscritos
                     </h4>
@@ -241,7 +241,7 @@
                         </table>
                     </div>
 
-                    <!-- ── Partidos ── -->
+                    <!-- ── Matches ── -->
                     <h4 class="text-white mb-4 fs-5 border-bottom border-secondary border-opacity-25 pb-2 mt-5">
                         <i class="bi bi-calendar-event me-2 text-cyan"></i>Partidos del Torneo
                     </h4>
@@ -287,7 +287,7 @@
                         <i class="bi bi-calendar-plus-fill me-2"></i>Añadir nuevo partido
                     </a>
 
-                    <!-- ── Zona de Peligro ── -->
+                    <!-- ── Danger Zone ── -->
                     <div class="alert alert-danger bg-transparent border-danger mt-5">
                         <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de
                             Peligro</h6>
