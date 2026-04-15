@@ -252,7 +252,8 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 #### **Diagrama de Navegación**
 
-Solo si ha cambiado.
+![Diagrama de Navegación](images/Diagrama-usuarios.png)
+![Diagrama de Navegación](images/Diagrama-administrador.png)
 
 #### **Capturas de Pantalla Actualizadas**
 
@@ -326,7 +327,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Jorge Castellano Bajo]**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
