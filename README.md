@@ -294,21 +294,21 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ![Diagrama de Clases](images/classes-diagram.png)
 
-> [Descripción opcional del diagrama y relaciones principales]
+> El diagrama muestra la separación de responsabilidades de la aplicación en 5 capas principales. Las flechas continuas representan el flujo de inyección de dependencias y llamadas de servicio.
 
 ### **Participación de Miembros en la Práctica 2**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - [Pedro González Martín]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Me centré en el modelaje de datos y la separación lógica abstrayendo la arquitectura de los controladores a nuevas clases service independientes. Me enfoqué en parte del desarrollo CRUD y administración web para Torneos, Equipos y Partidos.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Implementación completa de Capa de Servicios y refactorización de Controladores](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/86d5d4fe9db250ad6db54ae1c41e85abd3767ed1)  | [MatchService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/86d5d4fe9db250ad6db54ae1c41e85abd3767ed1/code/backend/src/main/java/es/urjc/code/backend/service/MatchService.java)   |
+|2| [Lógica de administración base: creación de torneos y relaciones con inyección de partidos](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/8814cda14a7a6bf1ff8dedd7fa642840f8fec95c)  | [edit-tournament.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/8814cda14a7a6bf1ff8dedd7fa642840f8fec95c/code/backend/src/main/resources/templates/edit-tournament.html)   |
+|3| [Administración dinámica de Equipos y Jugadores](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/725518905bf46ec18815dd7fe5c028e879ae3c1a)  | [edit-team.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/725518905bf46ec18815dd7fe5c028e879ae3c1a/code/backend/src/main/resources/templates/edit-team.html)   |
+|4| [Integración de tracking de estadísticas](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/4fba69dc5379433c3c40d5e88252ad98bb635259)  | [MatchController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/4fba69dc5379433c3c40d5e88252ad98bb635259/code/backend/src/main/java/es/urjc/code/backend/controller/MatchController.java)   |
+|5| [Traducción y depuración estructural ](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/771b17cd4ee05c55c6c456f64968e47700c34a46)  | [edit-matches.html](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/771b17cd4ee05c55c6c456f64968e47700c34a46/code/backend/src/main/resources/templates/edit-matches.html)   |
 
 ---
 
