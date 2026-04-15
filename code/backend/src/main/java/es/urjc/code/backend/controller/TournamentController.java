@@ -2,12 +2,18 @@ package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.model.User;
+import es.urjc.code.backend.service.PdfService;
 import es.urjc.code.backend.service.TeamService;
 import es.urjc.code.backend.service.TournamentService;
 import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,6 +38,9 @@ public class TournamentController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PdfService pdfService;
+
     @GetMapping("/tournaments")
     public String getTournaments(
             Model model,
@@ -45,8 +54,8 @@ public class TournamentController {
         String gameParam = (game != null && !game.isBlank()) ? game : null;
         String stateParam = (state != null && !state.isBlank()) ? state : null;
 
-        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, 3);
-        org.springframework.data.domain.Page<Tournament> tournamentPage = tournamentService.findWithFilters(searchParam,
+        Pageable pageable = PageRequest.of(page, 3);
+        Page<Tournament> tournamentPage = tournamentService.findWithFilters(searchParam,
                 gameParam, stateParam, pageable);
 
         User currentUser = userService.resolveUser(principal);
@@ -227,23 +236,21 @@ public class TournamentController {
         return "redirect:/admin/tournaments/edit/" + id;
     }
 
-    @Autowired
-    private es.urjc.code.backend.service.PdfService pdfService;
-
     @GetMapping("/tournaments/{id}/pdf")
-    public org.springframework.http.ResponseEntity<byte[]> downloadTournamentPdf(@PathVariable Long id) {
+    public ResponseEntity<byte[]> downloadTournamentPdf(@PathVariable Long id) {
         Optional<Tournament> opt = tournamentService.findById(id);
-        if (opt.isEmpty()) return org.springframework.http.ResponseEntity.notFound().build();
-        
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
+
         Tournament t = opt.get();
         byte[] pdf = pdfService.generateTournamentPdf(t);
-        
-        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-        headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("attachment", "Tournament_" + id + ".pdf");
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        
-        return new org.springframework.http.ResponseEntity<>(pdf, headers, org.springframework.http.HttpStatus.OK);
+
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
     }
 
     @PostMapping("/tournaments/{id}/toggle-favorite")
