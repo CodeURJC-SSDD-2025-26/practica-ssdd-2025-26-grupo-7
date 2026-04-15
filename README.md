@@ -232,20 +232,6 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
-
-| Nº    | Commits      | Files      |
-|:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
-
----
-
 ## 🛠 **Práctica 2: Web con HTML generado en servidor**
 
 ### **Navegación y Capturas de Pantalla**
@@ -270,15 +256,28 @@ Solo si han cambiado.
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/[usuario]/[nombre-repositorio].git
-   cd [nombre-repositorio]
+   git clone https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7.git
    ```
 
-2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
+2. **Iniciar la base de datos en docker**
+   ```bash
+   docker run --name mysql-practica -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_DATABASE=ssdd_prac2 -p 3306:3306 -d mysql:latest
+   ```
+
+3. **Iniciar el backend**
+   ```bash
+   cd .\code\backend
+   mvn spring-boot:run
+   ```
+
+4. **Abrir la web en el navegador**
+   ```bash
+   http://localhost:8443
+   ```
 
 #### **Credenciales de prueba**
-- **Usuario Admin**: usuario: `admin`, contraseña: `admin`
-- **Usuario Registrado**: usuario: `user`, contraseña: `user`
+- **Usuario Admin**: usuario: `admin`, contraseña: `pass123`
+- **Usuario Registrado**: usuario: `user`, contraseña:`pass123`
 
 ### **Diagrama de Entidades de Base de Datos**
 
@@ -286,7 +285,7 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 ![Diagrama Entidad-Relación](images/database-diagram.png)
 
-> [Descripción opcional: Ej: "El diagrama muestra las 4 entidades principales: Usuario, Producto, Pedido y Categoría, con sus respectivos atributos y relaciones 1:N y N:M."]
+> El diagrama muestra las relaciones entre las entidades principales: Usuarios, Equipos, Torneos y Partidos. También incluye los Mensajes entre usuarios y las Estadísticas detalladas de los jugadores en cada encuentro.
 
 ### **Diagrama de Clases y Templates**
 
@@ -312,35 +311,21 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - [Angel Molinero Caja]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Encargado del desarrollo del backend, incluyendo la configuración de la seguridad con Spring Security, el sistema de registro y gestión de perfiles, así como la implementación de funcionalidades clave como la generación de reportes en PDF. También me encargué de la integración y edición de las estadísticas de los jugadores y el sistema de mensajería del administrador.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Configuración de Spring Security, autenticación y base de datos](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/42f9a76)  | [SecurityConfiguration.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/backend/src/main/java/es/urjc/code/backend/security/SecurityConfiguration.java)   |
+|2| [Lógica de registro de usuarios y perfiles](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/8c2f6e0)  | [UserRegistrationController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/backend/src/main/java/es/urjc/code/backend/controller/UserRegistrationController.java)   |
+|3| [Filtrado avanzado de torneos y reportes PDF](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/d91fa69)  | [PdfService.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/backend/src/main/java/es/urjc/code/backend/service/PdfService.java)   |
+|4| [Sistema de mensajería y gestión de roles](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/229c1ae)  | [Message.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/backend/src/main/java/es/urjc/code/backend/model/Message.java)   |
+|5| [Integración de historial de partidos y estadísticas](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/edef197)  | [Match.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/backend/src/main/java/es/urjc/code/backend/model/Match.java)   |
 
 ---
 
 #### **Alumno 3 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
-
-| Nº    | Commits      | Files      |
-|:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
-
----
-
-#### **Alumno 4 - [Nombre Completo]**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 

@@ -66,9 +66,7 @@ public class UserService {
         return userRepository.count();
     }
 
-    /**
-     * Resolves the currently authenticated user from the principal.
-     */
+    // Resolves the currently authenticated user from the principal.
     public User resolveUser(Principal principal) {
         if (principal == null)
             return null;

@@ -22,7 +22,7 @@ public class PdfService {
             PdfWriter.getInstance(document, baos);
             document.open();
 
-            // Font definitions
+            // Font
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, Color.BLACK);
             Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, Color.DARK_GRAY);
             Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Color.BLACK);
@@ -37,11 +37,12 @@ public class PdfService {
             // Details section
             document.add(new Paragraph("Información General", headerFont));
             document.add(new Paragraph("----------------------------------------------------------------", headerFont));
-            
+
             document.add(createKeyValueParagraph("Juego: ", tournament.getGame(), boldFont, normalFont));
             document.add(createKeyValueParagraph("Plataforma: ", tournament.getPlatform(), boldFont, normalFont));
             document.add(createKeyValueParagraph("Modo: ", tournament.getMode(), boldFont, normalFont));
-            document.add(createKeyValueParagraph("Equipos Máximos: ", String.valueOf(tournament.getMaxTeams()), boldFont, normalFont));
+            document.add(createKeyValueParagraph("Equipos Máximos: ", String.valueOf(tournament.getMaxTeams()),
+                    boldFont, normalFont));
             document.add(createKeyValueParagraph("Fecha de Inicio: ", tournament.getStartDate(), boldFont, normalFont));
             document.add(createKeyValueParagraph("Estado: ", tournament.getState(), boldFont, normalFont));
             document.add(new Paragraph(" "));
@@ -67,7 +68,7 @@ public class PdfService {
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10f);
 
-            // Header cells
+            // Header
             addHeaderCell(table, "Fecha");
             addHeaderCell(table, "Partido");
             addHeaderCell(table, "Fase");
@@ -81,7 +82,8 @@ public class PdfService {
                     String away = (m.getAwayTeam() != null) ? m.getAwayTeam().getName() : "TBD";
                     table.addCell(new Phrase(local + " vs " + away, normalFont));
                     table.addCell(new Phrase(m.getPhase(), normalFont));
-                    table.addCell(new Phrase(m.getResult() != null ? m.getResult() : (m.getState() != null ? m.getState() : "Programado"), normalFont));
+                    table.addCell(new Phrase(m.getResult() != null ? m.getResult()
+                            : (m.getState() != null ? m.getState() : "Programado"), normalFont));
                 }
             } else {
                 PdfPCell emptyCell = new PdfPCell(new Phrase("No hay partidos registrados aún."));
@@ -107,7 +109,8 @@ public class PdfService {
     }
 
     private void addHeaderCell(PdfPTable table, String text) {
-        PdfPCell cell = new PdfPCell(new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.WHITE)));
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.WHITE)));
         cell.setBackgroundColor(Color.GRAY);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setPadding(5);
