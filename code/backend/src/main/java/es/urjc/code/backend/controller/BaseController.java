@@ -8,6 +8,7 @@ import es.urjc.code.backend.service.MatchService;
 import es.urjc.code.backend.service.TeamService;
 import es.urjc.code.backend.service.TournamentService;
 import es.urjc.code.backend.service.UserService;
+import es.urjc.code.backend.repository.MessageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,7 +41,7 @@ public class BaseController {
     private MatchService matchService;
 
     @Autowired
-    private es.urjc.code.backend.repository.MessageRepository messageRepository;
+    private MessageRepository messageRepository;
 
     // HOME
     @GetMapping("/")
