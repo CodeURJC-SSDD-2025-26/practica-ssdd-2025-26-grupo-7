@@ -329,15 +329,15 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 #### **Alumno 3 - [Jorge Castellano Bajo]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[El alumno ha liderado la arquitectura inicial del modelo de datos en el backend, encargándose de la creación de las entidades principales (usuarios, equipos, torneos y partidos), sus respectivos repositorios y la lógica de inicialización de la base de datos. Además, su labor incluyó el desarrollo de funcionalidades interactivas clave, como los sistemas de filtrado de torneos y la gestión de favoritos, culminando con tareas de mejora en la calidad del código, elaboración de diagramas técnicos y el refinamiento de la experiencia de usuario en las plantillas de manejo de errores y vistas principales.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Added: Functional tournament-details]([https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/493797f380d7fa96a961da229aeb9c00a6bdc95c])  | [tournament-controller](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/493797f380d7fa96a961da229aeb9c00a6bdc95c#diff-ecc9924b32de612ac6b489388f145baec088a87f55227a23cc49a07901cda68b)   |
+|2| [Update: Favourites functionallity](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/ed858ffebef5d4f6f3db2fbaf686e1e66450ff97)  | [User.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/ed858ffebef5d4f6f3db2fbaf686e1e66450ff97#diff-c439ca77219672518a79931bcf6ad655834f2dd96ea4e835c454f39e44bc1ad7)   |
+|3| [Added: Filter functionality](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/24a411dfb7d73d0873be03a21677f51405af68fe)  | [TournamentRepository](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/24a411dfb7d73d0873be03a21677f51405af68fe#diff-d0da064f2db09b894a33145a0d10293876242e7afbb6a90a1a02d28fb09ce536)   |
+|4| [Added: Match.java and Tournament.java and repositories](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/b4f3482547f74d3978d3d1951a268a88c7c7c3fc)  | [Match.java, MatchRepository, Tournament.javaTournamentRepository](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/b4f3482547f74d3978d3d1951a268a88c7c7c3fc)   |
+|5| [Update: Profile functionality](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/df0f4a48499576fdf5ef1033e46ef0d483a0b4d4)  | [BaseController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/df0f4a48499576fdf5ef1033e46ef0d483a0b4d4#diff-c57c8819be175802e6c08600f76513f845ea0bedce4fbb81836bf28503a78134)   |
 
 ---
 
