@@ -1,23 +1,26 @@
 package es.urjc.code.backend.controller;
 
 import java.security.Principal;
-
 import jakarta.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import es.urjc.code.backend.repository.UserRepository;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private es.urjc.code.backend.repository.UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 	@ModelAttribute
-	public void addAttributes(org.springframework.ui.Model model, HttpServletRequest request) {
+	public void addAttributes(Model model, HttpServletRequest request) {
 
-		org.springframework.security.web.csrf.CsrfToken csrfToken = 
-			(org.springframework.security.web.csrf.CsrfToken) request.getAttribute(org.springframework.security.web.csrf.CsrfToken.class.getName());
+		CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
 		if (csrfToken != null) {
 			model.addAttribute("_csrf", csrfToken);
 		}
@@ -41,8 +44,7 @@ public class GlobalControllerAdvice {
                     }
                 );
 
-            org.springframework.security.core.Authentication auth = 
-                org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             
             boolean isAdmin = auth != null && (
                 auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) ||
