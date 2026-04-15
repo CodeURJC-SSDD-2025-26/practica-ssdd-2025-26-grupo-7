@@ -2,7 +2,7 @@ package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.model.Message;
 import es.urjc.code.backend.model.User;
-import es.urjc.code.backend.repository.MessageRepository;
+import es.urjc.code.backend.service.MessageService;
 import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
 public class MessageController {
 
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageService messageService;
 
     @Autowired
     private UserService userService;
@@ -45,12 +45,12 @@ public class MessageController {
 
             for (User captain : captains) {
                 Message msg = new Message(sender, captain, subject, content);
-                messageRepository.save(msg);
+                messageService.save(msg);
             }
         } else {
             userService.findById(recipientId).ifPresent(recipient -> {
                 Message msg = new Message(sender, recipient, subject, content);
-                messageRepository.save(msg);
+                messageService.save(msg);
             });
         }
 
@@ -61,10 +61,10 @@ public class MessageController {
     public String markAsRead(@PathVariable Long id, Principal principal) {
         if (principal == null)
             return "redirect:/login";
-        messageRepository.findById(id).ifPresent(msg -> {
+        messageService.findById(id).ifPresent(msg -> {
             if (msg.getRecipient().getEmail().equals(principal.getName())) {
                 msg.setRead(true);
-                messageRepository.save(msg);
+                messageService.save(msg);
             }
         });
         return "redirect:/profile";
@@ -74,9 +74,9 @@ public class MessageController {
     public String deleteMessage(@PathVariable Long id, Principal principal) {
         if (principal == null)
             return "redirect:/login";
-        messageRepository.findById(id).ifPresent(msg -> {
+        messageService.findById(id).ifPresent(msg -> {
             if (msg.getRecipient().getEmail().equals(principal.getName())) {
-                messageRepository.delete(msg);
+                messageService.delete(msg);
             }
         });
         return "redirect:/profile";

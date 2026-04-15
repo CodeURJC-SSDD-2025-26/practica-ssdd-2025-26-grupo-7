@@ -8,7 +8,7 @@ import es.urjc.code.backend.service.MatchService;
 import es.urjc.code.backend.service.TeamService;
 import es.urjc.code.backend.service.TournamentService;
 import es.urjc.code.backend.service.UserService;
-import es.urjc.code.backend.repository.MessageRepository;
+import es.urjc.code.backend.service.MessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,7 +41,7 @@ public class BaseController {
     private MatchService matchService;
 
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageService messageService;
 
     // HOME
     @GetMapping("/")
@@ -84,7 +84,7 @@ public class BaseController {
 
             if (user != null) {
                 model.addAttribute("user", user);
-                List<Message> messages = messageRepository.findByRecipientOrderBySentAtDesc(user);
+                List<Message> messages = messageService.findByRecipientOrderBySentAtDesc(user);
                 model.addAttribute("messages", messages);
                 model.addAttribute("hasMessages", !messages.isEmpty());
                 model.addAttribute("userIsCaptain", user.getIsCaptain());

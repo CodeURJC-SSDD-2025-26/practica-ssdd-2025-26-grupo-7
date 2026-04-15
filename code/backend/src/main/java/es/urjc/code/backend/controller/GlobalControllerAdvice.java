@@ -9,13 +9,14 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import es.urjc.code.backend.repository.UserRepository;
+import es.urjc.code.backend.model.User;
+import es.urjc.code.backend.service.UserService;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -31,18 +32,14 @@ public class GlobalControllerAdvice {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
             
-            userRepository.findByEmail(principal.getName())
-                .or(() -> userRepository.findByName(principal.getName()))
-                .ifPresentOrElse(
-                    u -> {
-                        model.addAttribute("userId", u.getId());
-                        model.addAttribute("userNickname", u.getNickname());
-                    },
-                    () -> {
-                        model.addAttribute("userId", "0");
-                        model.addAttribute("userNickname", "Usuario");
-                    }
-                );
+            User u = userService.resolveUser(principal);
+            if (u != null) {
+                model.addAttribute("userId", u.getId());
+                model.addAttribute("userNickname", u.getNickname());
+            } else {
+                model.addAttribute("userId", "0");
+                model.addAttribute("userNickname", "Usuario");
+            }
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             
