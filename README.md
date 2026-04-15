@@ -328,7 +328,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 #### **Alumno 3 - [Jorge Castellano Bajo]**
 
-[El alumno ha liderado la arquitectura inicial del modelo de datos en el backend, encargándose de la creación de las entidades principales (usuarios, equipos, torneos y partidos), sus respectivos repositorios y la lógica de inicialización de la base de datos. Además, su labor incluyó el desarrollo de funcionalidades interactivas clave, como los sistemas de filtrado de torneos y la gestión de favoritos, culminando con tareas de mejora en la calidad del código, elaboración de diagramas técnicos y el refinamiento de la experiencia de usuario en las plantillas de manejo de errores y vistas principales.]
+[Encargado de liderar la arquitectura inicial del modelo de datos en el backend, incluyendo la creación de las entidades principales (usuarios, equipos, torneos y partidos), sus respectivos repositorios y la lógica para inicializar la base de datos. También me encargué de desarrollar funcionalidades interactivas clave como los filtros de torneos y la gestión de favoritos, así como de mejorar la calidad del código, elaborar los diagramas técnicos y darle un repaso a la experiencia de usuario en las vistas principales y plantillas de error.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
