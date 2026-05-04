@@ -188,4 +188,16 @@ public class UserService {
                 .filter(User::getIsCaptain)
                 .toList();
     }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    public User registerUser(String name, String nickname, String email,
+                             String university, String password) {
+        User user = new User(name, nickname, email, university,
+                passwordEncoder.encode(password), new ArrayList<>(List.of("USER")));
+        return userRepository.save(user);
+    }
 }
+
