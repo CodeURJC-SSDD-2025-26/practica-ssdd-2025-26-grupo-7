@@ -2,12 +2,12 @@ package es.urjc.code.backend.controller;
 
 import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.model.User;
-import es.urjc.code.backend.service.PdfService;
 import es.urjc.code.backend.service.TeamService;
 import es.urjc.code.backend.service.TournamentService;
 import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +39,7 @@ public class TournamentController {
     private UserService userService;
 
     @Autowired
-    private PdfService pdfService;
+    private RestTemplate restTemplate;
 
     @GetMapping("/tournaments")
     public String getTournaments(
@@ -243,14 +243,56 @@ public class TournamentController {
             return ResponseEntity.notFound().build();
 
         Tournament t = opt.get();
-        byte[] pdf = pdfService.generateTournamentPdf(t);
+        
+        // Build the request body mapping exactly to TournamentPdfRequest DTO in utility-service
+        Map<String, Object> request = new HashMap<>();
+        request.put("id", t.getId());
+        request.put("name", t.getName());
+        request.put("game", t.getGame());
+        request.put("platform", t.getPlatform());
+        request.put("mode", t.getMode());
+        request.put("maxTeams", t.getMaxTeams());
+        request.put("startDate", t.getStartDate());
+        request.put("state", t.getState());
+        request.put("description", t.getDescription());
+        request.put("rules", t.getRules());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "Tournament_" + id + ".pdf");
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        List<Map<String, String>> matchesList = new ArrayList<>();
+        if (t.getMatches() != null) {
+            t.getMatches().forEach(m -> {
+                Map<String, String> mInfo = new HashMap<>();
+                mInfo.put("matchDate", m.getMatchDate());
+                mInfo.put("localTeamName", m.getLocalTeam() != null ? m.getLocalTeam().getName() : "TBD");
+                mInfo.put("awayTeamName", m.getAwayTeam() != null ? m.getAwayTeam().getName() : "TBD");
+                mInfo.put("phase", m.getPhase());
+                mInfo.put("result", m.getResult());
+                mInfo.put("matchState", m.getState());
+                matchesList.add(mInfo);
+            });
+        }
+        request.put("matches", matchesList);
 
-        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+        try {
+            // Call utility-service
+            ResponseEntity<byte[]> response = restTemplate.postForEntity(
+                    "http://localhost:8080/api/pdf/tournament",
+                    request,
+                    byte[].class
+            );
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                headers.setContentDispositionFormData("attachment", "Tournament_" + id + ".pdf");
+                headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+                return new ResponseEntity<>(response.getBody(), headers, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+        }
     }
 
     @PostMapping("/tournaments/{id}/toggle-favorite")
