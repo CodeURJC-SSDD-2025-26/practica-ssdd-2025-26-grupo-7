@@ -1,0 +1,531 @@
+{
+  "info": {
+    "name": "OneTap eLeague API",
+    "_postman_id": "onetap-eleague-api-v1",
+    "description": "Complete REST API collection for OneTap eLeague (Práctica 3 SSDD).\n\n**Setup:**\n1. Set the `baseUrl` variable to `https://localhost:8443` (or your deployed URL).\n2. Call `POST /api/v1/auth/login` to get a JWT token.\n3. The `token` variable is used automatically in authenticated requests.\n\n**Credentials (default):**\n- Admin: `admin` / `pass123`\n- User:  `user` / `pass123`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:8443",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Login and registration endpoints",
+      "item": [
+        {
+          "name": "Login (get JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.token) {",
+                  "    var raw = json.token.replace('Bearer ', '');",
+                  "    pm.collectionVariables.set('token', raw);",
+                  "    console.log('Token saved.');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"pass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            },
+            "description": "Authenticates a user and returns a JWT Bearer token. The test script automatically saves the token to the `token` collection variable."
+          }
+        },
+        {
+          "name": "Register new user",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"nickname\": \"testuser\",\n  \"email\": \"test@urjc.es\",\n  \"university\": \"URJC\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "register"]
+            },
+            "description": "Registers a new user. Returns 201 Created with a JWT token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tournaments",
+      "description": "Tournament CRUD endpoints",
+      "item": [
+        {
+          "name": "List tournaments (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments?page=0&size=10&game=&state=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"},
+                {"key": "game", "value": "", "description": "Filter by game (optional)"},
+                {"key": "state", "value": "", "description": "Filter by state (optional)"}
+              ]
+            },
+            "description": "Returns a paginated list of tournaments. Supports optional filters: `game` and `state`. Public endpoint."
+          }
+        },
+        {
+          "name": "Get tournament by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments", "1"]
+            },
+            "description": "Returns the details of a specific tournament. Public endpoint."
+          }
+        },
+        {
+          "name": "Create tournament (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spring Championship 2025\",\n  \"game\": \"League of Legends\",\n  \"platform\": \"PC\",\n  \"mode\": \"5v5\",\n  \"maxTeams\": 16,\n  \"startDate\": \"2025-06-01\",\n  \"description\": \"Annual spring tournament for URJC students.\",\n  \"rules\": \"Standard competitive ruleset.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments"]
+            },
+            "description": "Creates a new tournament. Requires ADMIN role. Returns 201 Created with Location header."
+          }
+        },
+        {
+          "name": "Update tournament (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spring Championship 2025 - Updated\",\n  \"game\": \"League of Legends\",\n  \"platform\": \"PC\",\n  \"mode\": \"5v5\",\n  \"maxTeams\": 32,\n  \"startDate\": \"2025-06-15\",\n  \"state\": \"Active\",\n  \"description\": \"Updated description.\",\n  \"rules\": \"Updated rules.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments", "1"]
+            },
+            "description": "Updates an existing tournament. Requires ADMIN role."
+          }
+        },
+        {
+          "name": "Delete tournament (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments", "1"]
+            },
+            "description": "Deletes a tournament by ID. Requires ADMIN role. Returns 204 No Content."
+          }
+        },
+        {
+          "name": "Get tournament PDF",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1/pdf",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments", "1", "pdf"]
+            },
+            "description": "Downloads the tournament summary as a PDF file. Calls the utility-service internally."
+          }
+        },
+        {
+          "name": "Get tournament image",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1/image",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tournaments", "1", "image"]
+            },
+            "description": "Returns the tournament banner image."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "description": "Team CRUD endpoints",
+      "item": [
+        {
+          "name": "List teams (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams?page=0&size=10&game=&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"},
+                {"key": "game", "value": "", "description": "Filter by game (optional)"},
+                {"key": "search", "value": "", "description": "Search by name (optional)"}
+              ]
+            },
+            "description": "Returns a paginated list of teams. Public endpoint."
+          }
+        },
+        {
+          "name": "Get team by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams", "1"]
+            },
+            "description": "Returns team details including members and stats. Public endpoint."
+          }
+        },
+        {
+          "name": "Create team (authenticated)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Phoenix Rising\",\n  \"university\": \"URJC\",\n  \"mainGame\": \"League of Legends\",\n  \"tag\": \"PHX\",\n  \"description\": \"Competitive LoL team from URJC.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams"]
+            },
+            "description": "Creates a new team. The authenticated user becomes the captain. Returns 201 Created."
+          }
+        },
+        {
+          "name": "Update team (captain/ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Phoenix Rising II\",\n  \"university\": \"URJC\",\n  \"mainGame\": \"Valorant\",\n  \"tag\": \"PHX2\",\n  \"description\": \"Updated team description.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams", "1"]
+            },
+            "description": "Updates an existing team. Requires being the captain or ADMIN."
+          }
+        },
+        {
+          "name": "Delete team (captain/ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams", "1"]
+            },
+            "description": "Deletes a team. Requires being the captain or ADMIN. Returns 204 No Content."
+          }
+        },
+        {
+          "name": "Get team image",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/image",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "teams", "1", "image"]
+            },
+            "description": "Returns the team logo image."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Matches",
+      "description": "Match CRUD endpoints",
+      "item": [
+        {
+          "name": "List matches (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches?page=0&size=10&tournamentId=&state=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "matches"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"},
+                {"key": "tournamentId", "value": "", "description": "Filter by tournament (optional)"},
+                {"key": "state", "value": "", "description": "Filter by state (optional)"}
+              ]
+            },
+            "description": "Returns a paginated list of matches. Public endpoint."
+          }
+        },
+        {
+          "name": "Get match by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "matches", "1"]
+            },
+            "description": "Returns details of a specific match. Public endpoint."
+          }
+        },
+        {
+          "name": "Create match (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"matchDate\": \"2025-06-10\",\n  \"phase\": \"Group Stage\",\n  \"format\": \"BO3\",\n  \"tournamentId\": 1,\n  \"localTeamId\": 1,\n  \"awayTeamId\": 2,\n  \"notes\": \"Opening match of the tournament.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "matches"]
+            },
+            "description": "Creates a new match. Requires ADMIN role. Returns 201 Created."
+          }
+        },
+        {
+          "name": "Update match (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"matchDate\": \"2025-06-12\",\n  \"phase\": \"Group Stage\",\n  \"format\": \"BO3\",\n  \"state\": \"Finished\",\n  \"scoreLocal\": 2,\n  \"scoreAway\": 1,\n  \"result\": \"2-1\",\n  \"notes\": \"Intense match!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "matches", "1"]
+            },
+            "description": "Updates a match (e.g., sets the result). Requires ADMIN role."
+          }
+        },
+        {
+          "name": "Delete match (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "matches", "1"]
+            },
+            "description": "Deletes a match. Requires ADMIN role. Returns 204 No Content."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "User management endpoints",
+      "item": [
+        {
+          "name": "List users (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"}
+              ]
+            },
+            "description": "Returns a paginated list of users. Requires ADMIN role. Passwords are NOT included in the response."
+          }
+        },
+        {
+          "name": "Get user by ID (own or ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users", "1"]
+            },
+            "description": "Returns user details. Accessible by the user themselves or an ADMIN. No password returned."
+          }
+        },
+        {
+          "name": "Update user profile (own user)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"nickname\": \"updatednick\",\n  \"university\": \"URJC\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users", "1"]
+            },
+            "description": "Updates the user's own profile. Users cannot edit other users' profiles."
+          }
+        },
+        {
+          "name": "Delete user (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users", "1"]
+            },
+            "description": "Deletes a user. Requires ADMIN role. Returns 204 No Content."
+          }
+        },
+        {
+          "name": "Get user stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/1/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users", "1", "stats"]
+            },
+            "description": "Returns player statistics for charts (KDA, win rate, matches played, etc.)."
+          }
+        },
+        {
+          "name": "Get user avatar image",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/1/image",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "users", "1", "image"]
+            },
+            "description": "Returns the user's profile picture."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "description": "Internal messaging endpoints",
+      "item": [
+        {
+          "name": "List my messages (paginated)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/messages?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "messages"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"}
+              ]
+            },
+            "description": "Returns the paginated list of messages for the authenticated user."
+          }
+        },
+        {
+          "name": "Send message (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientId\": 2,\n  \"subject\": \"Tournament Update\",\n  \"content\": \"Your team has been registered for the Spring Championship.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "messages"]
+            },
+            "description": "Sends a message to a user. Requires ADMIN role. Returns 201 Created."
+          }
+        },
+        {
+          "name": "Delete message (own sender/ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/messages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "messages", "1"]
+            },
+            "description": "Deletes a message. Only the sender or an ADMIN can delete it. Returns 204 No Content."
+          }
+        }
+      ]
+    }
+  ]
+}
