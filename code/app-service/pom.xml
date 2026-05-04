@@ -9,10 +9,10 @@
     <relativePath/> 
   </parent>
   <groupId>es.urjc.code</groupId>
-  <artifactId>backend</artifactId>
+  <artifactId>app-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>backend</name>
-  <description>Backend application for Practica 2 SSDD</description>
+  <name>app-service</name>
+  <description>Main application for Practica 3 SSDD</description>
   <properties>
     <java.version>17</java.version>
   </properties>
