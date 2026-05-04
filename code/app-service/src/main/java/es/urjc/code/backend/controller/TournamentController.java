@@ -7,6 +7,7 @@ import es.urjc.code.backend.service.TournamentService;
 import es.urjc.code.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +41,9 @@ public class TournamentController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${UTILITY_SERVICE_URL:http://localhost:8080}")
+    private String utilityServiceUrl;
 
     @GetMapping("/tournaments")
     public String getTournaments(
@@ -274,8 +278,9 @@ public class TournamentController {
 
         try {
             // Call utility-service
+            String url = utilityServiceUrl + "/api/pdf/tournament";
             ResponseEntity<byte[]> response = restTemplate.postForEntity(
-                    "http://localhost:8080/api/pdf/tournament",
+                    url,
                     request,
                     byte[].class
             );
