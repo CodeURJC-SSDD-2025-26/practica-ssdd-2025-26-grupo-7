@@ -1,8 +1,6 @@
 services:
 
-  # ──────────────────────────────────────────────────────────
-  # MySQL Database (official image from DockerHub)
-  # ──────────────────────────────────────────────────────────
+  # MySQL Database
   mysql:
     image: mysql:8.3
     container_name: onetap-mysql
@@ -20,9 +18,7 @@ services:
       retries: 10
       start_period: 30s
 
-  # ──────────────────────────────────────────────────────────
-  # Utility Service (PDF generation — no database)
-  # ──────────────────────────────────────────────────────────
+  # Utility Service
   utility-service:
     image: anxelito/onetap-utility-service:latest
     container_name: onetap-utility-service
@@ -35,9 +31,7 @@ services:
       retries: 5
       start_period: 20s
 
-  # ──────────────────────────────────────────────────────────
-  # App Service (main backend — requires mysql & utility-service)
-  # ──────────────────────────────────────────────────────────
+  # App Service
   app-service:
     image: anxelito/onetap-app-service:latest
     container_name: onetap-app-service
