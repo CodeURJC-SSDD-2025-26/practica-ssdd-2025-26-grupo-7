@@ -4,7 +4,6 @@ import es.urjc.code.backend.dto.request.TeamCreateRequest;
 import es.urjc.code.backend.dto.request.TeamUpdateRequest;
 import es.urjc.code.backend.dto.response.TeamResponse;
 import es.urjc.code.backend.model.Team;
-import es.urjc.code.backend.model.User;
 import es.urjc.code.backend.service.TeamService;
 import es.urjc.code.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +58,8 @@ public class TeamRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponse> getTeam(@PathVariable Long id) {
         Optional<Team> opt = teamService.findById(id);
-        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(new TeamResponse(opt.get()));
     }
 
@@ -69,7 +69,7 @@ public class TeamRestController {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TeamResponse> createTeam(@Valid @RequestBody TeamCreateRequest body,
-                                                   Authentication auth) {
+            Authentication auth) {
         try {
             Team saved = teamService.createTeam(
                     body.getName(),
@@ -80,8 +80,7 @@ public class TeamRestController {
                     null,
                     null,
                     null,
-                    auth.getName()
-            );
+                    auth.getName());
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}").buildAndExpand(saved.getId()).toUri();
             return ResponseEntity.created(location).body(new TeamResponse(saved));
@@ -98,10 +97,11 @@ public class TeamRestController {
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TeamResponse> updateTeam(@PathVariable Long id,
-                                                   @Valid @RequestBody TeamUpdateRequest body,
-                                                   Authentication auth) {
+            @Valid @RequestBody TeamUpdateRequest body,
+            Authentication auth) {
         Optional<Team> opt = teamService.findById(id);
-        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
 
         Team team = opt.get();
         // Check authorization: must be captain or admin
@@ -122,8 +122,7 @@ public class TeamRestController {
                     body.getDescription() != null ? body.getDescription() : team.getDescription(),
                     body.getTag() != null ? body.getTag() : team.getTag(),
                     body.getCaptainId(),
-                    null, null
-            );
+                    null, null);
             Optional<Team> updated = teamService.findById(id);
             return updated.map(t -> ResponseEntity.ok(new TeamResponse(t)))
                     .orElse(ResponseEntity.notFound().build());
@@ -141,7 +140,8 @@ public class TeamRestController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteTeam(@PathVariable Long id, Authentication auth) {
         Optional<Team> opt = teamService.findById(id);
-        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
 
         Team team = opt.get();
         boolean isAdmin = auth.getAuthorities().stream()
@@ -158,11 +158,12 @@ public class TeamRestController {
 
     // ── GET /api/v1/teams/{id}/image ────────────────────────
     @Operation(summary = "Get team logo image")
-    @GetMapping(value = "/{id}/image", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    @GetMapping(value = "/{id}/image", produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
     public ResponseEntity<byte[]> getTeamImage(@PathVariable Long id) {
         try {
             Optional<Team> opt = teamService.findById(id);
-            if (opt.isEmpty() || opt.get().getImageFile() == null) return ResponseEntity.notFound().build();
+            if (opt.isEmpty() || opt.get().getImageFile() == null)
+                return ResponseEntity.notFound().build();
             byte[] imageBytes = opt.get().getImageFile().getBytes(1, (int) opt.get().getImageFile().length());
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
         } catch (Exception e) {
