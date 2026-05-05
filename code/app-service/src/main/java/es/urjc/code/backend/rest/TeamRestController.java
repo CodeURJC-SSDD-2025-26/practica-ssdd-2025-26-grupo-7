@@ -5,7 +5,6 @@ import es.urjc.code.backend.dto.request.TeamUpdateRequest;
 import es.urjc.code.backend.dto.response.TeamResponse;
 import es.urjc.code.backend.model.Team;
 import es.urjc.code.backend.service.TeamService;
-import es.urjc.code.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,9 +30,6 @@ public class TeamRestController {
 
     @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private UserService userService;
 
     // ── GET /api/v1/teams ───────────────────────────────────
     @Operation(summary = "List all teams (paginated)")
