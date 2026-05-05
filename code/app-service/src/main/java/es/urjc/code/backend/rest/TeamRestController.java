@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,8 +68,8 @@ public class TeamRestController {
     @ApiResponse(responseCode = "201", description = "Team created")
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<TeamResponse> createTeam(@RequestBody TeamCreateRequest body,
-                                                           Authentication auth) {
+    public ResponseEntity<TeamResponse> createTeam(@Valid @RequestBody TeamCreateRequest body,
+                                                   Authentication auth) {
         try {
             Team saved = teamService.createTeam(
                     body.getName(),
@@ -97,8 +98,8 @@ public class TeamRestController {
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TeamResponse> updateTeam(@PathVariable Long id,
-                                                           @RequestBody TeamUpdateRequest body,
-                                                           Authentication auth) {
+                                                   @Valid @RequestBody TeamUpdateRequest body,
+                                                   Authentication auth) {
         Optional<Team> opt = teamService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
 

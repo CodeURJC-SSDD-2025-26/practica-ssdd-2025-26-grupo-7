@@ -22,6 +22,20 @@ import java.util.NoSuchElementException;
 public class GlobalApiExceptionHandler {
 
     // ── 400 Bad Request ─────────────────────────────────────
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleValidationExceptions(org.springframework.web.bind.MethodArgumentNotValidException ex, HttpServletRequest request) {
+        Map<String, String> errors = new java.util.HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((org.springframework.validation.FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        Map<String, Object> body = errorBody(HttpStatus.BAD_REQUEST, "Validation Failed", "One or more fields are invalid.", request.getRequestURI());
+        body.put("details", errors);
+        return body;
+    }
+
     @ExceptionHandler({IllegalArgumentException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleBadRequest(Exception ex, HttpServletRequest request) {

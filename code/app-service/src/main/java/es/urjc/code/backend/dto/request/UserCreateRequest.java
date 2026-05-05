@@ -1,11 +1,19 @@
 package es.urjc.code.backend.dto.request;
 
+import jakarta.validation.constraints.*;
 import java.util.List;
 
 public class UserCreateRequest {
+    @NotBlank
     private String name;
+    @NotBlank
+    @Size(min = 3, max = 20)
     private String nickname;
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
+    @Size(min = 6)
     private String password;
     private String university;
     private List<String> roles;

@@ -1,8 +1,17 @@
 package es.urjc.code.backend.dto.request;
 
+import jakarta.validation.constraints.*;
+
 public class MessageCreateRequest {
+    @NotNull
     private Long recipientId;
+
+    @NotBlank
+    @Size(max = 100)
     private String subject;
+
+    @NotBlank
+    @Size(max = 2000)
     private String content;
 
     public MessageCreateRequest() {}

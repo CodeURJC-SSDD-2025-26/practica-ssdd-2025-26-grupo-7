@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -70,7 +71,7 @@ public class TournamentRestController {
     @ApiResponse(responseCode = "201", description = "Tournament created")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TournamentResponse> createTournament(@RequestBody TournamentCreateRequest body) {
+    public ResponseEntity<TournamentResponse> createTournament(@Valid @RequestBody TournamentCreateRequest body) {
         try {
             Tournament saved = tournamentService.createTournament(
                     body.getName(),
@@ -98,7 +99,7 @@ public class TournamentRestController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TournamentResponse> updateTournament(@PathVariable Long id,
-                                                                 @RequestBody TournamentUpdateRequest body) {
+                                                               @Valid @RequestBody TournamentUpdateRequest body) {
         try {
             Optional<Tournament> existing = tournamentService.findById(id);
             if (existing.isEmpty()) return ResponseEntity.notFound().build();

@@ -1,12 +1,26 @@
 package es.urjc.code.backend.dto.request;
 
+import jakarta.validation.constraints.*;
+
 public class MatchCreateRequest {
+    @NotNull
     private Long tournamentId;
+
+    @NotNull
     private Long localTeamId;
+
+    @NotNull
     private Long awayTeamId;
+
+    @NotBlank
     private String phase;
+
+    @NotBlank
     private String format;
+
+    @NotBlank
     private String matchDate;
+
     private String notes;
 
     public MatchCreateRequest() {}

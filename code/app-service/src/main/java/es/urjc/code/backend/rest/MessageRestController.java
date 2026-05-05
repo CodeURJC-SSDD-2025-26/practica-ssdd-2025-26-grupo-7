@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,7 +59,7 @@ public class MessageRestController {
     @ApiResponse(responseCode = "201", description = "Message sent")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> sendMessage(@RequestBody MessageCreateRequest body,
+    public ResponseEntity<MessageResponse> sendMessage(@Valid @RequestBody MessageCreateRequest body,
                                                            Authentication auth) {
         Long recipientId = body.getRecipientId();
         if (recipientId == null) {

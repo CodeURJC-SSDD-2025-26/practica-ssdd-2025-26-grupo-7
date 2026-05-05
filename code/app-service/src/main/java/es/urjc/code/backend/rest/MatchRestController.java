@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +62,7 @@ public class MatchRestController {
     @ApiResponse(responseCode = "201", description = "Match created")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MatchResponse> createMatch(@RequestBody MatchCreateRequest body) {
+    public ResponseEntity<MatchResponse> createMatch(@Valid @RequestBody MatchCreateRequest body) {
         try {
             Match saved = matchService.createMatch(
                     body.getTournamentId(),
@@ -89,7 +90,7 @@ public class MatchRestController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MatchResponse> updateMatch(@PathVariable Long id,
-                                                           @RequestBody MatchUpdateRequest body) {
+                                                           @Valid @RequestBody MatchUpdateRequest body) {
         Optional<Match> opt = matchService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
 

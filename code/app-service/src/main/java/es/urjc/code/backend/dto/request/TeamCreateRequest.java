@@ -1,10 +1,22 @@
 package es.urjc.code.backend.dto.request;
 
+import jakarta.validation.constraints.*;
+
 public class TeamCreateRequest {
+    @NotBlank
+    @Size(max = 50)
     private String name;
+
+    @NotBlank
     private String university;
+
+    @NotBlank
     private String mainGame;
+
     private String description;
+
+    @NotBlank
+    @Size(min = 2, max = 5)
     private String tag;
 
     public TeamCreateRequest() {}

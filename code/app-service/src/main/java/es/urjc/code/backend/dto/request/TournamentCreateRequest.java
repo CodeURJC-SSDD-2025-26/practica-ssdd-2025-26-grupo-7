@@ -1,12 +1,26 @@
 package es.urjc.code.backend.dto.request;
 
+import jakarta.validation.constraints.*;
+
 public class TournamentCreateRequest {
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String game;
+
+    @NotBlank
     private String platform;
+
+    @NotBlank
     private String mode;
+
+    @Min(2)
     private int maxTeams;
+
+    @NotBlank
     private String startDate;
+
     private String description;
     private String rules;
 
