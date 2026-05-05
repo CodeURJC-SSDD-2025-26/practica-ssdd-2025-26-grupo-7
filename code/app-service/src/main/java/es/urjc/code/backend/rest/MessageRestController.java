@@ -1,5 +1,7 @@
 package es.urjc.code.backend.rest;
 
+import es.urjc.code.backend.dto.request.MessageCreateRequest;
+import es.urjc.code.backend.dto.response.MessageResponse;
 import es.urjc.code.backend.model.Message;
 import es.urjc.code.backend.model.User;
 import es.urjc.code.backend.service.MessageService;
@@ -9,6 +11,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -33,7 +38,7 @@ public class MessageRestController {
     @Operation(summary = "List messages for authenticated user (paginated)")
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Map<String, Object>> listMessages(
+    public ResponseEntity<Page<MessageResponse>> listMessages(
             @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
             Authentication auth) {
@@ -41,20 +46,11 @@ public class MessageRestController {
         User currentUser = userService.resolveUser(auth.getName());
         if (currentUser == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        List<Message> all = messageService.findByRecipientOrderBySentAtDesc(currentUser);
-        int start = page * size;
-        int end = Math.min(start + size, all.size());
-        List<Message> pageContent = start < all.size() ? all.subList(start, end) : List.of();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Message> messagePage = messageService.findByRecipient(currentUser, pageable);
+        Page<MessageResponse> responsePage = messagePage.map(MessageResponse::new);
 
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("content", pageContent.stream().map(this::toMap).toList());
-        response.put("page", page);
-        response.put("size", size);
-        response.put("totalElements", all.size());
-        response.put("totalPages", (int) Math.ceil((double) all.size() / size));
-        response.put("last", end >= all.size());
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responsePage);
     }
 
     // ── POST /api/v1/messages ───────────────────────────────
@@ -62,32 +58,30 @@ public class MessageRestController {
     @ApiResponse(responseCode = "201", description = "Message sent")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> sendMessage(@RequestBody Map<String, Object> body,
+    public ResponseEntity<MessageResponse> sendMessage(@RequestBody MessageCreateRequest body,
                                                            Authentication auth) {
-        Long recipientId = body.containsKey("recipientId")
-                ? Long.valueOf(body.get("recipientId").toString()) : null;
+        Long recipientId = body.getRecipientId();
         if (recipientId == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "recipientId is required"));
+            return ResponseEntity.badRequest().build();
         }
 
         Optional<User> recipientOpt = userService.findById(recipientId);
         if (recipientOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "Recipient not found"));
+            return ResponseEntity.notFound().build();
         }
 
         User sender = userService.resolveUser(auth.getName());
         Message message = new Message(
                 sender,
                 recipientOpt.get(),
-                (String) body.getOrDefault("subject", ""),
-                (String) body.getOrDefault("content", "")
+                body.getSubject() != null ? body.getSubject() : "",
+                body.getContent() != null ? body.getContent() : ""
         );
 
         Message saved = messageService.save(message);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(saved.getId()).toUri();
-        return ResponseEntity.created(location).body(toMap(saved));
+        return ResponseEntity.created(location).body(new MessageResponse(saved));
     }
 
     // ── DELETE /api/v1/messages/{id} ────────────────────────
@@ -115,24 +109,5 @@ public class MessageRestController {
 
         messageService.delete(message);
         return ResponseEntity.noContent().build();
-    }
-
-    // ── Helper ───────────────────────────────────────────────
-    private Map<String, Object> toMap(Message m) {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("id", m.getId());
-        map.put("subject", m.getSubject());
-        map.put("content", m.getContent());
-        map.put("sentAt", m.getFormattedDate());
-        map.put("isRead", m.isRead());
-        if (m.getSender() != null) {
-            map.put("senderId", m.getSender().getId());
-            map.put("senderName", m.getSender().getNickname());
-        }
-        if (m.getRecipient() != null) {
-            map.put("recipientId", m.getRecipient().getId());
-            map.put("recipientName", m.getRecipient().getNickname());
-        }
-        return map;
     }
 }

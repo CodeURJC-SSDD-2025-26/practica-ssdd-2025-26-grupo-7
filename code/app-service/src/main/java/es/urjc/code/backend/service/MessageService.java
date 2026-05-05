@@ -30,4 +30,8 @@ public class MessageService {
     public List<Message> findByRecipientOrderBySentAtDesc(User user) {
         return messageRepository.findByRecipientOrderBySentAtDesc(user);
     }
+
+    public org.springframework.data.domain.Page<Message> findByRecipient(User user, org.springframework.data.domain.Pageable pageable) {
+        return messageRepository.findByRecipientOrderBySentAtDesc(user, pageable);
+    }
 }
