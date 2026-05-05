@@ -49,6 +49,26 @@ public class UserRestController {
         return ResponseEntity.ok(responsePage);
     }
 
+    // ── POST /api/v1/users ──────────────────────────────────
+    @Operation(summary = "Create a new user (ADMIN only)")
+    @ApiResponse(responseCode = "201", description = "User created")
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserCreateRequest body) {
+        try {
+            User user = userService.registerUser(
+                    body.getName(),
+                    body.getNickname(),
+                    body.getEmail(),
+                    body.getUniversity(),
+                    body.getPassword()
+            );
+            return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(user));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     // ── GET /api/v1/users/{id} ──────────────────────────────
     @Operation(summary = "Get user by ID (own user or ADMIN)", description = "Returns user details without password.")
     @ApiResponse(responseCode = "200", description = "User found")

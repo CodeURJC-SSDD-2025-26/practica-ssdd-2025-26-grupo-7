@@ -20,7 +20,9 @@ services:
 
   # Utility Service
   utility-service:
-    image: anxelito/onetap-utility-service:latest
+    build:
+      context: ..
+      dockerfile: docker/utility-service.Dockerfile
     container_name: onetap-utility-service
     ports:
       - "8080:8080"
@@ -33,7 +35,9 @@ services:
 
   # App Service
   app-service:
-    image: anxelito/onetap-app-service:latest
+    build:
+      context: ..
+      dockerfile: docker/app-service.Dockerfile
     container_name: onetap-app-service
     ports:
       - "8443:8443"

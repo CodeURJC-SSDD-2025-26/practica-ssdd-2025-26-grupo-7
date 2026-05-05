@@ -122,7 +122,7 @@ public class TeamRestController {
                     body.getDescription() != null ? body.getDescription() : team.getDescription(),
                     body.getTag() != null ? body.getTag() : team.getTag(),
                     body.getCaptainId(),
-                    null, null, null
+                    null, null
             );
             Optional<Team> updated = teamService.findById(id);
             return updated.map(t -> ResponseEntity.ok(new TeamResponse(t)))
