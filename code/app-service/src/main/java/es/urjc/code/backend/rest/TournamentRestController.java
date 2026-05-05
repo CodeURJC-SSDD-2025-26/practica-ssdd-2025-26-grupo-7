@@ -1,5 +1,8 @@
 package es.urjc.code.backend.rest;
 
+import es.urjc.code.backend.dto.request.TournamentCreateRequest;
+import es.urjc.code.backend.dto.request.TournamentUpdateRequest;
+import es.urjc.code.backend.dto.response.TournamentResponse;
 import es.urjc.code.backend.model.Tournament;
 import es.urjc.code.backend.service.TournamentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +41,7 @@ public class TournamentRestController {
     @Operation(summary = "List all tournaments (paginated)")
     @ApiResponse(responseCode = "200", description = "Page of tournaments returned successfully")
     @GetMapping
-    public ResponseEntity<Map<String, Object>> listTournaments(
+    public ResponseEntity<Page<TournamentResponse>> listTournaments(
             @Parameter(description = "Page number (0-indexed)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
             @Parameter(description = "Filter by game") @RequestParam(required = false) String game,
@@ -46,19 +49,9 @@ public class TournamentRestController {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Tournament> tournamentPage = tournamentService.findWithFilters(null, game, state, pageable);
+        Page<TournamentResponse> responsePage = tournamentPage.map(TournamentResponse::new);
 
-        List<Map<String, Object>> content = tournamentPage.getContent().stream()
-                .map(this::toSummaryMap).toList();
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("content", content);
-        response.put("page", tournamentPage.getNumber());
-        response.put("size", tournamentPage.getSize());
-        response.put("totalElements", tournamentPage.getTotalElements());
-        response.put("totalPages", tournamentPage.getTotalPages());
-        response.put("last", tournamentPage.isLast());
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responsePage);
     }
 
     // ── GET /api/v1/tournaments/{id} ────────────────────────
@@ -66,10 +59,10 @@ public class TournamentRestController {
     @ApiResponse(responseCode = "200", description = "Tournament found")
     @ApiResponse(responseCode = "404", description = "Tournament not found")
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getTournament(@PathVariable Long id) {
+    public ResponseEntity<TournamentResponse> getTournament(@PathVariable Long id) {
         Optional<Tournament> opt = tournamentService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(toDetailMap(opt.get()));
+        return ResponseEntity.ok(new TournamentResponse(opt.get()));
     }
 
     // ── POST /api/v1/tournaments ────────────────────────────
@@ -77,25 +70,24 @@ public class TournamentRestController {
     @ApiResponse(responseCode = "201", description = "Tournament created")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> createTournament(@RequestBody Map<String, Object> body) {
+    public ResponseEntity<TournamentResponse> createTournament(@RequestBody TournamentCreateRequest body) {
         try {
             Tournament saved = tournamentService.createTournament(
-                    (String) body.get("name"),
-                    (String) body.get("game"),
-                    (String) body.get("platform"),
-                    (String) body.get("mode"),
-                    body.containsKey("maxTeams") ? ((Number) body.get("maxTeams")).intValue() : 16,
-                    (String) body.get("startDate"),
-                    (String) body.get("description"),
-                    (String) body.get("rules"),
+                    body.getName(),
+                    body.getGame(),
+                    body.getPlatform(),
+                    body.getMode(),
+                    body.getMaxTeams() != 0 ? body.getMaxTeams() : 16,
+                    body.getStartDate(),
+                    body.getDescription(),
+                    body.getRules(),
                     null
             );
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}").buildAndExpand(saved.getId()).toUri();
-            return ResponseEntity.created(location).body(toDetailMap(saved));
+            return ResponseEntity.created(location).body(new TournamentResponse(saved));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Failed to create tournament: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -105,8 +97,8 @@ public class TournamentRestController {
     @ApiResponse(responseCode = "404", description = "Tournament not found")
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> updateTournament(@PathVariable Long id,
-                                                                @RequestBody Map<String, Object> body) {
+    public ResponseEntity<TournamentResponse> updateTournament(@PathVariable Long id,
+                                                                 @RequestBody TournamentUpdateRequest body) {
         try {
             Optional<Tournament> existing = tournamentService.findById(id);
             if (existing.isEmpty()) return ResponseEntity.notFound().build();
@@ -114,24 +106,23 @@ public class TournamentRestController {
 
             boolean updated = tournamentService.editTournament(
                     id,
-                    (String) body.getOrDefault("name", t.getName()),
-                    (String) body.getOrDefault("game", t.getGame()),
-                    (String) body.getOrDefault("platform", t.getPlatform()),
-                    (String) body.getOrDefault("mode", t.getMode()),
-                    body.containsKey("maxTeams") ? ((Number) body.get("maxTeams")).intValue() : t.getMaxTeams(),
-                    (String) body.getOrDefault("startDate", t.getStartDate()),
-                    (String) body.getOrDefault("description", t.getDescription()),
-                    (String) body.getOrDefault("rules", t.getRules()),
-                    (String) body.getOrDefault("state", t.getState()),
+                    body.getName() != null ? body.getName() : t.getName(),
+                    body.getGame() != null ? body.getGame() : t.getGame(),
+                    body.getPlatform() != null ? body.getPlatform() : t.getPlatform(),
+                    body.getMode() != null ? body.getMode() : t.getMode(),
+                    body.getMaxTeams() != null ? body.getMaxTeams() : t.getMaxTeams(),
+                    body.getStartDate() != null ? body.getStartDate() : t.getStartDate(),
+                    body.getDescription() != null ? body.getDescription() : t.getDescription(),
+                    body.getRules() != null ? body.getRules() : t.getRules(),
+                    body.getState() != null ? body.getState() : t.getState(),
                     null
             );
             if (!updated) return ResponseEntity.notFound().build();
             Optional<Tournament> updated2 = tournamentService.findById(id);
-            return updated2.map(tt -> ResponseEntity.ok(toDetailMap(tt)))
+            return updated2.map(tt -> ResponseEntity.ok(new TournamentResponse(tt)))
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -213,28 +204,5 @@ public class TournamentRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    // ── Helpers ─────────────────────────────────────────────
-    private Map<String, Object> toSummaryMap(Tournament t) {
-        Map<String, Object> m = new LinkedHashMap<>();
-        m.put("id", t.getId());
-        m.put("name", t.getName());
-        m.put("game", t.getGame());
-        m.put("platform", t.getPlatform());
-        m.put("state", t.getState());
-        m.put("maxTeams", t.getMaxTeams());
-        m.put("startDate", t.getStartDate());
-        m.put("teamCount", t.getTeams() != null ? t.getTeams().size() : 0);
-        return m;
-    }
-
-    private Map<String, Object> toDetailMap(Tournament t) {
-        Map<String, Object> m = toSummaryMap(t);
-        m.put("mode", t.getMode());
-        m.put("description", t.getDescription());
-        m.put("rules", t.getRules());
-        m.put("matchCount", t.getMatches() != null ? t.getMatches().size() : 0);
-        return m;
     }
 }
