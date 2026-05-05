@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
     Optional<Team> findByName(String name);
+
+    org.springframework.data.domain.Page<Team> findByNameContainingIgnoreCaseAndMainGameContainingIgnoreCase(
+            String name, String mainGame, org.springframework.data.domain.Pageable pageable);
 }

@@ -1,5 +1,8 @@
 package es.urjc.code.backend.rest;
 
+import es.urjc.code.backend.dto.request.TeamCreateRequest;
+import es.urjc.code.backend.dto.request.TeamUpdateRequest;
+import es.urjc.code.backend.dto.response.TeamResponse;
 import es.urjc.code.backend.model.Team;
 import es.urjc.code.backend.model.User;
 import es.urjc.code.backend.service.TeamService;
@@ -9,7 +12,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -33,36 +38,17 @@ public class TeamRestController {
     // ── GET /api/v1/teams ───────────────────────────────────
     @Operation(summary = "List all teams (paginated)")
     @GetMapping
-    public ResponseEntity<Map<String, Object>> listTeams(
+    public ResponseEntity<Page<TeamResponse>> listTeams(
             @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
             @Parameter(description = "Search by name") @RequestParam(required = false) String search,
             @Parameter(description = "Filter by game") @RequestParam(required = false) String game) {
 
-        List<Team> allTeams = teamService.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Team> teamPage = teamService.findWithFilters(search, game, pageable);
+        Page<TeamResponse> responsePage = teamPage.map(TeamResponse::new);
 
-        // Apply filters
-        List<Team> filtered = allTeams.stream()
-                .filter(t -> search == null || search.isBlank() || t.getName().toLowerCase().contains(search.toLowerCase()))
-                .filter(t -> game == null || game.isBlank() || (t.getMainGame() != null && t.getMainGame().equalsIgnoreCase(game)))
-                .toList();
-
-        // Manual pagination
-        int start = page * size;
-        int end = Math.min(start + size, filtered.size());
-        List<Team> pageContent = (start < filtered.size()) ? filtered.subList(start, end) : List.of();
-
-        List<Map<String, Object>> content = pageContent.stream().map(this::toSummaryMap).toList();
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("content", content);
-        response.put("page", page);
-        response.put("size", size);
-        response.put("totalElements", filtered.size());
-        response.put("totalPages", (int) Math.ceil((double) filtered.size() / size));
-        response.put("last", end >= filtered.size());
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responsePage);
     }
 
     // ── GET /api/v1/teams/{id} ──────────────────────────────
@@ -70,10 +56,10 @@ public class TeamRestController {
     @ApiResponse(responseCode = "200", description = "Team found")
     @ApiResponse(responseCode = "404", description = "Team not found")
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getTeam(@PathVariable Long id) {
+    public ResponseEntity<TeamResponse> getTeam(@PathVariable Long id) {
         Optional<Team> opt = teamService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(toDetailMap(opt.get()));
+        return ResponseEntity.ok(new TeamResponse(opt.get()));
     }
 
     // ── POST /api/v1/teams ──────────────────────────────────
@@ -81,15 +67,15 @@ public class TeamRestController {
     @ApiResponse(responseCode = "201", description = "Team created")
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Map<String, Object>> createTeam(@RequestBody Map<String, Object> body,
+    public ResponseEntity<TeamResponse> createTeam(@RequestBody TeamCreateRequest body,
                                                            Authentication auth) {
         try {
             Team saved = teamService.createTeam(
-                    (String) body.get("name"),
-                    (String) body.get("university"),
-                    (String) body.get("mainGame"),
-                    (String) body.get("description"),
-                    (String) body.get("tag"),
+                    body.getName(),
+                    body.getUniversity(),
+                    body.getMainGame(),
+                    body.getDescription(),
+                    body.getTag(),
                     null,
                     null,
                     null,
@@ -97,10 +83,9 @@ public class TeamRestController {
             );
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}").buildAndExpand(saved.getId()).toUri();
-            return ResponseEntity.created(location).body(toDetailMap(saved));
+            return ResponseEntity.created(location).body(new TeamResponse(saved));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Failed to create team: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -111,8 +96,8 @@ public class TeamRestController {
     @ApiResponse(responseCode = "404", description = "Team not found")
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Map<String, Object>> updateTeam(@PathVariable Long id,
-                                                           @RequestBody Map<String, Object> body,
+    public ResponseEntity<TeamResponse> updateTeam(@PathVariable Long id,
+                                                           @RequestBody TeamUpdateRequest body,
                                                            Authentication auth) {
         Optional<Team> opt = teamService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
@@ -124,26 +109,25 @@ public class TeamRestController {
         boolean isCaptain = teamService.isCaptainOf(team, auth.getName());
 
         if (!isAdmin && !isCaptain) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "Only the team captain or an admin can edit this team"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         try {
             teamService.editTeam(
                     id,
-                    (String) body.getOrDefault("name", team.getName()),
-                    (String) body.getOrDefault("university", team.getUniversity()),
-                    (String) body.getOrDefault("mainGame", team.getMainGame()),
-                    (String) body.getOrDefault("description", team.getDescription()),
-                    (String) body.getOrDefault("tag", team.getTag()),
+                    body.getName() != null ? body.getName() : team.getName(),
+                    body.getUniversity() != null ? body.getUniversity() : team.getUniversity(),
+                    body.getMainGame() != null ? body.getMainGame() : team.getMainGame(),
+                    body.getDescription() != null ? body.getDescription() : team.getDescription(),
+                    body.getTag() != null ? body.getTag() : team.getTag(),
+                    body.getCaptainId(),
                     null, null, null
             );
             Optional<Team> updated = teamService.findById(id);
-            return updated.map(t -> ResponseEntity.ok(toDetailMap(t)))
+            return updated.map(t -> ResponseEntity.ok(new TeamResponse(t)))
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -183,39 +167,5 @@ public class TeamRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    // ── Helpers ─────────────────────────────────────────────
-    private Map<String, Object> toSummaryMap(Team t) {
-        Map<String, Object> m = new LinkedHashMap<>();
-        m.put("id", t.getId());
-        m.put("name", t.getName());
-        m.put("university", t.getUniversity());
-        m.put("mainGame", t.getMainGame());
-        m.put("tag", t.getTag());
-        m.put("wins", t.getWins());
-        m.put("losses", t.getLosses());
-        m.put("matchesPlayed", t.getMatchesPlayed());
-        m.put("playerCount", t.getPlayers() != null ? t.getPlayers().size() : 0);
-        return m;
-    }
-
-    private Map<String, Object> toDetailMap(Team t) {
-        Map<String, Object> m = toSummaryMap(t);
-        m.put("description", t.getDescription());
-        if (t.getCaptain() != null) {
-            m.put("captainId", t.getCaptain().getId());
-            m.put("captainNickname", t.getCaptain().getNickname());
-        }
-        if (t.getPlayers() != null) {
-            m.put("players", t.getPlayers().stream().map(p -> {
-                Map<String, Object> pm = new LinkedHashMap<>();
-                pm.put("id", p.getId());
-                pm.put("nickname", p.getNickname());
-                pm.put("name", p.getName());
-                return pm;
-            }).toList());
-        }
-        return m;
     }
 }

@@ -37,6 +37,12 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
+    public org.springframework.data.domain.Page<Team> findWithFilters(String name, String mainGame, org.springframework.data.domain.Pageable pageable) {
+        String nameFilter = (name != null) ? name : "";
+        String gameFilter = (mainGame != null) ? mainGame : "";
+        return teamRepository.findByNameContainingIgnoreCaseAndMainGameContainingIgnoreCase(nameFilter, gameFilter, pageable);
+    }
+
     public Optional<Team> findById(Long id) {
         return teamRepository.findById(id);
     }
