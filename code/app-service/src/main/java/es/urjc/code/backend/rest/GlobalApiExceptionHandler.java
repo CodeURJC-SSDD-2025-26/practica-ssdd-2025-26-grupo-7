@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Global exception handler for REST API endpoints (/api/v1/**).
@@ -41,11 +43,18 @@ public class GlobalApiExceptionHandler {
     }
 
     // ── 404 Not Found ───────────────────────────────────────
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, Object> handleNotFound(NoSuchElementException ex, HttpServletRequest request) {
+        return errorBody(HttpStatus.NOT_FOUND, "Not Found", "The requested resource does not exist.", request.getRequestURI());
+    }
+
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> handleResponseStatus(ResponseStatusException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.valueOf(ex.getStatusCode().value());
         Map<String, Object> body = errorBody(
-                HttpStatus.valueOf(ex.getStatusCode().value()),
-                ex.getReason() != null ? ex.getReason() : ex.getStatusCode().toString(),
+                status,
+                ex.getReason() != null ? ex.getReason() : status.getReasonPhrase(),
                 ex.getMessage(),
                 request.getRequestURI()
         );
@@ -57,12 +66,13 @@ public class GlobalApiExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, Object> handleGeneric(Exception ex, HttpServletRequest request) {
         return errorBody(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error",
-                "An unexpected error occurred. Please try again later.", request.getRequestURI());
+                "An unexpected error occurred: " + ex.getMessage(), request.getRequestURI());
     }
 
     // ── Helper ───────────────────────────────────────────────
     private Map<String, Object> errorBody(HttpStatus status, String error, String message, String path) {
         Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
         body.put("status", status.value());
         body.put("error", error);
         body.put("message", message);
