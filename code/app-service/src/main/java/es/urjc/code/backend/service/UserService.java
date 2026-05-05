@@ -38,6 +38,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public org.springframework.data.domain.Page<User> findAll(org.springframework.data.domain.Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }

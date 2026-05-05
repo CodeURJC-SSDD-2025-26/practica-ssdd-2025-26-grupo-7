@@ -1,5 +1,8 @@
 package es.urjc.code.backend.rest;
 
+import es.urjc.code.backend.dto.request.UserCreateRequest;
+import es.urjc.code.backend.dto.request.UserUpdateRequest;
+import es.urjc.code.backend.dto.response.UserResponse;
 import es.urjc.code.backend.model.PlayerMatchStats;
 import es.urjc.code.backend.model.User;
 import es.urjc.code.backend.service.MatchService;
@@ -9,6 +12,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -31,24 +37,15 @@ public class UserRestController {
     @Operation(summary = "List all users (ADMIN)", description = "Returns a paginated list of users. Passwords are NOT included.")
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> listUsers(
+    public ResponseEntity<Page<UserResponse>> listUsers(
             @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size) {
 
-        List<User> all = userService.findAll();
-        int start = page * size;
-        int end = Math.min(start + size, all.size());
-        List<User> pageContent = start < all.size() ? all.subList(start, end) : List.of();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userPage = userService.findAll(pageable);
+        Page<UserResponse> responsePage = userPage.map(UserResponse::new);
 
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("content", pageContent.stream().map(this::toSafeMap).toList());
-        response.put("page", page);
-        response.put("size", size);
-        response.put("totalElements", all.size());
-        response.put("totalPages", (int) Math.ceil((double) all.size() / size));
-        response.put("last", end >= all.size());
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responsePage);
     }
 
     // ── GET /api/v1/users/{id} ──────────────────────────────
@@ -58,7 +55,7 @@ public class UserRestController {
     @ApiResponse(responseCode = "404", description = "User not found")
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Map<String, Object>> getUser(@PathVariable Long id, Authentication auth) {
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id, Authentication auth) {
         Optional<User> opt = userService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -66,11 +63,10 @@ public class UserRestController {
         boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         User requestingUser = userService.resolveUser(auth.getName());
         if (!isAdmin && (requestingUser == null || !requestingUser.getId().equals(id))) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "You can only view your own profile"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        return ResponseEntity.ok(toSafeMap(opt.get()));
+        return ResponseEntity.ok(new UserResponse(opt.get()));
     }
 
     // ── PUT /api/v1/users/{id} ──────────────────────────────
@@ -79,8 +75,8 @@ public class UserRestController {
     @ApiResponse(responseCode = "403", description = "Access denied")
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable Long id,
-                                                          @RequestBody Map<String, Object> body,
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
+                                                          @RequestBody UserUpdateRequest body,
                                                           Authentication auth) {
         Optional<User> opt = userService.findById(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
@@ -88,20 +84,18 @@ public class UserRestController {
         boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         User requestingUser = userService.resolveUser(auth.getName());
         if (!isAdmin && (requestingUser == null || !requestingUser.getId().equals(id))) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "You can only edit your own profile"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         try {
             User user = opt.get();
-            if (body.containsKey("nickname")) user.setNickname((String) body.get("nickname"));
-            if (body.containsKey("university")) user.setUniversity((String) body.get("university"));
-            if (body.containsKey("name")) user.setName((String) body.get("name"));
+            if (body.getNickname() != null) user.setNickname(body.getNickname());
+            if (body.getUniversity() != null) user.setUniversity(body.getUniversity());
+            if (body.getName() != null) user.setName(body.getName());
             userService.save(user);
-            return ResponseEntity.ok(toSafeMap(user));
+            return ResponseEntity.ok(new UserResponse(user));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -163,6 +157,7 @@ public class UserRestController {
         return ResponseEntity.ok(response);
     }
 
+
     // ── GET /api/v1/users/{id}/image ────────────────────────
     @Operation(summary = "Get user avatar image")
     @GetMapping(value = "/{id}/image", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
@@ -175,23 +170,5 @@ public class UserRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    // ── Helper: Safe map WITHOUT password ───────────────────
-    private Map<String, Object> toSafeMap(User u) {
-        Map<String, Object> m = new LinkedHashMap<>();
-        m.put("id", u.getId());
-        m.put("name", u.getName());
-        m.put("nickname", u.getNickname());
-        m.put("email", u.getEmail());
-        m.put("university", u.getUniversity());
-        m.put("roles", u.getRoles());
-        m.put("enabled", u.isEnabled());
-        // password is intentionally NOT included
-        if (u.getTeam() != null) {
-            m.put("teamId", u.getTeam().getId());
-            m.put("teamName", u.getTeam().getName());
-        }
-        return m;
     }
 }
