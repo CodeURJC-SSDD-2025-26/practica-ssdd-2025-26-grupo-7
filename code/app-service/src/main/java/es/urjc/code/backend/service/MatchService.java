@@ -35,6 +35,10 @@ public class MatchService {
         return matchRepository.findAll();
     }
 
+    public org.springframework.data.domain.Page<Match> findWithFilters(Long tournamentId, String state, org.springframework.data.domain.Pageable pageable) {
+        return matchRepository.findWithFilters(tournamentId, state, pageable);
+    }
+
     public Optional<Match> findById(Long id) {
         return matchRepository.findById(id);
     }
