@@ -384,19 +384,32 @@ graph LR
 
 #### **Pasos para ejecutar con docker-compose:**
 
-1. **Clonar el repositorio**:
+1. **Clonar el repositorio** (Si quieres probarlo con el código fuente):
    ```bash
    git clone https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7.git
-   cd practica-ssdd-2025-26-grupo-7
+   cd practica-ssdd-2025-26-grupo-7/docker
    ```
 
-2. **Iniciar la aplicación con Docker Compose**:
+2. **Opcional: Descargar el archivo docker-compose desde Docker Hub (OCI Artifact)** (Si no tienes el código):
    ```bash
-   cd docker
+   mkdir onetap && cd onetap
+   docker run --rm -v ${PWD}:/ext anxelito/onetap-compose:latest cp /docker-compose.yml /ext/
+   ```
+
+3. **Iniciar la aplicación**:
+   ```bash
    docker-compose up -d
    ```
-   
-   > Esto levantará la infraestructura completa: MySQL, Utility Service y App Service.
+   > Esto levantará la infraestructura completa descargando las imágenes de Docker Hub (MySQL, Utility Service y App Service).
+
+4. **Acceder a la web**:
+   Abre el navegador y dirígete a: **`https://localhost:8443`**
+   *(Nota: acepta el certificado de seguridad autofirmado).*
+
+5. **Detener la aplicación**:
+   ```bash
+   docker-compose down
+   ```
 
 ### **Construcción de la Imagen Docker**
 

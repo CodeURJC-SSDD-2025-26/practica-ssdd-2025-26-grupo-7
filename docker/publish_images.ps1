@@ -12,4 +12,4 @@ docker push "anxelito/onetap-app-service:$Tag"
 Write-Host "> Subiendo utility-service..."
 docker push "anxelito/onetap-utility-service:$Tag"
 
-Write-Host "¡Todo subido correctamente!"
+Write-Host "Todo subido correctamente"
