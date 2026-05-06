@@ -496,10 +496,10 @@ graph LR
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [feat: implement match DTOs and refactor MatchRestController with paginated repository queries](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/8809edde96b818e4663480d4ce653118085d270c)  | [MatchRestController.java](code/app-service/src/main/java/es/urjc/code/backend/rest/MatchRestController.java)   |
+|2| [feat: implement team DTOs and refactor TeamRestController with database pagination](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/77a332e68ef268bbe06aa3800a59db83a6fa9aed)  | [TeamRestController.java](code/app-service/src/main/java/es/urjc/code/backend/rest/TeamRestController.java) |
+|3| [feat: implement tournament DTOs and refactor TournamentRestController](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/b756701c75a91c69dfa3bb0a43a38997f07a8fca)  | [TournamentRestController.java](code/app-service/src/main/java/es/urjc/code/backend/rest/TournamentRestController.java)   |
+|4| [feat: add user DTOs and refactor UserRestController with pagination](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/2431d522f1e0e9cdbf7599e12fd08dc21e446307)  | [UserRestController.java](code/app-service/src/main/java/es/urjc/code/backend/rest/UserRestController.java)   |
+|5| [feat: implement message DTOs and migrate MessageRestController to paginated API](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/3bf517257319cd8d717a65aaae9f95f2c4d21489)  | [MessageRestController.java](code/app-service/src/main/java/es/urjc/code/backend/rest/MessageRestController.java)   |
 
 ---
