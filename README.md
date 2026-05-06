@@ -345,10 +345,10 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 ### **Documentación de la API REST**
 
 #### **Especificación OpenAPI**
-📄 **[Especificación OpenAPI (YAML)](/api-docs/api-docs.yaml)**
+📄 **[Especificación OpenAPI (YAML)](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/code/app-service/api-docs/api-docs.yaml)**
 
 #### **Documentación HTML**
-📖 **[Documentación API REST (HTML)](https://raw.githack.com/[usuario]/[repositorio]/main/api-docs/api-docs.html)**
+📖 **[Documentación API REST (HTML)](https://raw.githack.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/main/code/app-service/api-docs/api-docs.html)**
 
 > La documentación de la API REST se encuentra en la carpeta `/api-docs` del repositorio. Se ha generado automáticamente con SpringDoc a partir de las anotaciones en el código Java.
 
@@ -358,6 +358,24 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ![Diagrama de Clases Actualizado](images/complete-classes-diagram.png)
 
+### **Diagrama de Comunicación de Servicios**
+Diagrama que muestra la interacción entre el servicio principal (`app-service`) y el servicio de utilidades (`utility-service`):
+
+```mermaid
+graph LR
+    subgraph "Infraestructura Docker"
+        App[App Service <br/> :8443]
+        Utility[Utility Service <br/> :8080]
+        DB[(MySQL Database <br/> :3306)]
+    end
+    
+    User((Usuario/Cliente)) -->|HTTPS| App
+    App -->|JDBC| DB
+    App -->|REST API <br/> HTTP/JSON| Utility
+    Utility -.->|Envío de PDFs/Emails| App
+```
+
+
 ### **Instrucciones de Ejecución con Docker**
 
 #### **Requisitos previos:**
@@ -366,13 +384,19 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 #### **Pasos para ejecutar con docker-compose:**
 
-1. **Clonar el repositorio** (si no lo has hecho ya):
+1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/[usuario]/[repositorio].git
-   cd [repositorio]
+   git clone https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7.git
+   cd practica-ssdd-2025-26-grupo-7
    ```
 
-2. **AQUÍ LOS SIGUIENTES PASOS**:
+2. **Iniciar la aplicación con Docker Compose**:
+   ```bash
+   cd docker
+   docker-compose up -d
+   ```
+   
+   > Esto levantará la infraestructura completa: MySQL, Utility Service y App Service.
 
 ### **Construcción de la Imagen Docker**
 
@@ -386,7 +410,20 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
    cd docker
    ```
 
-2. **AQUÍ LOS SIGUIENTES PASOS**
+2. **Construir y publicar las imágenes**:
+   
+   Puedes usar el script de PowerShell:
+   ```powershell
+   ./publish_images.ps1
+   ```
+   
+   O manualmente:
+   ```bash
+   docker build -t anxelito/onetap-app-service -f app-service.Dockerfile ..
+   docker build -t anxelito/onetap-utility-service -f utility-service.Dockerfile ..
+   docker push anxelito/onetap-app-service
+   docker push anxelito/onetap-utility-service
+   ```
 
 ### **Despliegue en Máquina Virtual**
 
@@ -425,9 +462,9 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ### **Participación de Miembros en la Práctica 3**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - [Angel Molinero Caja]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Me encargué de la dockerización completa de la arquitectura, creando Dockerfiles multi-stage para optimizar las imágenes de los microservicios y configurando la orquestación con Docker Compose para gestionar la base de datos y los servicios. Además, lideré el desarrollo inicial de la API REST, implementando los controladores principales para la gestión de torneos, usuarios y mensajes.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

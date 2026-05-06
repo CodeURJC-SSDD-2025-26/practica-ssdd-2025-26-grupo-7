@@ -73,7 +73,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/matches", "/matches/{id}").permitAll()
                 .requestMatchers("/error", "/error-403").permitAll()
                 .requestMatchers("/api/teams/*/players").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/v3/api-docs.yaml").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/profile", "/profile/edit").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/profile/{id}").hasAnyRole("USER", "ADMIN")
