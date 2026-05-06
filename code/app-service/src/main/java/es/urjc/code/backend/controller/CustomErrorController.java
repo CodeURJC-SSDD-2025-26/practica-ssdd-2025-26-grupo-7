@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CustomErrorController implements ErrorController {
 
-    @RequestMapping("/error")
+    @RequestMapping(value = "/error", produces = "text/html")
     public String handleError(HttpServletRequest request, Model model) {
 
         Object statusAttr  = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
