@@ -372,7 +372,7 @@ graph LR
     User((Usuario/Cliente)) -->|HTTPS| App
     App -->|JDBC| DB
     App -->|REST API <br/> HTTP/JSON| Utility
-    Utility -.->|Envío de PDFs/Emails| App
+    Utility -.->|Envío de PDFs| App
 ```
 
 
