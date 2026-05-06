@@ -490,9 +490,9 @@ graph LR
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Jorge Castellano Bajo]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Me encargué de la arquitectura de transferencia de datos creando el sistema completo de DTOs (Data Transfer Objects) para separar el modelo de dominio de la capa web. Implementé la validación de datos (JSR-303) en las peticiones REST y desarrollé el manejador global de excepciones (GlobalApiExceptionHandler) para garantizar respuestas JSON estandarizadas ante cualquier error. Además, finalicé la paginación en los repositorios de Equipos, Partidos y Torneos, y configuré la colección completa de Postman con variables de entorno ({{baseUrl}}) para facilitar las pruebas de la API]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
