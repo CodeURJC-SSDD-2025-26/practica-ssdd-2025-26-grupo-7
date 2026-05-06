@@ -7,10 +7,8 @@ $tempDir = New-TemporaryFile | ForEach-Object { Remove-Item $_; New-Item -ItemTy
 Copy-Item $COMPOSE_FILE "$tempDir\docker-compose.yml"
 
 Push-Location $tempDir
-docker build -t $OCI_IMAGE . -f - << EOF
-FROM scratch
-COPY docker-compose.yml /docker-compose.yml
-EOF
+Set-Content -Path "Dockerfile" -Value "FROM scratch`nCOPY docker-compose.yml /docker-compose.yml"
+docker build -t $OCI_IMAGE .
 
 docker push $OCI_IMAGE
 Pop-Location
