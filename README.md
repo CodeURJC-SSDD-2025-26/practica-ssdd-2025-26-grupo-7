@@ -475,18 +475,18 @@ graph LR
 |5| [Docker: Add multi-stage Dockerfiles for app-service and utility-service](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/9bc07a7)  | [app-service.Dockerfile](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/main/docker/app-service.Dockerfile)   |
 
 ---
+ 
+#### **Alumno 2 - [Pedro González Martín]**
 
-#### **Alumno 2 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[Me he encargado de dos partes principalmente: la separación de la arquitectura en microservicios y la seguridad JWT de la API REST. Extraje la funcionalidad de generación de PDFs desde el servicio principal hacia un nuevo microservicio independiente (`utility-service`), exponiendo un endpoint REST para su consumo mediante `RestTemplate` desde el `app-service`. Además, configuré toda la capa de seguridad basada en tokens JWT para la nueva API REST, implementando el controlador de autenticación (`AuthRestController`) y adaptando los filtros de Spring Security.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [feat: implement JwtAuthenticationFilter and webFilterChain to SecurityConfiguration.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/8e7ef72bd85558e4c866b5dde3fd791600e3a076)  | [SecurityConfiguration.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/8e7ef72bd85558e4c866b5dde3fd791600e3a076/code/app-service/src/main/java/es/urjc/code/backend/security/SecurityConfiguration.java)   |
+|2| [feat: implement REST Auth controller and adapt UserService for JWT registration](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/e8660a8cd2a71d977fc092d18c67e8af349bf7cf)  | [AuthRestController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/e8660a8cd2a71d977fc092d18c67e8af349bf7cf/code/app-service/src/main/java/es/urjc/code/backend/rest/AuthRestController.java)   |
+|3| [feat: utility-service base](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/3e2c806d6ce2a9feedbb59e84cf08695a6df0d69)  | [pom.xml (utility-service)](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/3e2c806d6ce2a9feedbb59e84cf08695a6df0d69/code/utility-service/pom.xml)   |
+|4| [update: pdfService in utility-service, separated service REST](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/09e75bced629c7898c68d650bf33470ff6203448)  | [PdfRestController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/09e75bced629c7898c68d650bf33470ff6203448/code/utility-service/src/main/java/es/urjc/code/utilityservice/controller/PdfRestController.java)   |
+|5| [feat: app-service calls utility-service for pdf generation](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/commit/39d8993a651c3f0141248c8d3837cbf4fe30feb2)  | [TournamentRestController.java](https://github.com/CodeURJC-SSDD-2025-26/practica-ssdd-2025-26-grupo-7/blob/39d8993a651c3f0141248c8d3837cbf4fe30feb2/code/app-service/src/main/java/es/urjc/code/backend/rest/TournamentRestController.java)   |
 
 ---
 
