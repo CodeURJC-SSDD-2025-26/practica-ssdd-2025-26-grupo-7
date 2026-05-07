@@ -1,0 +1,21 @@
+$kind: http-request
+description: Updates a match (e.g., sets the result). Requires ADMIN role.
+url: "{{baseUrl}}/api/v1/matches/1"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "matchDate": "2025-06-12",
+      "phase": "Group Stage",
+      "format": "BO3",
+      "state": "Finished",
+      "scoreLocal": 2,
+      "scoreAway": 1,
+      "result": "2-1",
+      "notes": "Intense match!"
+    }
+order: 4000

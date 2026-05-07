@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns details of a specific match. Public endpoint.
+url: "{{baseUrl}}/api/v1/matches/1"
+method: GET
+order: 2000

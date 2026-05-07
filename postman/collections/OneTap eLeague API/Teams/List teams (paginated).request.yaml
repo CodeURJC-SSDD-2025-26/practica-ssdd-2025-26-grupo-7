@@ -1,0 +1,16 @@
+$kind: http-request
+description: Returns a paginated list of teams. Public endpoint.
+url: "{{baseUrl}}/api/v1/teams?page=0&size=10&game=&search="
+method: GET
+queryParams:
+  - key: page
+    value: "0"
+  - key: size
+    value: "10"
+  - key: game
+    value: ""
+    description: Filter by game (optional)
+  - key: search
+    value: ""
+    description: Search by name (optional)
+order: 1000

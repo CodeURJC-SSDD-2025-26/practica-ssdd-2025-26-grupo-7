@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns the user's profile picture.
+url: "{{baseUrl}}/api/v1/users/1/image"
+method: GET
+order: 6000

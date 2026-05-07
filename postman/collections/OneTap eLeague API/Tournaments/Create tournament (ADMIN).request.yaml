@@ -1,0 +1,21 @@
+$kind: http-request
+description: Creates a new tournament. Requires ADMIN role. Returns 201 Created with Location header.
+url: "{{baseUrl}}/api/v1/tournaments"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Spring Championship 2025",
+      "game": "League of Legends",
+      "platform": "PC",
+      "mode": "5v5",
+      "maxTeams": 16,
+      "startDate": "2025-06-01",
+      "description": "Annual spring tournament for URJC students.",
+      "rules": "Standard competitive ruleset."
+    }
+order: 3000

@@ -1,0 +1,4 @@
+name: ssdd
+values:
+  - key: baseUrl
+    value: 'https://localhost:8443'

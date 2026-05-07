@@ -1,0 +1,10 @@
+$kind: http-request
+description: Returns a paginated list of users. Requires ADMIN role. Passwords are NOT included in the response.
+url: "{{baseUrl}}/api/v1/users?page=0&size=10"
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+queryParams:
+  page: "0"
+  size: "10"
+order: 1000

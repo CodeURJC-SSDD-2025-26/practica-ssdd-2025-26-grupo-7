@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns team details including members and stats. Public endpoint.
+url: "{{baseUrl}}/api/v1/teams/1"
+method: GET
+order: 2000

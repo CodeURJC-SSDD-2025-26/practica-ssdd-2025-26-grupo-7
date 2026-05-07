@@ -1,0 +1,3 @@
+$kind: collection
+description: Internal messaging endpoints
+order: 6000
