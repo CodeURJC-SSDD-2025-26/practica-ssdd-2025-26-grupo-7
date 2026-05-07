@@ -1,0 +1,18 @@
+$kind: http-request
+description: Creates a new team. The authenticated user becomes the captain. Returns 201 Created.
+url: "{{baseUrl}}/api/v1/teams"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Phoenix Rising",
+      "university": "URJC",
+      "mainGame": "League of Legends",
+      "tag": "PHX",
+      "description": "Competitive LoL team from URJC."
+    }
+order: 3000

@@ -1,0 +1,16 @@
+$kind: http-request
+description: "Returns a paginated list of tournaments. Supports optional filters: `game` and `state`. Public endpoint."
+url: "{{baseUrl}}/api/v1/tournaments?page=0&size=10&game=&state="
+method: GET
+queryParams:
+  - key: page
+    value: "0"
+  - key: size
+    value: "10"
+  - key: game
+    value: ""
+    description: Filter by game (optional)
+  - key: state
+    value: ""
+    description: Filter by state (optional)
+order: 1000

@@ -1,0 +1,8 @@
+$kind: http-request
+name: Delete team (captain/ADMIN)
+description: Deletes a team. Requires being the captain or ADMIN. Returns 204 No Content.
+url: "{{baseUrl}}/api/v1/teams/1"
+method: DELETE
+headers:
+  Authorization: Bearer {{token}}
+order: 5000

@@ -1,0 +1,10 @@
+$kind: http-request
+description: Returns the paginated list of messages for the authenticated user.
+url: "{{baseUrl}}/api/v1/messages?page=0&size=10"
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+queryParams:
+  page: "0"
+  size: "10"
+order: 1000

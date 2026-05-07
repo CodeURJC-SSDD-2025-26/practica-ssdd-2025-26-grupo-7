@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns the details of a specific tournament. Public endpoint.
+url: "{{baseUrl}}/api/v1/tournaments/1"
+method: GET
+order: 2000

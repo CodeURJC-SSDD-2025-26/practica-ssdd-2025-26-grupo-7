@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns the team logo image.
+url: "{{baseUrl}}/api/v1/teams/1/image"
+method: GET
+order: 6000

@@ -1,0 +1,16 @@
+$kind: http-request
+description: Sends a message to a user. Requires ADMIN role. Returns 201 Created.
+url: "{{baseUrl}}/api/v1/messages"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "recipientId": 2,
+      "subject": "Tournament Update",
+      "content": "Your team has been registered for the Spring Championship."
+    }
+order: 2000

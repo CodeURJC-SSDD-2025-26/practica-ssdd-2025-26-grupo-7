@@ -1,0 +1,7 @@
+$kind: http-request
+description: Returns user details. Accessible by the user themselves or an ADMIN. No password returned.
+url: "{{baseUrl}}/api/v1/users/1"
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+order: 2000

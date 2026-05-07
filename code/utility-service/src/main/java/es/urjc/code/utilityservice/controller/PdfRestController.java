@@ -20,7 +20,6 @@ public class PdfRestController {
     public ResponseEntity<byte[]> generateTournamentPdf(@RequestBody TournamentPdfRequest request) {
         try {
             byte[] pdf = pdfService.generateTournamentPdf(request);
-
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("attachment", "Tournament_" + request.id() + ".pdf");

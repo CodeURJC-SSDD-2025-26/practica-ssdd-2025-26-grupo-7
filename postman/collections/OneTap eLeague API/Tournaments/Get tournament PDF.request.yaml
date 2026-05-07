@@ -1,0 +1,5 @@
+$kind: http-request
+description: Downloads the tournament summary as a PDF file. Calls the utility-service internally.
+url: "{{baseUrl}}/api/v1/tournaments/1/pdf"
+method: GET
+order: 6000

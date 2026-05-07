@@ -1,0 +1,22 @@
+$kind: http-request
+description: Updates an existing tournament. Requires ADMIN role.
+url: "{{baseUrl}}/api/v1/tournaments/1"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Spring Championship 2025 - Updated",
+      "game": "League of Legends",
+      "platform": "PC",
+      "mode": "5v5",
+      "maxTeams": 32,
+      "startDate": "2025-06-15",
+      "state": "Active",
+      "description": "Updated description.",
+      "rules": "Updated rules."
+    }
+order: 4000

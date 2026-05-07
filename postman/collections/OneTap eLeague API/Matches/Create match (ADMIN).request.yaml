@@ -1,0 +1,20 @@
+$kind: http-request
+description: Creates a new match. Requires ADMIN role. Returns 201 Created.
+url: "{{baseUrl}}/api/v1/matches"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "matchDate": "2025-06-10",
+      "phase": "Group Stage",
+      "format": "BO3",
+      "tournamentId": 1,
+      "localTeamId": 1,
+      "awayTeamId": 2,
+      "notes": "Opening match of the tournament."
+    }
+order: 3000

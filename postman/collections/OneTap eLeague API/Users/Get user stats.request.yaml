@@ -1,0 +1,7 @@
+$kind: http-request
+description: Returns player statistics for charts (KDA, win rate, matches played, etc.).
+url: "{{baseUrl}}/api/v1/users/1/stats"
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+order: 5000

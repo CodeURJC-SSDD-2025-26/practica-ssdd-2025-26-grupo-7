@@ -1,0 +1,16 @@
+$kind: http-request
+description: Updates the user's own profile. Users cannot edit other users' profiles.
+url: "{{baseUrl}}/api/v1/users/1"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Updated Name",
+      "nickname": "updatednick",
+      "university": "URJC"
+    }
+order: 3000

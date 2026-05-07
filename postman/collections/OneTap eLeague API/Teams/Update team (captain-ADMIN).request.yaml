@@ -1,0 +1,19 @@
+$kind: http-request
+name: Update team (captain/ADMIN)
+description: Updates an existing team. Requires being the captain or ADMIN.
+url: "{{baseUrl}}/api/v1/teams/1"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Phoenix Rising II",
+      "university": "URJC",
+      "mainGame": "Valorant",
+      "tag": "PHX2",
+      "description": "Updated team description."
+    }
+order: 4000

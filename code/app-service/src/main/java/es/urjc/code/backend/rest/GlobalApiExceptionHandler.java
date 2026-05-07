@@ -24,54 +24,59 @@ public class GlobalApiExceptionHandler {
     // ── 400 Bad Request ─────────────────────────────────────
     @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, Object> handleValidationExceptions(org.springframework.web.bind.MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public Map<String, Object> handleValidationExceptions(
+            org.springframework.web.bind.MethodArgumentNotValidException ex, HttpServletRequest request) {
         Map<String, String> errors = new java.util.HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((org.springframework.validation.FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        Map<String, Object> body = errorBody(HttpStatus.BAD_REQUEST, "Validation Failed", "One or more fields are invalid.", request.getRequestURI());
+        Map<String, Object> body = errorBody(HttpStatus.BAD_REQUEST, "Validation Failed",
+                "One or more fields are invalid.", request.getRequestURI());
         body.put("details", errors);
         return body;
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({ IllegalArgumentException.class, MethodArgumentTypeMismatchException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleBadRequest(Exception ex, HttpServletRequest request) {
         return errorBody(HttpStatus.BAD_REQUEST, "Bad Request", ex.getMessage(), request.getRequestURI());
     }
 
     // ── 401 Unauthorized ────────────────────────────────────
-    @ExceptionHandler({AuthenticationException.class, BadCredentialsException.class})
+    @ExceptionHandler({ AuthenticationException.class, BadCredentialsException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Map<String, Object> handleUnauthorized(Exception ex, HttpServletRequest request) {
-        return errorBody(HttpStatus.UNAUTHORIZED, "Unauthorized", "Authentication is required to access this resource.", request.getRequestURI());
+        return errorBody(HttpStatus.UNAUTHORIZED, "Unauthorized", "Authentication is required to access this resource.",
+                request.getRequestURI());
     }
 
     // ── 403 Forbidden ───────────────────────────────────────
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Map<String, Object> handleForbidden(AccessDeniedException ex, HttpServletRequest request) {
-        return errorBody(HttpStatus.FORBIDDEN, "Forbidden", "You do not have permission to perform this action.", request.getRequestURI());
+        return errorBody(HttpStatus.FORBIDDEN, "Forbidden", "You do not have permission to perform this action.",
+                request.getRequestURI());
     }
 
     // ── 404 Not Found ───────────────────────────────────────
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, Object> handleNotFound(NoSuchElementException ex, HttpServletRequest request) {
-        return errorBody(HttpStatus.NOT_FOUND, "Not Found", "The requested resource does not exist.", request.getRequestURI());
+        return errorBody(HttpStatus.NOT_FOUND, "Not Found", "The requested resource does not exist.",
+                request.getRequestURI());
     }
 
     @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Map<String, Object>> handleResponseStatus(ResponseStatusException ex, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> handleResponseStatus(ResponseStatusException ex,
+            HttpServletRequest request) {
         HttpStatus status = HttpStatus.valueOf(ex.getStatusCode().value());
         Map<String, Object> body = errorBody(
                 status,
                 ex.getReason() != null ? ex.getReason() : status.getReasonPhrase(),
                 ex.getMessage(),
-                request.getRequestURI()
-        );
+                request.getRequestURI());
         return ResponseEntity.status(ex.getStatusCode()).body(body);
     }
 
